@@ -1,28 +1,36 @@
-﻿using System;
+﻿using Prism;
+using Prism.Ioc;
+using System;
+using Vedanta.View;
+using Vedanta.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vedanta
 {
-    public partial class App : Application
+    public partial class App
     {
-        public App()
+
+        public App(IPlatformInitializer initializer) : base(initializer)
+        {
+            Device.SetFlags(new string[] { "Shapes_Experimental" });
+        }
+
+        protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
 
-        protected override void OnStart()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-        }
+           // containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+           
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            
         }
     }
 }

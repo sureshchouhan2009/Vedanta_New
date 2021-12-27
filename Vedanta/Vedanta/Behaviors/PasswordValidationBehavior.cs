@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,10 +7,9 @@ using Xamarin.Forms;
 
 namespace Vedanta.Behaviors
 {
-    public class EmailValidatorBehavior : Behavior<CustomEntry>
+    public class PasswordValidationBehavior : Behavior<CustomEntry>
     {
-        const string emailRegex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
-
+        const string passwordRegex = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$";
 
 
         protected override void OnAttachedTo(CustomEntry bindable)
@@ -23,7 +21,7 @@ namespace Vedanta.Behaviors
         void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
             bool IsValid = false;
-            IsValid = (Regex.IsMatch(e.NewTextValue, emailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)));
+            IsValid = (Regex.IsMatch(e.NewTextValue, passwordRegex));
             ((CustomEntry)sender).TextColor = IsValid ? Color.Black : Color.Red;
             if (string.IsNullOrEmpty(e.NewTextValue))
                 ((CustomEntry)sender).TextColor = Color.Black;

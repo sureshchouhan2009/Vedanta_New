@@ -1,12 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Vedanta.View.LoginPage">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:components="clr-namespace:Vedanta.Components" 
+             xmlns:local="clr-namespace:Vedanta.Behaviors"
+             x:Class="Vedanta.View.LoginPage" 
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <Style TargetType="components:CustomEntry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="Margin" Value="20,0,10,0" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderColor" Value="#D3D3D3" />
+            <Setter Property="HasShadow" Value="False" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <Grid RowDefinitions="2*, 1*,1*,.3*, 1*, 1*,3.7*" Margin="15,10,15,10" >
+            <Frame Grid.Row="0" BackgroundColor="GreenYellow"  VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Margin="30">
+                
+            </Frame>
+            <components:CustomLabel Grid.Row="1" Text="Welcome" FontAttributes="Bold" TextColor="Black" FontSize="30" HorizontalOptions="CenterAndExpand" />
+
+            <Frame Grid.Row="2">
+                <components:CustomEntry x:Name="EmailEntry" Text="{Binding EmailText}" Placeholder="User Name">
+                    <components:CustomEntry.Behaviors>
+                        <local:EmailValidatorBehavior />
+                    </components:CustomEntry.Behaviors>
+                </components:CustomEntry>
+                
+            </Frame>
+
+            <Frame Grid.Row="4" >
+                <components:CustomEntry x:Name="PasswordEntry" IsPassword="True"   Text="{Binding PasswordText}" Placeholder="Password">
+                    <components:CustomEntry.Behaviors>
+                        <local:PasswordValidationBehavior />
+                    </components:CustomEntry.Behaviors>
+                </components:CustomEntry>
+                  </Frame>
+            <Grid Grid.Row="5" RowDefinitions="*" ColumnDefinitions="3*,6*" VerticalOptions="Center" >
+                <components:CustomLabel Grid.Column="0"  Text="Remember me" TextColor="Gray" FontSize="18" />
+                <Switch  Grid.Row="0"  HorizontalOptions="Start" VerticalOptions="Start"  HeightRequest="30" WidthRequest="50" Grid.Column="1" IsToggled="True" ThumbColor="White"  OnColor="#66cc33" />
+            </Grid>
+            <Button Grid.Row="6" Command="{Binding LoginComand }"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" CornerRadius="8" HeightRequest="70" TextColor="White" Background="#006699" Text="Login"></Button>
+        </Grid>
+            </ScrollView>
     </ContentPage.Content>
 </ContentPage>

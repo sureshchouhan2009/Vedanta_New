@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Vedanta.View.GembaSchedule" Title="Gemba Schedule" NavigationPage.HasNavigationBar="False">
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="logo" Order="Default" Priority="0" />
+        <ToolbarItem IconImageSource="logo" Order="Primary" Priority="0" />
+    </ContentPage.ToolbarItems>-->
+    <ContentPage.Content>
+        <Grid RowDefinitions="1*,1*,9*" RowSpacing="0" >
+            <Frame Grid.Row="0" BackgroundColor="#006699">
+                <Grid ColumnDefinitions="7*, 3*">
+                    <Label Text="Gemba Schedule" Grid.Column="0" TextColor="White" FontSize="Title"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                    <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Orientation="Horizontal" Spacing="40">
+                        <Image Source="search_icon" HeightRequest="30" WidthRequest="30" />
+                        <Image Source="search_icon" HeightRequest="30" WidthRequest="30" />
+                    </StackLayout>
+                </Grid>
+               
+            </Frame>
+
+            <Frame Grid.Row="1" BackgroundColor="LightGray">
+                
+            </Frame>
+            
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

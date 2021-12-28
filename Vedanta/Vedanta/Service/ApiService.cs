@@ -10,37 +10,42 @@ using Xamarin.Forms;
 
 namespace Vedanta.Service
 {
-    public class ApiService: IApiService
+    public class ApiService : IApiService
     {
-        #region Fields
-
-        private static IApiService _instance;
-
-        #endregion
-        public static IApiService Instance
+        private static ApiService _instance;
+        public static ApiService Instance
         {
             get
             {
                 if (_instance == null)
-                {
-                    _instance = DependencyService.Get<IApiService>(DependencyFetchTarget.GlobalInstance);
-                }
+                    _instance = new ApiService();
                 return _instance;
             }
         }
 
 
 
-
+        public async Task<HttpResponseMessage> LoginApiCall(String UserName, String Password)
+        {
+            
+            var client = ServiceUtility.CreateNewHttpClient();
+            var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+            client.DefaultRequestHeaders.Authorization = authHeader;
+            String RequestUrl = Urls.LoginURL + "?userName=" + UserName + "&password=" + Password;
+            var response = await client.GetAsync(RequestUrl);
+            return response;
+        } 
+        
+        
         public async Task<HttpResponseMessage> GetRequest(String URL, Object Param)
         {
 
-            var client=  ServiceUtility.CreateNewHttpClient();
-            var response= await client.GetAsync(URL);
+            var client = ServiceUtility.CreateNewHttpClient();
+            var response = await client.GetAsync(URL);
             return response;
         }
 
-        public  async Task<HttpResponseMessage> PostRequest(String URL, Object Param)
+        public async Task<HttpResponseMessage> PostRequest(String URL, Object Param)
         {
             var client = ServiceUtility.CreateNewHttpClient();
             var request = ServiceUtility.BuildRequest(Param);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Vedanta.Service;
-using Vedanta.Service.Interface;
+//using Vedanta.Service.Interface;
 using Xamarin.Forms;
 
 namespace Vedanta.Locator
@@ -11,7 +11,7 @@ namespace Vedanta.Locator
     {
         public static void Init()
         {
-            DependencyService.Register<IApiService, ApiService>();
+            //DependencyService.Register<IApiService, ApiService>();
         }
     }
 }

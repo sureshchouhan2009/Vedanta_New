@@ -45,8 +45,8 @@
                 </components:CustomEntry>
                   </Frame>
             <Grid Grid.Row="5" RowDefinitions="*" ColumnDefinitions="3*,6*" VerticalOptions="Center" >
-                <components:CustomLabel Grid.Column="0"  Text="Remember me" TextColor="Gray" FontSize="18" />
-                <Switch  Grid.Row="0"  HorizontalOptions="Start" VerticalOptions="Start"  HeightRequest="30" WidthRequest="50" Grid.Column="1" IsToggled="True" ThumbColor="White"  OnColor="#66cc33" />
+                    <components:CustomLabel Grid.Column="0"   Text="Remember me" TextColor="Gray" FontSize="18" />
+                    <Switch Grid.Row="0" IsToggled="{Binding RememberMe}"  HorizontalOptions="Start" VerticalOptions="Start" HeightRequest="30" WidthRequest="50" Grid.Column="1" ThumbColor="White"  OnColor="#66cc33" />
             </Grid>
             <Button Grid.Row="6" Command="{Binding LoginComand }"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" CornerRadius="8" HeightRequest="70" TextColor="White" Background="#006699" Text="Login"></Button>
         </Grid>

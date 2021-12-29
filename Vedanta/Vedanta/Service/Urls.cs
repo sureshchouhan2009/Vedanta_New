@@ -12,6 +12,9 @@
         #region PostMethods
 
         public const string LoginURL = BaseUrl + "Account/ValidateUser";
+        public const string GembaScheduleURL = BaseUrl + "AO/Gemba/GetAllLeaderSchedule";
+
+
         public const string TokenURL = BaseUrl + "token";
         public const string TokenURLTest = BaseUrl + "token?grant_type=password&username=mes.dev&password=abc@1234";
 

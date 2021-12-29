@@ -60,6 +60,9 @@ namespace Vedanta.ViewModel
                             Preferences.Set("Password", PasswordText);
                             Preferences.Set("IsLoggedIN", true);
                         }
+                        var StartDate = new DateTime(2021, 11, 01).Date.ToString();
+                        var EndDate = new DateTime(2021, 12, 21).Date.ToString();
+                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate);
                        await NavigationService.NavigateAsync("GembaSchedule");
                     }
                     else

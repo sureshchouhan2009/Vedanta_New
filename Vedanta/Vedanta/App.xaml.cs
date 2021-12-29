@@ -1,6 +1,8 @@
 ﻿using Prism;
 using Prism.Ioc;
 using System;
+using Vedanta.Service;
+using Vedanta.Utility;
 using Vedanta.View;
 using Vedanta.ViewModel;
 using Xamarin.Essentials;
@@ -23,7 +25,9 @@ namespace Vedanta
             Preferences.Get("IsLoggedIN", false);
             if (CheckIfLoggedIn())
             {
+               
                 await NavigationService.NavigateAsync("NavigationPage/GembaSchedule");
+                
             }
             else
             {

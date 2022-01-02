@@ -16,8 +16,12 @@ namespace Vedanta.View
         public GembaSchedule()
         {
             InitializeComponent();
+           
         }
 
-       
+        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+
+        }
     }
 }

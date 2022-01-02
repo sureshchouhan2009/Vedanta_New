@@ -36,7 +36,11 @@
                                 <TapGestureRecognizer Command="{Binding CancelTappedCommand}" />
                             </Image.GestureRecognizers>
                         </Image>
-                        <Image Source="filter_new" HeightRequest="25" WidthRequest="25" />
+                        <Image Source="filter_new" HeightRequest="25" WidthRequest="25">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateToFilterPageCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
                     </StackLayout>
                 </Grid>
                

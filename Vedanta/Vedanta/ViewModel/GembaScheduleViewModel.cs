@@ -111,6 +111,26 @@ namespace Vedanta.ViewModel
 
                 return _cancelTappedCommand;
             }
+        } 
+        
+        private ICommand _navigateToFilterPageCommand;
+
+        public ICommand NavigateToFilterPageCommand
+        {
+            get
+            {
+                if (_navigateToFilterPageCommand == null)
+                {
+                    _navigateToFilterPageCommand = new Command<object>(NavigateToFilterPageExecute);
+                }
+
+                return _navigateToFilterPageCommand;
+            }
+        }
+
+        private void NavigateToFilterPageExecute(object obj)
+        {
+            NavigationService.NavigateAsync("FilterPage");
         }
 
         private void CancelledTapped(object obj)

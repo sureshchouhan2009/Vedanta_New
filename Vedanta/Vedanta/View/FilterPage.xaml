@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             Title="Gemba Schedule" 
+             NavigationPage.HasNavigationBar="False" 
+             x:Class="Vedanta.View.FilterPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        
+        <Grid RowDefinitions="1*,1*,7*,1*" RowSpacing="0">
+            <Frame Grid.Row="0" BackgroundColor="#006699" >
+                <Grid ColumnDefinitions="5*, 5*">
+                    <Label Grid.Column="0" Text="Filters" VerticalOptions="Center" TextColor="White" FontSize="16" FontAttributes="Bold"></Label>
+                    <Label Grid.Column="1" Text="Clear All" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" FontSize="16" FontAttributes="Bold"></Label>
+                </Grid>
+            </Frame>
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" BackgroundColor="LightGray"  >
+                <Label Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="14" FontAttributes="Bold" Text="SBU"></Label>
+                <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="14" FontAttributes="Bold" Text="Department"></Label>
+                <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="14" FontAttributes="Bold" Text="Status"></Label>
+
+            </Grid>
+            <Grid Grid.Row="2" ColumnDefinitions="*,*,*" >
+                <ListView Grid.Column="0" HasUnevenRows="True" ItemsSource="{Binding SBUList}"  >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Padding="10">
+                                    <Label Text="{Binding SBUName}"   />
+                                </Frame>
+                               
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView Grid.Column="1" HasUnevenRows="True" ItemsSource="{Binding DepartmentList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame  Padding="10">
+                                    <Label Text="{Binding DepartmentName}" />
+                                </Frame>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView Grid.Column="2" HasUnevenRows="True" ItemsSource="{Binding StatusList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame>
+                                    <Label Text="{Binding StatusName}" />
+                                </Frame>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <Frame Grid.Row="3" Padding="10">
+                <Grid  ColumnDefinitions="5*, 5*" Padding="10">
+                    <Label Grid.Column="0" Text="Close" VerticalOptions="Center" TextColor="#006699" FontSize="16" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearCommand}" />
+
+                        </Label.GestureRecognizers>
+                        
+                    </Label>
+                    <Label Grid.Column="1" Text="Apply" HorizontalOptions="End" VerticalOptions="Center" TextColor="#006699" FontSize="16" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ApplyClickedCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+           
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

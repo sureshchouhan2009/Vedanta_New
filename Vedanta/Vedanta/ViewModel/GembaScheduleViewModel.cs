@@ -128,6 +128,26 @@ namespace Vedanta.ViewModel
             }
         }
 
+        private ICommand _ObservationClickedCommmand;
+
+        public ICommand ObservationClickedCommmand
+        {
+            get
+            {
+                if (_ObservationClickedCommmand == null)
+                {
+                    _ObservationClickedCommmand = new Command<object>(ObservationClickedExecute);
+                }
+
+                return _ObservationClickedCommmand;
+            }
+        }
+
+        private void ObservationClickedExecute(object obj)
+        {
+            NavigationService.NavigateAsync("MeasureAndScorePage");
+        }
+
         private void NavigateToFilterPageExecute(object obj)
         {
             NavigationService.NavigateAsync("FilterPage");

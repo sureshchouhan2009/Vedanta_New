@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Vedanta.View.MeasureAndScorePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="mainfram" TargetType="Frame"  >
+                <Setter Property="BorderColor" Value="Red" />
+            </Style>
+            <Style x:Key="circleFram" TargetType="Frame"  >
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="BackgroundColor" Value="Gray" />
+                <Setter Property="CornerRadius" Value="30" />
+                
+            </Style>
+            <Style x:Key="LabelInsideFramStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="GreterThanSymbolStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalOptions" Value="End" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions=".7*,.5*,8*" RowSpacing="0">
+            <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" >
+                    <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Measure &amp; Score" FontSize="Body" TextColor="White" />
+                </StackLayout>
+            </Frame>
+            <Label Grid.Row="1" Text="Update score by clicking on section" FontSize="12" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" Margin="20,0,0,0" />
+
+            <ScrollView Grid.Row="2" Margin="20,0,20,0">
+                <StackLayout  >
+                    <Frame Style="{StaticResource mainfram}">
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
+                            <Label Grid.Column="1" Text="AO Awareness" Style="{StaticResource LabelInsideFramStyle}"  />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Frame Style="{StaticResource mainfram}">
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
+                            <Label Grid.Column="1" Text="Preventive maintenance Task list Adequacy and PM plan check" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Frame Style="{StaticResource mainfram}"  >
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}"/>
+                            <Label Grid.Column="1" Text="RCA tool understanding and onsite action compliance check" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Frame Style="{StaticResource mainfram}">
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}"/>
+                            <Label Grid.Column="1" Text="CLTI understanding and Compliance" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+
+                    <Frame Style="{StaticResource mainfram}">
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
+                            <Label Grid.Column="1" Text="SOP/SMP understanding and Compliance" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Frame Style="{StaticResource mainfram}"   >
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
+                            <Label Grid.Column="1" Text="5S Awareness and Compliance" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Frame Style="{StaticResource mainfram}">
+                        <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                            <Frame Grid.Column="0" Style="{StaticResource circleFram}"/>
+                            <Label Grid.Column="1" Text="Process Optimization" Style="{StaticResource LabelInsideFramStyle}" />
+                            <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                        </Grid>
+                    </Frame>
+                    <Button Text="Final Submit" HeightRequest="70" Margin="0,20,0,20" CornerRadius="5" TextColor="White" BackgroundColor="#006699" />
+                
+                </StackLayout>
+                
+                
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

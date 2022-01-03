@@ -4,9 +4,9 @@
              xmlns:Converter="clr-namespace:Vedanta.Converters" 
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Vedanta.View.GembaSchedule"
-             Title="Gemba Schedule" NavigationPage.HasNavigationBar="False" 
-             xmlns:components="clr-namespace:Vedanta.Components" 
-             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms">
+             Title="Gemba Schedule" NavigationPage.HasNavigationBar="False" xmlns:components="clr-namespace:Vedanta.Components"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             x:Name="GembaScheduleScreen">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Converter:StringToColorConverter x:Key="StrToColConverter" />
@@ -17,7 +17,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid RowDefinitions="1*,1*,8*" RowSpacing="0" >
-            <Frame Grid.Row="0" BackgroundColor="#006699">
+            <Frame Grid.Row="0" BackgroundColor="#006699" >
                 <Grid ColumnDefinitions="7*, 3*">
                     <Label Grid.Column="0" Text="Gemba Schedule"  IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontSize="Title"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                     <components:CustomEntry Grid.Column="0" Text="{Binding SearchText}"  IsVisible="{Binding IsSearchTapped}" BackgroundColor="White" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="14" Placeholder="Search">
@@ -79,7 +79,7 @@
                 </Grid>
             </Frame>
 
-            <ListView Grid.Row="2" ItemsSource="{Binding GembaScheduleList}"  HasUnevenRows="True" SeparatorVisibility="Default"  >
+            <ListView Grid.Row="2" ItemsSource="{Binding GembaScheduleList}" SelectionMode="None"  HasUnevenRows="True" SeparatorVisibility="Default"  >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -99,9 +99,14 @@
                                     <Label Grid.Column="1" HorizontalOptions="End" Text="{Binding Percentage,StringFormat='Percentage- {0}'}" TextColor="Black" FontSize="16" />
                                 </Grid>
                                
-                                <Frame Grid.Row="3" Padding="0" BorderColor="#006699" CornerRadius="5">
-                                    <Label Text="{Binding Status,Converter={StaticResource StatusToBTextConverter}}" TextColor="Blue" FontSize="16" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-                                </Frame>
+                                <!--<Frame Grid.Row="3" Padding="0" BorderColor="#006699" CornerRadius="5">
+                                    --><!--<Label Text="{Binding Status,Converter={StaticResource StatusToBTextConverter}}" TextColor="Blue" FontSize="16" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />--><!--
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ObservationClickedCommmand}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>-->
+
+                                <Button Grid.Row="3" Command="{Binding Source={x:Reference GembaScheduleScreen}, Path=BindingContext.ObservationClickedCommmand}" CommandParameter="{Binding Status}" Text="{Binding Status,Converter={StaticResource StatusToBTextConverter}}" />
                             </Grid>
                         </ViewCell>
                         

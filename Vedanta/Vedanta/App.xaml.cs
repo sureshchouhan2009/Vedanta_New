@@ -26,7 +26,7 @@ namespace Vedanta
             if (CheckIfLoggedIn())
             {
                
-                await NavigationService.NavigateAsync("NavigationPage/GembaSchedule");
+                await NavigationService.NavigateAsync("NavigationPage/AOAwarenessPage");
                 
             }
             else
@@ -52,6 +52,7 @@ namespace Vedanta
             containerRegistry.RegisterForNavigation<GembaSchedule, GembaScheduleViewModel>();
             containerRegistry.RegisterForNavigation<FilterPage, FilterPageViewModel>();
             containerRegistry.RegisterForNavigation<MeasureAndScorePage, MeasureAndScorePageViewModel>();
+            containerRegistry.RegisterForNavigation<AOAwarenessPage, AOAwarenessPageViewModel>();
         }
     }
 }

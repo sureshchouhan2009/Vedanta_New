@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Vedanta.View.AOAwarenessPage" NavigationPage.HasNavigationBar="False" x:Name="AOScreen">
+    <ContentPage.Content>
+        <Grid RowDefinitions=".7*,3*,6*" RowSpacing="0">
+            <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Add Observation - AO Awareness" FontSize="Body" TextColor="White" />
+                </StackLayout>
+            </Frame>
+            <CarouselView  x:Name="corousel" ItemsSource="{Binding UploadedImagesList}" Grid.Row="1"  HorizontalScrollBarVisibility="Always" >
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Image Aspect="AspectFill" Source="{Binding imageSource}" BackgroundColor="Green" />
+                            <Label Text="Add Image" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Start">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.PickOrCaptureImageCommmand}" CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Delete" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold"  VerticalOptions="End" HorizontalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteCurrentImageCommand}" CommandParameter="{Binding ImageName}" />
+
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                        
+                        
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto">
+                <Label Grid.Row="0" Text="Observation" TextColor="Black" FontSize="16" VerticalOptions="Center" />
+                <Frame Grid.Row="1" HeightRequest="200" BorderColor="Gray" BackgroundColor="Red" Margin="20" Padding="0">
+                    <Editor></Editor> 
+                </Frame>
+            </Grid>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -46,6 +46,7 @@
                     <Frame Style="{StaticResource mainfram}">
                         <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
                             <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
+                            <Label Grid.Column="0" Text="{Binding GembaScheduleModelParam.Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="AO Awareness" Style="{StaticResource LabelInsideFramStyle}"  />
                             <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
                             <Grid.GestureRecognizers>
@@ -87,7 +88,7 @@
                         <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
                             <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="ForestGreen" />
 
-                            <Label Grid.Column="0" Text="5" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                            <Label Grid.Column="0" Text="{Binding GembaScheduleModelParam.Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="5S Awareness and Compliance" Style="{StaticResource LabelInsideFramStyle}" />
                             <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
                         </Grid>

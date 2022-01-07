@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Vedanta.Models;
 using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
@@ -23,14 +24,31 @@ namespace Vedanta.ViewModel
             }
         }
 
+        private GembaScheduleModel _gembaScheduleModelParam;
+        public GembaScheduleModel GembaScheduleModelParam
+        {
+            get { return _gembaScheduleModelParam; }
+            set { SetProperty(ref _gembaScheduleModelParam, value); }
+        }
+
+
         private async void AOAwarenessNavigationCommandExecute(object obj)
         {
-           await NavigationService.NavigateAsync("AOAwarenessPage");
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add("ScheduleDataForAwareness", GembaScheduleModelParam);
+            await NavigationService.NavigateAsync("AOAwarenessPage", navigationParameters);
         }
 
         public MeasureAndScorePageViewModel(INavigationService navigationService) : base(navigationService)
         {
 
+        }
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters.ContainsKey("ScheduleData"))
+            {
+                GembaScheduleModelParam = parameters.GetValue<GembaScheduleModel>("ScheduleData");
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Vedanta.Models;
+using Xamarin.Essentials;
 
 namespace Vedanta.Utility
 {
@@ -22,5 +23,15 @@ namespace Vedanta.Utility
         #endregion
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
+
+        #region Check Internet
+
+        public bool CheckInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+            return current == NetworkAccess.Internet;
+        }
+
+        #endregion
     }
 }

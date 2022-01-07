@@ -25,7 +25,17 @@ namespace Vedanta.Service
             }
         }
 
+        public async Task<HttpResponseMessage> AddObservationApiCall(ObservationModel observationModel)
+        {
 
+            var client = ServiceUtility.CreateNewHttpClient();
+            var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+            client.DefaultRequestHeaders.Authorization = authHeader;
+            String RequestUrl = Urls.AddObservationDetails;
+            var payload = ServiceUtility.BuildRequest(observationModel);
+            var response = await client.PostAsync(RequestUrl, payload);
+            return response;
+        }
 
         public async Task<HttpResponseMessage> LoginApiCall(String UserName, String Password)
         {

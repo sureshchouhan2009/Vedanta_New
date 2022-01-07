@@ -26,8 +26,9 @@ namespace Vedanta
             if (CheckIfLoggedIn())
             {
                
-                await NavigationService.NavigateAsync("NavigationPage/AOAwarenessPage");
-                
+                await NavigationService.NavigateAsync("NavigationPage/GembaSchedule");
+              //  await NavigationService.NavigateAsync("NavigationPage/AOAwarenessPage");
+
             }
             else
             {

@@ -142,23 +142,21 @@ namespace Vedanta.ViewModel
                 return _ObservationClickedCommmand;
             }
         }
-
         private void ObservationClickedExecute(object obj)
         {
-            NavigationService.NavigateAsync("MeasureAndScorePage");
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add("ScheduleData", obj);
+            NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
         }
-
         private void NavigateToFilterPageExecute(object obj)
         {
             NavigationService.NavigateAsync("FilterPage");
         }
-
         private void CancelledTapped(object obj)
         {
             IsSearchTapped = false;
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
         }
-
         private ICommand _searchTextChangedCommand;
 
         public ICommand SearchTextChangedCommand
@@ -202,16 +200,11 @@ namespace Vedanta.ViewModel
                 Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
-           
-           
-
         }
         private async void SelectedDateFunc(object obj)
         {
             var test = obj as DateSelectedEvent;
             await Application.Current.MainPage.DisplayAlert("Selected Date", "Your selected date Is: {0}", "Ok");
         }
-
-       
     }
 }

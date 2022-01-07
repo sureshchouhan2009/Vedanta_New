@@ -106,7 +106,7 @@
                                     </Frame.GestureRecognizers>
                                 </Frame>-->
 
-                                <Button Grid.Row="3" Command="{Binding Source={x:Reference GembaScheduleScreen}, Path=BindingContext.ObservationClickedCommmand}" CommandParameter="{Binding Status}" Text="{Binding Status,Converter={StaticResource StatusToBTextConverter}}" />
+                                <Button Grid.Row="3" Command="{Binding Source={x:Reference GembaScheduleScreen}, Path=BindingContext.ObservationClickedCommmand}" CommandParameter="{Binding .}" Text="{Binding Status,Converter={StaticResource StatusToBTextConverter}}" />
                             </Grid>
                         </ViewCell>
                         

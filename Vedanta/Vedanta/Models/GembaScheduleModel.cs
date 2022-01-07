@@ -24,10 +24,10 @@ namespace Vedanta.Models
         public string Percentage { get; set; }
         public string ActionPlanComplianceFraction { get; set; }
         public object ActionPlanCompliance { get; set; }
-        public object AoGembaObservations { get; set; }
+        public string AoGembaObservations { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public object PerformedBy { get; set; }
+        public string PerformedBy { get; set; }
         public DateTime PerformedOn { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
+using Acr.UserDialogs;
 
 namespace Vedanta.Droid
 {
@@ -17,6 +18,7 @@ namespace Vedanta.Droid
             base.OnCreate(savedInstanceState);
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(0, 102, 153)); //to change the status bar color
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            UserDialogs.Init(this);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }

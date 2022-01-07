@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Vedanta.Helpers;
 using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
@@ -88,7 +89,23 @@ namespace Vedanta.ViewModel
 
         }
 
-
+        private bool _isBusy = false;
+        public virtual bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (value)
+                {
+                    Loading.Instance.ShowLoadingDialog();
+                }
+                else
+                {
+                    Loading.Instance.HideLoadingDialog();
+                }
+                SetProperty(ref _isBusy, value);
+            }
+        }
 
     }
 }

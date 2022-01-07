@@ -36,6 +36,13 @@ namespace Vedanta.ViewModel
             get { return _observationSummaryText; }
             set { SetProperty(ref _observationSummaryText, value); }
         }
+        
+        private List<string> _previousObservations;
+        public List<string> PreviousObservations
+        {
+            get { return _previousObservations; }
+            set { SetProperty(ref _previousObservations, value); }
+        }
 
         private ICommand _pickOrCaptureImageCommmand;
 
@@ -250,6 +257,10 @@ namespace Vedanta.ViewModel
 
         public AOAwarenessPageViewModel(INavigationService navigationService) : base(navigationService)
         {
+            PreviousObservations = new List<string>
+            {
+                "","",""
+            };
             var ImagesList = new ObservableCollection<UploadImageModel>(new List<UploadImageModel>
             {
                 new UploadImageModel{ ImageName="siteImage" , imageSource= ImageSource.FromResource("siteImage")}

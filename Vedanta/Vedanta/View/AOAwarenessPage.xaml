@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:Vedanta.Components" x:Class="Vedanta.View.AOAwarenessPage" NavigationPage.HasNavigationBar="False" x:Name="AOScreen">
     <ContentPage.Content>
-        <Grid RowDefinitions=".7*,2*,6*" RowSpacing="0">
+        <Grid RowDefinitions=".7*,2*,2.5*,4*" RowSpacing="0">
             <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                     <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
@@ -12,38 +12,79 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
-            <CarouselView  x:Name="corousel" ItemsSource="{Binding UploadedImagesList}" Grid.Row="1"  HorizontalScrollBarVisibility="Always" >
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Image Aspect="AspectFill" Source="{Binding imageSource}" BackgroundColor="Gray" />
-                            <Label Text="Add Image" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Start">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.PickOrCaptureImageCommmand}" CommandParameter="{Binding .}" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Text="Delete" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold"  VerticalOptions="End" HorizontalOptions="End">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteCurrentImageCommand}" CommandParameter="{Binding .}" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                            
-                        </Grid>
-                        
-                        
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
 
-            <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto" Margin="20" >
+            <StackLayout Grid.Row="1">
+                <CarouselView x:Name="corousel" ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True"  EmptyView="No items to display.">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Aspect="AspectFill" Source="{Binding imageSource}" BackgroundColor="Gray" />
+                                <Label Text="Add Image" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Start">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.PickOrCaptureImageCommmand}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Delete" Margin="20" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="End">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteCurrentImageCommand}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                            </Grid>
+
+
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+
+                </CarouselView>
+                <IndicatorView x:Name="indicatorView"  IndicatorColor="Gray" SelectedIndicatorColor="Green" HorizontalOptions="Center" VerticalOptions="End" />
+
+            </StackLayout>
+            
+            
+             <Grid Grid.Row="2" RowDefinitions="1*,7*,2*" Margin="20,10,20,10" >
                 <Label Grid.Row="0" Text="Observation" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                <Frame Grid.Row="1" HeightRequest="200" BorderColor="DarkGray"  Padding="0" >
+                <Frame Grid.Row="1" VerticalOptions="FillAndExpand" BorderColor="DarkGray" HasShadow="True"  Padding="0" >
                     <components:CustomEditor Text="{Binding ObservationSummaryText}" FontSize="16" FontAttributes="Bold"/>
                 </Frame>
                 <Button Grid.Row="2" TextColor="#006699"  BorderColor="#006699" BackgroundColor="White" BorderWidth="2" Command="{Binding AddObservationCommand}" Text="Add Observation" />
-               
             </Grid>
-            
+            <ListView Grid.Row="3" ItemsSource="{Binding PreviousObservations}" HasUnevenRows="True" SeparatorVisibility="None"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BorderColor="Gray">
+                                <Grid RowDefinitions="3*,4*,.2,3*" ColumnDefinitions="5*,5*">
+                                    <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="5*,5*">
+                                        <Label Text="Observation 1" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" FontSize="14" Text="07-01-2022,13:07" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,20,0">
+                                        <Label FontSize="14" Text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document" />
+                                    </Grid>
+
+                                    <BoxView Grid.Row="2" Grid.ColumnSpan="2" Color="Gray" HeightRequest="2"></BoxView>
+
+                                    <Grid Grid.Row="3" Grid.ColumnSpan="2" ColumnDefinitions="5*,.1,5*">
+                                        <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
+                                            <Label Grid.Column="1" Text="Delete" FontSize="14"></Label>
+                                        </Grid  >
+                                        <BoxView Grid.Column="1" Color="Gray" WidthRequest="1"></BoxView>
+                                        <Grid Grid.Column="2" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
+                                            <Label Grid.Column="1" Text="Edit" FontSize="14"></Label>
+                                        </Grid  >
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+           
         </Grid>
     </ContentPage.Content>
 </ContentPage>

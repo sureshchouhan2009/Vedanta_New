@@ -15,7 +15,7 @@ namespace Vedanta.ViewModel
 {
     public class GembaScheduleViewModel : ViewModelBase
     {
-        private DateTime _startDate=DateTime.Now.AddDays(-30);
+        private DateTime _startDate=DateTime.Now.AddDays(-60);
         private DateTime _endDate= DateTime.Now;
 
         private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();

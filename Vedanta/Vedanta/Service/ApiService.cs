@@ -31,9 +31,15 @@ namespace Vedanta.Service
             var client = ServiceUtility.CreateNewHttpClient();
             var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
             client.DefaultRequestHeaders.Authorization = authHeader;
+            
+            
             String RequestUrl = Urls.AddObservationDetails;
             var payload = ServiceUtility.BuildRequest(observationModel);
-            var response = await client.PostAsync(RequestUrl, payload);
+
+            var req = new HttpRequestMessage(HttpMethod.Post, "https://vedantaconnect.com/ECGITWEBAPI/AO/Gemba/CreateAddObservationDetails") { Content = new StringContent( JsonConvert.SerializeObject(observationModel), System.Text.Encoding.UTF8, "application/json") };
+
+
+            var response = await client.SendAsync(req);
             return response;
         }
 

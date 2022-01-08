@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using Newtonsoft.Json;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -141,7 +142,7 @@ namespace Vedanta.ViewModel
                         observationModel.Id = GembaScheduleModelParamMeasure.Id;
                         observationModel.AoCategoryMasterId = GembaScheduleModelParamMeasure.AoCategoryMasterId;
                         observationModel.AoDepartmentMasterId = GembaScheduleModelParamMeasure.AoDepartmentMasterId;
-                        //observationModel.AoGembaCheckListMasterId = GembaScheduleModelParamMeasure;
+                        observationModel.AoGembaCheckListMasterId = 1;  // for now hardcoded need to get from server and set according to measure
                         //observationModel.AoGembaObservationId = GembaScheduleModelParamMeasure.ao;
                         observationModel.AoSBUMasterId = GembaScheduleModelParamMeasure.AoSBUMasterId;
                         observationModel.Category = GembaScheduleModelParamMeasure.Category;
@@ -151,14 +152,17 @@ namespace Vedanta.ViewModel
                         observationModel.SBU = GembaScheduleModelParamMeasure.SBU;
                         observationModel.Score = GembaScheduleModelParamMeasure.Score;
                         observationModel.PerformedOn = DateTime.Now.ToString();
-                        observationModel.PerformedBy = GembaScheduleModelParamMeasure.PerformedBy;
+                        observationModel.PerformedBy = "Umesh.ecgit"; // to get current logged in user
                         observationModel.Percentage = GembaScheduleModelParamMeasure.Percentage;
-                        // observationModel.Leader=GembaScheduleModelParamMeasure.
-                        // observationModel.GembaWalkScheduleId = GembaScheduleModelParamMeasure.gem;
-
+                        observationModel.Leader = GembaScheduleModelParamMeasure.Employee;
+                        observationModel.GembaWalkScheduleId = GembaScheduleModelParamMeasure.Id;
+                        observationModel.Measure = "AO Awareness";
+                        observationModel.Department = GembaScheduleModelParamMeasure.Department;
                         observationModel.EmployeeMappingId = GembaScheduleModelParamMeasure.EmployeeMappingId;
                         observationModel.Employee = GembaScheduleModelParamMeasure.Employee;
+                      var request=  JsonConvert.SerializeObject(observationModel);
                         var result = await ApiService.Instance.AddObservationApiCall(observationModel);
+
                         IsBusy = false;
                     }
                     else

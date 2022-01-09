@@ -49,24 +49,24 @@
                 </Frame>
                 <Button Grid.Row="2" TextColor="#006699"  BorderColor="#006699" BackgroundColor="White" BorderWidth="2" Command="{Binding AddObservationCommand}" Text="Add Observation" />
             </Grid>
-            <ListView Grid.Row="3" ItemsSource="{Binding PreviousObservations}" HasUnevenRows="True" SeparatorVisibility="None"  >
+            <ListView Grid.Row="3" ItemsSource="{Binding PreviousObservations}" HasUnevenRows="True"  Margin="20" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BorderColor="Gray">
-                                <Grid RowDefinitions="3*,4*,.2,3*" ColumnDefinitions="5*,5*">
+                            <Frame BorderColor="Gray" Padding="0">
+                                <Grid RowDefinitions="3*,.2,4*,.2,3*" ColumnDefinitions="5*,5*">
                                     <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="5*,5*">
-                                        <Label Text="Observation 1" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
-                                        <Label Grid.Column="1" FontSize="14" Text="07-01-2022,13:07" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Text="{Binding Id,StringFormat='Observation {0}'}" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" FontSize="14" Text="{Binding PerformedOn,StringFormat='{0:MM-dd-yyyy HH:mm}'}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Grid>
+                                    <BoxView Grid.Row="1" Grid.ColumnSpan="2"  Color="Gray" HeightRequest="2"></BoxView>
+                                    <Grid Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,20,0">
+                                        <Label FontSize="14" Text="{Binding Observations}" />
                                     </Grid>
 
-                                    <Grid Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,20,0">
-                                        <Label FontSize="14" Text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document" />
-                                    </Grid>
+                                    <BoxView Grid.Row="3" Grid.ColumnSpan="2" Color="Gray" HeightRequest="2"></BoxView>
 
-                                    <BoxView Grid.Row="2" Grid.ColumnSpan="2" Color="Gray" HeightRequest="2"></BoxView>
-
-                                    <Grid Grid.Row="3" Grid.ColumnSpan="2" ColumnDefinitions="5*,.1,5*">
+                                    <Grid Grid.Row="4" Grid.ColumnSpan="2" ColumnDefinitions="5*,.1,5*">
                                         <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
                                             <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
                                             <Label Grid.Column="1" Text="Delete" FontSize="14"></Label>

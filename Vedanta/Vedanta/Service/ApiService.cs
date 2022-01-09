@@ -25,23 +25,69 @@ namespace Vedanta.Service
             }
         }
 
-        public async Task<HttpResponseMessage> AddObservationApiCall(ObservationModel observationModel)
+        public async Task<bool> AddObservationApiCall(ObservationModel observationModel)
         {
+            bool isSuccess=false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.AddObservationDetails;
+                var payload = ServiceUtility.BuildRequest(observationModel);
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl) { Content = payload };
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                
+            }
+            return isSuccess;
 
-            var client = ServiceUtility.CreateNewHttpClient();
-            var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
-            client.DefaultRequestHeaders.Authorization = authHeader;
-            
-            
-            String RequestUrl = Urls.AddObservationDetails;
-            var payload = ServiceUtility.BuildRequest(observationModel);
-
-            var req = new HttpRequestMessage(HttpMethod.Post, "https://vedantaconnect.com/ECGITWEBAPI/AO/Gemba/CreateAddObservationDetails") { Content = new StringContent( JsonConvert.SerializeObject(observationModel), System.Text.Encoding.UTF8, "application/json") };
-
-
-            var response = await client.SendAsync(req);
-            return response;
         }
+
+
+        //to get the all observations of current GembaSchedule 
+        public async Task<List<GetObservationModel>> GetAllObservationAgainstSchedule( int ScheduleID)
+        {
+            List<GetObservationModel> responsedata = new List<GetObservationModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetAllLeaderObservation + "?ScheduleId=" + ScheduleID;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    responsedata = JsonConvert.DeserializeObject<List<GetObservationModel>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return responsedata;
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<HttpResponseMessage> LoginApiCall(String UserName, String Password)
         {

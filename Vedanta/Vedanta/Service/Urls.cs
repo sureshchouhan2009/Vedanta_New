@@ -9,6 +9,8 @@
 
         public const string LoginURL = BaseUrl + "Account/ValidateUser";
         public const string GembaScheduleURL = BaseUrl + "AO/Gemba/GetAllLeaderSchedule";
+       // public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation?ScheduleId=1";
+
         public const string AddObservationDetails = BaseUrl + "AO/Gemba/CreateAddObservationDetails";
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";
 

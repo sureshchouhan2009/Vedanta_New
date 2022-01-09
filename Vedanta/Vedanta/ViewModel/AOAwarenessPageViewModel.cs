@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,8 +39,8 @@ namespace Vedanta.ViewModel
             set { SetProperty(ref _observationSummaryText, value); }
         }
         
-        private List<string> _previousObservations;
-        public List<string> PreviousObservations
+        private ObservableCollection<GetObservationModel> _previousObservations;
+        public ObservableCollection<GetObservationModel> PreviousObservations
         {
             get { return _previousObservations; }
             set { SetProperty(ref _previousObservations, value); }
@@ -160,8 +161,19 @@ namespace Vedanta.ViewModel
                         observationModel.Department = GembaScheduleModelParamMeasure.Department;
                         observationModel.EmployeeMappingId = GembaScheduleModelParamMeasure.EmployeeMappingId;
                         observationModel.Employee = GembaScheduleModelParamMeasure.Employee;
-                      var request=  JsonConvert.SerializeObject(observationModel);
+                        var request=  JsonConvert.SerializeObject(observationModel);
                         var result = await ApiService.Instance.AddObservationApiCall(observationModel);
+
+                        if (result)
+                        {
+                            getAllLeaderObservationList();
+                            ObservationSummaryText = "";//clearing the edit text field
+                            await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfuly", "Ok");
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                        }
 
                         IsBusy = false;
                     }
@@ -188,6 +200,15 @@ namespace Vedanta.ViewModel
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+            }
+        }
+
+        private async void getAllLeaderObservationList()
+        {
+            var allObservationList = await ApiService.Instance.GetAllObservationAgainstSchedule(GembaScheduleModelParamMeasure.Id);
+            if (allObservationList.Count > 0)
+            {
+                PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e=>e.Id));
             }
         }
 
@@ -261,10 +282,7 @@ namespace Vedanta.ViewModel
 
         public AOAwarenessPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            PreviousObservations = new List<string>
-            {
-                "","",""
-            };
+           
             var ImagesList = new ObservableCollection<UploadImageModel>(new List<UploadImageModel>
             {
                 new UploadImageModel{ ImageName="siteImage" , imageSource= ImageSource.FromResource("siteImage")}
@@ -272,11 +290,13 @@ namespace Vedanta.ViewModel
             UploadedImagesList = ImagesList;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters.ContainsKey("ScheduleDataForAwareness"))
             {
                 GembaScheduleModelParamMeasure = parameters.GetValue<GembaScheduleModel>("ScheduleDataForAwareness");
+
+                getAllLeaderObservationList();
             }
         }
     }

@@ -18,7 +18,6 @@ namespace Vedanta.ViewModel
         public DelegateCommand HomeCommand { get; private set; }
         public DelegateCommand CreateNewEventCommand { get; private set; }
         public DelegateCommand GobackCommand { get; private set; }
-
         public DelegateCommand UserProfilePopulateCommand { get; private set; }
 
         private ControlTemplate _currentTemplate;
@@ -43,7 +42,7 @@ namespace Vedanta.ViewModel
             NavigationService = navigationService;
             //HomeCommand = new DelegateCommand(PerformHomeCommand);
             //CreateNewEventCommand = new DelegateCommand(CreateNewEvent);
-            //GobackCommand = new DelegateCommand(BackPageNavigation);
+            GobackCommand = new DelegateCommand(BackPageNavigation);
             //UserProfilePopulateCommand = new DelegateCommand(PopulateUserProfile);
             //CurrentTemplate = (ControlTemplate)Application.Current.Resources["MasterTemplate"];
         }

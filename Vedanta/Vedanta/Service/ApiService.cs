@@ -25,7 +25,7 @@ namespace Vedanta.Service
             }
         }
 
-        public async Task<bool> AddObservationApiCall(ObservationModel observationModel)
+        public async Task<bool> AddObservationApiCall(PostObservationModel observationModel)
         {
             bool isSuccess=false;
             try

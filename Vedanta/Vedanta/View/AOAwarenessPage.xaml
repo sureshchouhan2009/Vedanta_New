@@ -8,7 +8,7 @@
                     <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
                     <Label Text="Add Observation - AO Awareness" FontSize="Body" TextColor="White" />
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BackPageNavigateCommand}" />
+                        <TapGestureRecognizer Command="{Binding GobackCommand}" />
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>

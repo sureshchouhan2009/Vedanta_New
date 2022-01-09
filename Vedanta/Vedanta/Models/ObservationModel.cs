@@ -5,7 +5,7 @@ using System.Text;
 namespace Vedanta.Models
 {
   
-    public class ObservationModel
+    public class PostObservationModel
     {
         public int Id { get; set; }
         public int GembaWalkScheduleId { get; set; }

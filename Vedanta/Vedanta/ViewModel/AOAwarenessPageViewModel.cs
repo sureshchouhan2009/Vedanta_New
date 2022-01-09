@@ -73,19 +73,7 @@ namespace Vedanta.ViewModel
             }
         }
 
-        private ICommand _backPageNavigateCommand;
-
-        public ICommand BackPageNavigateCommand
-        {
-            get
-            {
-                if (_backPageNavigateCommand == null)
-                {
-                    _backPageNavigateCommand = new Command<object>(BackPageNavigation);
-                }
-                return _backPageNavigateCommand;
-            }
-        }
+       
 
         private void BackPageNavigation(object obj)
         {
@@ -108,7 +96,7 @@ namespace Vedanta.ViewModel
 
         private async void AddObservationCommandExecute(object obj)
         {
-            ObservationModel observationModel = new ObservationModel();
+            PostObservationModel observationModel = new PostObservationModel();
 
             try
             {

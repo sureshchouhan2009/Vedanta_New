@@ -21,7 +21,11 @@
             <Frame Grid.Row="0" BackgroundColor="#006699" >
                 <Grid ColumnDefinitions="5*, 5*">
                     <Label Grid.Column="0" Text="Filters" VerticalOptions="Center" TextColor="White" FontSize="16" FontAttributes="Bold"></Label>
-                    <Label Grid.Column="1" Text="Clear All" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" FontSize="16" FontAttributes="Bold"></Label>
+                    <Label Grid.Column="1" Text="Clear All" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" FontSize="16" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearAllCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
             </Frame>
             <Grid Grid.Row="1" ColumnDefinitions="*,*,*" BackgroundColor="LightGray"  >
@@ -63,7 +67,10 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Frame>
-                                    <Label Text="{Binding StatusName}" />
+                                    <Label Text="{Binding StatusName}" TextColor="{Binding IsSelected ,Converter={StaticResource boolToColConverter}}" />
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference filterPage},Path=BindingContext.StatusSelectedCommand}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
                                 </Frame>
 
                             </ViewCell>

@@ -12,7 +12,36 @@ namespace Vedanta.ViewModel
 {
     public class FilterPageViewModel : ViewModelBase
     {
-        
+
+        private ICommand _ClearAllCommand;
+
+        public ICommand ClearAllCommand
+        {
+            get
+            {
+                if (_ClearAllCommand == null)
+                {
+                    _ClearAllCommand = new Command<object>(ClearAllCommandExecute);
+                }
+
+                return _ClearAllCommand;
+            }
+        }
+
+        private void ClearAllCommandExecute(object obj)
+        {
+            SBUList.Clear();
+            Session.Instance.SbuList.Clear();
+            Session.Instance.SbuList = Session.fillSBUModel();
+            SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
+            StatusList.Clear();
+            Session.Instance.StatusList.Clear();
+            Session.Instance.StatusList = Session.fillStatusModel();
+            StatusList = new ObservableCollection<StatusModel>(Session.Instance.StatusList);
+            BackPageNavigation();
+
+        }
+
         private ICommand _ApplyClickedCommand;
 
         public ICommand ApplyClickedCommand
@@ -27,8 +56,8 @@ namespace Vedanta.ViewModel
                 return _ApplyClickedCommand;
             }
         }
-        
-        
+
+
         private ICommand _SBUSelectedCommand;
 
         public ICommand SBUSelectedCommand
@@ -44,16 +73,30 @@ namespace Vedanta.ViewModel
             }
         }
 
+
+        private ICommand _statusSelectedCommand;
+
+        public ICommand StatusSelectedCommand
+        {
+            get
+            {
+                if (_statusSelectedCommand == null)
+                {
+                    _statusSelectedCommand = new Command<object>(ModifyStatusSelectionOnStatusList);
+                }
+
+                return _statusSelectedCommand;
+            }
+        }
+
         private void ModifySBUSelectionOnSbuList(object obj)
         {
             var currentSBU = obj as SBUFilterModel;
             if (currentSBU.SBUName == "All")
             {
-                //var indexOfAll = Session.Instance.SbuList.IndexOf(obj as SBUFilterModel);
-                //Session.Instance.SbuList[indexOfAll].IsSelected = !Session.Instance.SbuList[indexOfAll].IsSelected;
                 Session.Instance.SbuList.ForEach(e =>
                 {
-                    if (e.SBUName == "All" && e.IsSelected==false)
+                    if (e.SBUName == "All" && e.IsSelected == false)
                     {
                         e.IsSelected = !e.IsSelected;
                     }
@@ -61,7 +104,7 @@ namespace Vedanta.ViewModel
                     {
                         e.IsSelected = false;
                     }
-                   
+
                 });
                 SBUList.Clear();
                 SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
@@ -76,8 +119,40 @@ namespace Vedanta.ViewModel
             }
 
 
-            
+
         }
+
+        private void ModifyStatusSelectionOnStatusList(object obj)
+        {
+            var currentStatus = obj as StatusModel;
+            if (currentStatus.StatusName == "All")
+            {
+                Session.Instance.StatusList.ForEach(e =>
+                {
+                    if (e.StatusName == "All" && e.IsSelected == false)
+                    {
+                        e.IsSelected = !e.IsSelected;
+                    }
+                    else
+                    {
+                        e.IsSelected = false;
+                    }
+
+                });
+                StatusList.Clear();
+                StatusList = new ObservableCollection<StatusModel>(Session.Instance.StatusList);
+            }
+            else
+            {
+                Session.Instance.StatusList[0].IsSelected = false;
+                var index = Session.Instance.StatusList.IndexOf(obj as StatusModel);
+                Session.Instance.StatusList[index].IsSelected = !Session.Instance.StatusList[index].IsSelected;
+                StatusList.Clear();
+                StatusList = new ObservableCollection<StatusModel>(Session.Instance.StatusList);
+            }
+        }
+
+
 
         private ICommand _clearCommand;
 
@@ -98,7 +173,7 @@ namespace Vedanta.ViewModel
         {
             NavigationService.GoBackAsync();
         }
-         private void ApplyClickedExecute(object obj)
+        private void ApplyClickedExecute(object obj)
         {
             NavigationService.GoBackAsync();
         }
@@ -109,14 +184,14 @@ namespace Vedanta.ViewModel
             get { return _SBUList; }
             set { SetProperty(ref _SBUList, value); }
         }
-        
+
         private ObservableCollection<DepartmentModel> _departmentList = new ObservableCollection<DepartmentModel>();
         public ObservableCollection<DepartmentModel> DepartmentList
         {
             get { return _departmentList; }
             set { SetProperty(ref _departmentList, value); }
         }
-         private ObservableCollection<StatusModel> _statusList = new ObservableCollection<StatusModel>();
+        private ObservableCollection<StatusModel> _statusList = new ObservableCollection<StatusModel>();
         public ObservableCollection<StatusModel> StatusList
         {
             get { return _statusList; }
@@ -127,7 +202,7 @@ namespace Vedanta.ViewModel
         {
             var listSBU = Session.Instance.SbuList;
             var listDepartMent = fillDepartmentFilters();
-            var listStatus = fillStatusModel();
+            var listStatus = Session.Instance.StatusList;
 
 
 
@@ -139,13 +214,13 @@ namespace Vedanta.ViewModel
         }
 
 
-        
+
 
 
         private List<DepartmentModel> fillDepartmentFilters()
         {
             var Departmentlist = new List<DepartmentModel>();
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "All", IsSelected=true });
+            Departmentlist.Add(new DepartmentModel { DepartmentName = "All", IsSelected = true });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "GAP Smelter-1" });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Bakeoven Smelter-1" });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Rodding Smelter-1" });
@@ -158,23 +233,13 @@ namespace Vedanta.ViewModel
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-1" });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-1" });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-2"});
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-2"});
+            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-2" });
+            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-2" });
             Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-2" });
 
             return Departmentlist;
         }
 
-        private List<StatusModel> fillStatusModel()
-        {
-            var Statuslist = new List<StatusModel>();
-            Statuslist.Add(new StatusModel { StatusName = "All", IsSelected = true });
-            Statuslist.Add(new StatusModel { StatusName = "Pending" });
-            Statuslist.Add(new StatusModel { StatusName = "Pending for Score" });
-            Statuslist.Add(new StatusModel { StatusName = "In Progress" });
-            Statuslist.Add(new StatusModel { StatusName = "Closed" });
-            Statuslist.Add(new StatusModel { StatusName = "Completed" });
-            return Statuslist;
-        }
+
     }
 }

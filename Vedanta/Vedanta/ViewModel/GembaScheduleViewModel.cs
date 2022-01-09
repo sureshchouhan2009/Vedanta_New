@@ -15,7 +15,7 @@ namespace Vedanta.ViewModel
 {
     public class GembaScheduleViewModel : ViewModelBase
     {
-        private DateTime _startDate=DateTime.Now.AddDays(-60);
+        private DateTime _startDate=DateTime.Now.AddDays(-30);
         private DateTime _endDate= DateTime.Now;
 
         private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();
@@ -219,9 +219,41 @@ namespace Vedanta.ViewModel
                 Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
-            if(Session.Instance.ChecklistParametersList.Count>0)
-            await ApiService.Instance.GetAllGembaChecklistParameters();
+            if (Session.Instance.ChecklistParametersList.Count == 0)
+            {
+                await ApiService.Instance.GetAllGembaChecklistParameters();
+            }
+            PerformFilterOperation();
             IsBusy = false;
+        }
+
+        private void PerformFilterOperation()
+        {
+            if (!Session.Instance.SbuList[0].IsSelected&& Session.Instance.SbuList.Any(sbu=>sbu.IsSelected))
+            {
+                var filteredList = new List<GembaScheduleModel>();
+
+                Session.Instance.SbuList.ForEach(fltrsbu =>
+                {
+                    if (fltrsbu.IsSelected)
+                    {
+                        filteredList.AddRange(Session.Instance.GembaScheduleList.Where(e => e.SBU.ToLower().Contains(fltrsbu.SBUName.ToLower())).ToList());
+                    }
+                    
+                });
+
+
+
+                GembaScheduleList.Clear();
+                GembaScheduleList =
+                new ObservableCollection<GembaScheduleModel>(filteredList);
+            }
+            else
+            {
+                GembaScheduleList.Clear();
+                GembaScheduleList =
+                new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
+            }
         }
     }
 }

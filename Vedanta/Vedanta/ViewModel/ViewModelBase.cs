@@ -47,7 +47,7 @@ namespace Vedanta.ViewModel
             //CurrentTemplate = (ControlTemplate)Application.Current.Resources["MasterTemplate"];
         }
 
-        private async void BackPageNavigation()
+        public async void BackPageNavigation()
         {
             await NavigationService.GoBackAsync();
         }

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Vedanta.Models;
+using Vedanta.Utility;
 using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
@@ -26,7 +27,57 @@ namespace Vedanta.ViewModel
                 return _ApplyClickedCommand;
             }
         }
+        
+        
+        private ICommand _SBUSelectedCommand;
 
+        public ICommand SBUSelectedCommand
+        {
+            get
+            {
+                if (_SBUSelectedCommand == null)
+                {
+                    _SBUSelectedCommand = new Command<object>(ModifySBUSelectionOnSbuList);
+                }
+
+                return _SBUSelectedCommand;
+            }
+        }
+
+        private void ModifySBUSelectionOnSbuList(object obj)
+        {
+            var currentSBU = obj as SBUFilterModel;
+            if (currentSBU.SBUName == "All")
+            {
+                //var indexOfAll = Session.Instance.SbuList.IndexOf(obj as SBUFilterModel);
+                //Session.Instance.SbuList[indexOfAll].IsSelected = !Session.Instance.SbuList[indexOfAll].IsSelected;
+                Session.Instance.SbuList.ForEach(e =>
+                {
+                    if (e.SBUName == "All" && e.IsSelected==false)
+                    {
+                        e.IsSelected = !e.IsSelected;
+                    }
+                    else
+                    {
+                        e.IsSelected = false;
+                    }
+                   
+                });
+                SBUList.Clear();
+                SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
+            }
+            else
+            {
+                Session.Instance.SbuList[0].IsSelected = false;
+                var index = Session.Instance.SbuList.IndexOf(obj as SBUFilterModel);
+                Session.Instance.SbuList[index].IsSelected = !Session.Instance.SbuList[index].IsSelected;
+                SBUList.Clear();
+                SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
+            }
+
+
+            
+        }
 
         private ICommand _clearCommand;
 
@@ -74,11 +125,7 @@ namespace Vedanta.ViewModel
 
         public FilterPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            var listSBU = fillSBUModel();
-           
-
-
-
+            var listSBU = Session.Instance.SbuList;
             var listDepartMent = fillDepartmentFilters();
             var listStatus = fillStatusModel();
 
@@ -92,17 +139,7 @@ namespace Vedanta.ViewModel
         }
 
 
-        private List<SBUFilterModel> fillSBUModel()
-        {
-            var SBUlist = new List<SBUFilterModel>();
-            SBUlist.Add(new SBUFilterModel { SBUName = "All", IsSelected = true });
-            SBUlist.Add(new SBUFilterModel { SBUName = "GAP Smelter-1" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Cast House" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Potline" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Closed" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Power System Common Services" });
-            return SBUlist;
-        }
+        
 
 
         private List<DepartmentModel> fillDepartmentFilters()

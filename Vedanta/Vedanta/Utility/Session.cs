@@ -24,6 +24,7 @@ namespace Vedanta.Utility
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
         public List<GembaChecklistParametersModel> ChecklistParametersList = new List<GembaChecklistParametersModel>();
+        public List<SBUFilterModel> SbuList = fillSBUModel();
 
         #region Check Internet
 
@@ -34,5 +35,16 @@ namespace Vedanta.Utility
         }
 
         #endregion
+
+        private static List<SBUFilterModel> fillSBUModel()
+        {
+            var SBUlist = new List<SBUFilterModel>();
+            SBUlist.Add(new SBUFilterModel { SBUName = "All", IsSelected = true });
+            SBUlist.Add(new SBUFilterModel { SBUName = "Carbon" });
+            SBUlist.Add(new SBUFilterModel { SBUName = "Cast House" });
+            SBUlist.Add(new SBUFilterModel { SBUName = "Potline" });
+            SBUlist.Add(new SBUFilterModel { SBUName = "Power System Common Services" });
+            return SBUlist;
+        }
     }
 }

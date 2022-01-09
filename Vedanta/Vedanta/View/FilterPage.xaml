@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             Title="Gemba Schedule" 
-             NavigationPage.HasNavigationBar="False" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Converter="clr-namespace:Vedanta.Converters" Title="Gemba Schedule" 
+             NavigationPage.HasNavigationBar="False"  x:Name="filterPage"
              x:Class="Vedanta.View.FilterPage">
     <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converter:BoolToColorConverter x:Key="boolToColConverter" />
+        </ResourceDictionary>
         <ResourceDictionary>
             <Style TargetType="Label">
                 <Setter Property="FontSize" Value="14" />
@@ -33,8 +35,11 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame Padding="10">
-                                    <Label Text="{Binding SBUName}"   />
+                                <Frame Padding="15" >
+                                    <Label Text="{Binding SBUName}"  TextColor="{Binding IsSelected ,Converter={StaticResource boolToColConverter}}"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference filterPage},Path=BindingContext.SBUSelectedCommand}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
                                 </Frame>
                                
                             </ViewCell>

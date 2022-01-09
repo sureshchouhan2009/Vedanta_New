@@ -14,9 +14,10 @@
             <Converter:DateChangedEventArgsConverter x:Key="dateChangedEventArgsConverter" />
             <Converter:InverseBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
+        
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowDefinitions="1*,1*,8*" RowSpacing="0" >
+        <Grid RowDefinitions="1*,1.5*,8*" RowSpacing="0" >
             <Frame Grid.Row="0" BackgroundColor="#006699" >
                 <Grid ColumnDefinitions="7*, 3*">
                     <Label Grid.Column="0" Text="Gemba Schedule"  IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontSize="Title"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
@@ -54,26 +55,35 @@
                     </components:CustomCalendarComponent.Behaviors>
                 </components:CustomCalendarComponent>-->
 
-                <Grid RowDefinitions="3.5*,6.5*" ColumnDefinitions="5*,5*"   >
+                <Grid RowDefinitions="3*,7*" ColumnDefinitions="5*,5*"   >
                     <Label Grid.Row="0" Text="Schedule List" FontSize="16" TextColor="Black" FontAttributes="Bold"></Label>
                     <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="8*,2*"  >
 
-                        <Label Grid.Column="0" Text="{Binding StartDateText}" FontSize="14" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                        <Image Grid.Column="1" Source="DropDown" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Start" />
-
-                        <!--<DatePicker  HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="40" FontSize="12"  Grid.Column="0" Date="{Binding StartDate}" TextColor="Black"  >
-                            <DatePicker.Behaviors>
-                                <behaviors:EventToCommandBehavior EventArgsConverter="{StaticResource dateChangedEventArgsConverter}" EventName="DateSelected" Command="{Binding SelectedDateCommand}" CommandParameter="{Binding .}" />
-                            </DatePicker.Behaviors>
-                        </DatePicker>
+                        <!--<Label Grid.Column="0" Text="{Binding StartDateText}" FontSize="14" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
                         <Image Grid.Column="1" Source="DropDown" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Start" />-->
+
+                        <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="0"   VerticalOptions="Center" HorizontalOptions="Start" Margin="10,0,0,0">
+                            <Label Margin="0" Padding="0" Text=" Start Date" FontAttributes="Bold"  />
+
+                            <DatePicker Margin="0,-5,0,0" FontSize="14" Date="{Binding StartDate}" MaximumDate="{Binding EndDate}" Format="dd-MM-yyyy" TextColor="Black" TextTransform="Uppercase">
+                            </DatePicker>
+                        </StackLayout>
                    
                     
                     </Grid>
 
-                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="8*,2*" HorizontalOptions="End" >
-                        <Label Grid.Column="0" Text="{Binding EndDateText}" FontSize="14" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                        <Image Grid.Column="1" Source="DropDown" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Start" />
+                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="8*,2*"  >
+                        <!--<Label Grid.Column="0" Text="{Binding EndDateText}" FontSize="14" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                        <Image Grid.Column="1" Source="DropDown" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Start" />-->
+
+                        <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,10,0">
+                            <Label Margin="0" Padding="0" Text=" End Date" FontAttributes="Bold" />
+
+                            <DatePicker Margin="0,-5,0,0" FontSize="14" Date="{Binding EndDate}"  Format="dd -MM-yyyy" TextColor="Black" TextTransform="Uppercase">
+                            </DatePicker>
+                        </StackLayout>
+
+
                     </Grid>
                    
                 </Grid>

@@ -144,9 +144,15 @@ namespace Vedanta.ViewModel
         }
         private void ObservationClickedExecute(object obj)
         {
-            var navigationParameters = new NavigationParameters();
-            navigationParameters.Add("ScheduleData", obj);
-            NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+            //var navigationParameters = new NavigationParameters();
+            //navigationParameters.Add("PageTitle", obj);
+            NavigationService.NavigateAsync("ScorePage");
+
+
+
+            //var navigationParameters = new NavigationParameters();
+            //navigationParameters.Add("ScheduleData", obj);
+            //NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
         }
         private void NavigateToFilterPageExecute(object obj)
         {

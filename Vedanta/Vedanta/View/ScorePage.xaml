@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" NavigationPage.HasNavigationBar="False"
+             x:Class="Vedanta.View.ScorePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="mainfram" TargetType="Frame">
+                <Setter Property="BorderColor" Value="Gray" />
+            </Style>
+            <Style x:Key="circleFram" TargetType="Frame">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="BackgroundColor" Value="Gray" />
+                <Setter Property="CornerRadius" Value="30" />
+
+            </Style>
+            <Style x:Key="LabelInsideFramStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+
+           
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" >
+            <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20" BorderColor="#006699">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Add Observation - AO Awareness" FontSize="Body" TextColor="White" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GobackCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+            <StackLayout Orientation="Vertical" Grid.Row="1" Spacing="-30">
+                <Label TextColor="Black" FontSize="16" Margin="20" FontAttributes="Bold" Text="Score" />
+                <Label TextColor="Black" FontSize="14" Margin="20" Text="Click on the score section to select the score." />
+            </StackLayout>
+            <StackLayout Grid.Row="2" Margin="30,10,30,10">
+                <Frame  Style="{StaticResource mainfram}">
+                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                        <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Red" />
+                        <Label Grid.Column="0" Text="0" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Not Satisfactory" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Grid.Row="3" Margin="30,10,30,10">
+                <Frame Style="{StaticResource mainfram}">
+                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                        <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Orange" />
+                        <Label Grid.Column="0" Text="3" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Average" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Grid.Row="4" Margin="30,10,30,10">
+                <Frame Style="{StaticResource mainfram}">
+                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                        <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Green" />
+                        <Label Grid.Column="0" Text="5" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Good" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                </Frame>
+            </StackLayout>
+
+            <Grid Grid.Row="5" ColumnDefinitions="*,*" Margin="30,10,30,10" >
+                <Label Grid.Column="0" Text="Score info" TextColor="DeepSkyBlue" HorizontalOptions="StartAndExpand" />
+
+                <Label Grid.Column="1" Text="Skip Adding Score" TextColor="DeepSkyBlue" HorizontalOptions="EndAndExpand" />
+            </Grid>
+
+            <Frame Grid.Row="6" VerticalOptions="End" HasShadow="True" HeightRequest="50" BackgroundColor="AliceBlue">
+                <Grid>
+                    
+                </Grid>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

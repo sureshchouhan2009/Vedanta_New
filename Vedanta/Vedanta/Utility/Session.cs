@@ -23,6 +23,7 @@ namespace Vedanta.Utility
         #endregion
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
+        public List<GembaChecklistParametersModel> ChecklistParametersList = new List<GembaChecklistParametersModel>();
 
         #region Check Internet
 

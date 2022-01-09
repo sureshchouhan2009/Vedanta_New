@@ -13,6 +13,7 @@
 
         public const string AddObservationDetails = BaseUrl + "AO/Gemba/CreateAddObservationDetails";
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";
+        public const string GetAllGembaChecklistParameters = BaseUrl + "AO/Gemba/GetAllGembaChecklistParameters";
 
        // https://vedantaconnect.com/ECGITWEBAPI/AO/Gemba/GetAllLeaderObservation?ScheduleId=1004
 

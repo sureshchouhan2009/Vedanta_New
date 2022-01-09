@@ -114,7 +114,7 @@ namespace Vedanta.ViewModel
             {
                 if (Session.Instance.CheckInternetConnection())
                 {
-                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count > 1)
+                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count >=3)
                     {
                         IsBusy = true;
                         UploadedImagesList.RemoveAt(0);//removing the default image.
@@ -143,8 +143,8 @@ namespace Vedanta.ViewModel
                         observationModel.Id = GembaScheduleModelParamMeasure.Id;
                         observationModel.AoCategoryMasterId = GembaScheduleModelParamMeasure.AoCategoryMasterId;
                         observationModel.AoDepartmentMasterId = GembaScheduleModelParamMeasure.AoDepartmentMasterId;
-                        observationModel.AoGembaCheckListMasterId = 1;  // for now hardcoded need to get from server and set according to measure
-                        //observationModel.AoGembaObservationId = GembaScheduleModelParamMeasure.ao;
+                        observationModel.Measure = "AO Awareness";
+                        observationModel.AoGembaCheckListMasterId = Session.Instance.ChecklistParametersList.FirstOrDefault(ck => ck.Measure == "AO Awareness").Id;
                         observationModel.AoSBUMasterId = GembaScheduleModelParamMeasure.AoSBUMasterId;
                         observationModel.Category = GembaScheduleModelParamMeasure.Category;
                         observationModel.Date = GembaScheduleModelParamMeasure.Date.ToString("dd/MM/yyyy");// check what send here
@@ -157,7 +157,6 @@ namespace Vedanta.ViewModel
                         observationModel.Percentage = GembaScheduleModelParamMeasure.Percentage;
                         observationModel.Leader = GembaScheduleModelParamMeasure.Employee;
                         observationModel.GembaWalkScheduleId = GembaScheduleModelParamMeasure.Id;
-                        observationModel.Measure = "AO Awareness";
                         observationModel.Department = GembaScheduleModelParamMeasure.Department;
                         observationModel.EmployeeMappingId = GembaScheduleModelParamMeasure.EmployeeMappingId;
                         observationModel.Employee = GembaScheduleModelParamMeasure.Employee;
@@ -297,6 +296,7 @@ namespace Vedanta.ViewModel
                 GembaScheduleModelParamMeasure = parameters.GetValue<GembaScheduleModel>("ScheduleDataForAwareness");
 
                 getAllLeaderObservationList();
+                
             }
         }
     }

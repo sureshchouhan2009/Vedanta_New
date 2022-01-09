@@ -193,6 +193,25 @@ namespace Vedanta.ViewModel
 
         public GembaScheduleViewModel(INavigationService navigationService) : base(navigationService)
         {
+            //if (GembaScheduleList.Count == 0)
+            //{
+            //    var startDate = StartDate.Date.ToString();
+            //    var endDate = EndDate.Date.ToString();
+            //    Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
+            //    GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
+            //}
+        }
+        private async void SelectedDateFunc(object obj)
+        {
+            var test = obj as DateSelectedEvent;
+            await Application.Current.MainPage.DisplayAlert("Selected Date", "Your selected date Is: {0}", "Ok");
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            IsBusy = true;
+
             if (GembaScheduleList.Count == 0)
             {
                 var startDate = StartDate.Date.ToString();
@@ -200,11 +219,9 @@ namespace Vedanta.ViewModel
                 Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
-        }
-        private async void SelectedDateFunc(object obj)
-        {
-            var test = obj as DateSelectedEvent;
-            await Application.Current.MainPage.DisplayAlert("Selected Date", "Your selected date Is: {0}", "Ok");
+            if(Session.Instance.ChecklistParametersList.Count>0)
+            await ApiService.Instance.GetAllGembaChecklistParameters();
+            IsBusy = false;
         }
     }
 }

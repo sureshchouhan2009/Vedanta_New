@@ -78,6 +78,32 @@ namespace Vedanta.Service
             return responsedata;
         }
 
+        //to get the all Checklist Parameters  
+        public async Task<List<GembaChecklistParametersModel>> GetAllGembaChecklistParameters( )
+        {
+            List<GembaChecklistParametersModel> ChecklistResponse = new List<GembaChecklistParametersModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetAllGembaChecklistParameters;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    ChecklistResponse = JsonConvert.DeserializeObject<List<GembaChecklistParametersModel>>(result);
+                    Session.Instance.ChecklistParametersList = ChecklistResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return ChecklistResponse;
+        }
+
 
 
 

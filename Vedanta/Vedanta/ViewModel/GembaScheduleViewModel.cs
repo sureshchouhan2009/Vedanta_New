@@ -229,24 +229,37 @@ namespace Vedanta.ViewModel
 
         private void PerformFilterOperation()
         {
-            if (!Session.Instance.SbuList[0].IsSelected&& Session.Instance.SbuList.Any(sbu=>sbu.IsSelected))
+            var filteredList = new List<GembaScheduleModel>();
+
+            if (!Session.Instance.SbuList[0].IsSelected || (!Session.Instance.StatusList[0].IsSelected))
             {
-                var filteredList = new List<GembaScheduleModel>();
-
-                Session.Instance.SbuList.ForEach(fltrsbu =>
+                if (!Session.Instance.SbuList[0].IsSelected && Session.Instance.SbuList.Any(sbu => sbu.IsSelected))
                 {
-                    if (fltrsbu.IsSelected)
+
+
+                    Session.Instance.SbuList.ForEach(fltrsbu =>
                     {
-                        filteredList.AddRange(Session.Instance.GembaScheduleList.Where(e => e.SBU.ToLower().Contains(fltrsbu.SBUName.ToLower())).ToList());
-                    }
-                    
-                });
+                        if (fltrsbu.IsSelected)
+                        {
+                            filteredList.AddRange(Session.Instance.GembaScheduleList.Where(e => e.SBU.ToLower().Contains(fltrsbu.SBUName.ToLower())).ToList());
+                        }
 
+                    });
+                }
+                if (!Session.Instance.StatusList[0].IsSelected && Session.Instance.StatusList.Any(sta => sta.IsSelected))
+                {
+                    Session.Instance.StatusList.ForEach(st =>
+                    {
+                        if (st.IsSelected)
+                        {
+                            filteredList.AddRange(Session.Instance.GembaScheduleList.Where(e => e.Status.ToLower().Contains(st.StatusName.ToLower())).ToList());
+                        }
 
-
+                    });
+                }
                 GembaScheduleList.Clear();
                 GembaScheduleList =
-                new ObservableCollection<GembaScheduleModel>(filteredList);
+                new ObservableCollection<GembaScheduleModel>(filteredList.Distinct());
             }
             else
             {
@@ -254,6 +267,9 @@ namespace Vedanta.ViewModel
                 GembaScheduleList =
                 new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
+
+            
+           
         }
     }
 }

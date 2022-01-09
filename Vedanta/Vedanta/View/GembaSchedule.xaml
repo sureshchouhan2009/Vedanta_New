@@ -38,7 +38,7 @@
                         </Image>
                         <Image Source="filter_new" HeightRequest="25" WidthRequest="25">
                             <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigateToFilterPageCommand}" />
+                                <TapGestureRecognizer Command="{Binding NavigateToFilterPageCommand}" NumberOfTapsRequired="1" />
                             </Image.GestureRecognizers>
                         </Image>
                     </StackLayout>

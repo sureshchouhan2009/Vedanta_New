@@ -24,6 +24,7 @@ namespace Vedanta.Utility
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
         public List<GembaChecklistParametersModel> ChecklistParametersList = new List<GembaChecklistParametersModel>();
+        public List<ScoreOptionsModel> ScoreOptionsList = ScoreOptionsListgenerator();
         public List<SBUFilterModel> SbuList = fillSBUModel();
         public List<StatusModel> StatusList = fillStatusModel();
 
@@ -58,6 +59,17 @@ namespace Vedanta.Utility
             Statuslist.Add(new StatusModel { StatusName = "Closed" });
             Statuslist.Add(new StatusModel { StatusName = "Completed" });
             return Statuslist;
+        }
+
+        public static List<ScoreOptionsModel> ScoreOptionsListgenerator()
+        {
+            List<ScoreOptionsModel> optionList = new List<ScoreOptionsModel>()
+            {
+                new ScoreOptionsModel{ScoreValue=0,ScoreName="Not Satisfactory", isSelected=false },
+                new ScoreOptionsModel{ScoreValue=3,ScoreName="Average", isSelected=false },
+                new ScoreOptionsModel{ScoreValue=5,ScoreName="Good", isSelected=false }
+            };
+            return optionList;
         }
     }
 }

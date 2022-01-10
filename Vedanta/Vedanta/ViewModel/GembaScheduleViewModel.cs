@@ -15,8 +15,8 @@ namespace Vedanta.ViewModel
 {
     public class GembaScheduleViewModel : ViewModelBase
     {
-        private DateTime _startDate=DateTime.Now.AddDays(-30);
-        private DateTime _endDate= DateTime.Now;
+        private DateTime _startDate = DateTime.Now.AddDays(-30);
+        private DateTime _endDate = DateTime.Now;
 
         private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();
         public ObservableCollection<GembaScheduleModel> GembaScheduleList
@@ -42,16 +42,16 @@ namespace Vedanta.ViewModel
             set { SetProperty(ref _endDate, value); }
         }
 
-       
+
         public string EndDateText
         {
             get { return "End Date " + EndDate.ToString("dd-MM-yyyy"); }
-            
+
         }
         public string StartDateText
         {
             get { return "Start Date " + StartDate.ToString("dd-MM-yyyy"); }
-            
+
         }
         private String _searchText;
         public String SearchText
@@ -98,7 +98,7 @@ namespace Vedanta.ViewModel
                 return _searchTappedCommand;
             }
         }
-         private ICommand _cancelTappedCommand;
+        private ICommand _cancelTappedCommand;
 
         public ICommand CancelTappedCommand
         {
@@ -111,8 +111,8 @@ namespace Vedanta.ViewModel
 
                 return _cancelTappedCommand;
             }
-        } 
-        
+        }
+
         private ICommand _navigateToFilterPageCommand;
 
         public ICommand NavigateToFilterPageCommand
@@ -142,17 +142,40 @@ namespace Vedanta.ViewModel
                 return _ObservationClickedCommmand;
             }
         }
-        private void ObservationClickedExecute(object obj)
+        private async void ObservationClickedExecute(object obj)
         {
-            //var navigationParameters = new NavigationParameters();
-            //navigationParameters.Add("PageTitle", obj);
-            NavigationService.NavigateAsync("ScorePage");
+            try
+            {
+                GembaScheduleModel model = obj as GembaScheduleModel;
+                var Status = model.Status;
 
+                if (Status == "Closed")
+                {
 
+                }
+                else if (Status == "In Progress")
+                {
 
-            //var navigationParameters = new NavigationParameters();
-            //navigationParameters.Add("ScheduleData", obj);
-            //NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+                }
+                else if (Status == "Pending For Score")
+                {
+                    //score page
+                    await NavigationService.NavigateAsync("ScorePage");
+                }
+                else if (Status == "Pending")
+                {
+                    var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("ScheduleData", obj);
+                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+                }
+                //var navigationParameters = new NavigationParameters();
+                //navigationParameters.Add("PageTitle", obj);
+                // NavigationService.NavigateAsync("ScorePage");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         private void NavigateToFilterPageExecute(object obj)
         {
@@ -180,10 +203,10 @@ namespace Vedanta.ViewModel
 
         private void searchTextChangedCommandExecute(object obj)
         {
-           if(!String.IsNullOrEmpty(SearchText))
+            if (!String.IsNullOrEmpty(SearchText))
             {
                 var fList = Session.Instance.GembaScheduleList.Where(e => e.SBU.ToLower().Contains(SearchText.ToLower())).ToList();
-                GembaScheduleList=
+                GembaScheduleList =
                 new ObservableCollection<GembaScheduleModel>(fList);
             }
             else
@@ -274,8 +297,8 @@ namespace Vedanta.ViewModel
                 new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
 
-            
-           
+
+
         }
     }
 }

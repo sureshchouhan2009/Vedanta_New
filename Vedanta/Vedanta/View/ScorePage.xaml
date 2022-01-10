@@ -42,12 +42,13 @@
             </StackLayout>
             <StackLayout Grid.Row="2" Margin="30,10,30,10">
                 <Frame  Style="{StaticResource mainfram}">
-                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                    <Grid ColumnDefinitions="1.5*,7*,1*,1*" Padding="0" Margin="0">
                         <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Red" />
                         <Label Grid.Column="0" Text="0" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text="Not Satisfactory" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Image Grid.Column="2" Source="SelectedIcon.png" IsVisible="{Binding IsNotSatisfactorySelected}" Aspect="AspectFit" HeightRequest="20" WidthRequest="20" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding NotSatisfactorySelectionCommand}" NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
 
@@ -56,12 +57,13 @@
 
             <StackLayout Grid.Row="3" Margin="30,10,30,10">
                 <Frame Style="{StaticResource mainfram}">
-                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                    <Grid ColumnDefinitions="1.5*,7*,1*,1*" Padding="0" Margin="0">
                         <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Orange" />
                         <Label Grid.Column="0" Text="3" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text="Average" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Image Grid.Column="2" Source="SelectedIcon.png" IsVisible="{Binding IsAverageSelected}" Aspect="AspectFit" HeightRequest="20" WidthRequest="20" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding AverageSelectionCommand}" NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
 
@@ -70,10 +72,11 @@
 
             <StackLayout Grid.Row="4" Margin="30,10,30,10">
                 <Frame Style="{StaticResource mainfram}">
-                    <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                    <Grid ColumnDefinitions="1.5*,7*,1*,1*" Padding="0" Margin="0">
                         <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="Green" />
                         <Label Grid.Column="0" Text="5" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text="Good" Style="{StaticResource LabelInsideFramStyle}" />
+                        <Image Grid.Column="2" Source="SelectedIcon.png"  IsVisible="{Binding IsGoodSelected}" Aspect="AspectFit" HeightRequest="20" WidthRequest="20"  />
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoodSelectionCommand}" NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>

@@ -9,6 +9,27 @@ namespace Vedanta.ViewModel
 {
     public class ScorePageViewModel : ViewModelBase
     {
+        private bool _isGoodSelected;
+        public bool IsGoodSelected
+        {
+            get { return _isGoodSelected; }
+            set { SetProperty(ref _isGoodSelected, value); }
+        }
+
+        private bool _isAverageSelected;
+        public bool IsAverageSelected
+        {
+            get { return _isAverageSelected; }
+            set { SetProperty(ref _isAverageSelected, value); }
+        }
+        private bool _isNotSatisfactorySelected;
+        public bool IsNotSatisfactorySelected
+        {
+            get { return _isNotSatisfactorySelected; }
+            set { SetProperty(ref _isNotSatisfactorySelected, value); }
+        }
+
+
         private ICommand _NotSatisfactorySelectionCommand;
         public ICommand NotSatisfactorySelectionCommand
         {
@@ -25,6 +46,9 @@ namespace Vedanta.ViewModel
 
         private void NotSatisfactorySelectionCommandExecute(object obj)
         {
+            IsNotSatisfactorySelected = true;
+            IsGoodSelected = false;
+            IsAverageSelected = false;
 
         }
 
@@ -45,7 +69,10 @@ namespace Vedanta.ViewModel
 
         private void AverageSelectionCommandExecute(object obj)
         {
-           
+            IsAverageSelected = true;
+            IsNotSatisfactorySelected = false;
+            IsGoodSelected = false;
+            
         }
 
        
@@ -68,7 +95,9 @@ namespace Vedanta.ViewModel
 
         private void GoodSelectionCommandExecute(object obj)
         {
-            
+            IsGoodSelected = true;
+            IsAverageSelected = false;
+            IsNotSatisfactorySelected = false;
         }
         
         private ICommand _BackToScoreCommand;

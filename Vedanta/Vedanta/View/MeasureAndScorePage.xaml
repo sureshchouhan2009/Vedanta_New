@@ -53,7 +53,7 @@
                             <Label Grid.Column="1" Text="AO Awareness" Style="{StaticResource LabelInsideFramStyle}"  />
                             <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                                <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" CommandParameter="1" NumberOfTapsRequired="1" />
                             </Grid.GestureRecognizers>
                         </Grid>
                         

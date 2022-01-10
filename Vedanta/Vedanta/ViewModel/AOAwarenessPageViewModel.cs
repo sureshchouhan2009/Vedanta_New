@@ -18,6 +18,15 @@ namespace Vedanta.ViewModel
 {
     public class AOAwarenessPageViewModel : ViewModelBase
     {
+        private string _PageTitle;
+        public string PageTitle
+        {
+            get { return _PageTitle; }
+            set { SetProperty(ref _PageTitle, value); }
+        }
+
+
+
         private ObservableCollection<UploadImageModel> _uploadedImagesList = new ObservableCollection<UploadImageModel>();
         public ObservableCollection<UploadImageModel> UploadedImagesList
         {
@@ -279,13 +288,17 @@ namespace Vedanta.ViewModel
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            IsBusy = true;
+            if (parameters.ContainsKey("Title"))
+            {
+                PageTitle= parameters.GetValue<string>("Title");
+            }
             if (parameters.ContainsKey("ScheduleDataForAwareness"))
             {
                 GembaScheduleModelParamMeasure = parameters.GetValue<GembaScheduleModel>("ScheduleDataForAwareness");
-
                 getAllLeaderObservationList();
-                
             }
+            IsBusy = false;
         }
     }
 }

@@ -6,7 +6,7 @@
             <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                     <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
-                    <Label Text="Add Observation - AO Awareness" FontSize="Body" TextColor="White" />
+                    <Label Text="{Binding PageTitle}" FontSize="Body" TextColor="White" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GobackCommand}" />
                     </StackLayout.GestureRecognizers>

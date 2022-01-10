@@ -24,6 +24,7 @@ namespace Vedanta.ViewModel
             get { return _gembaScheduleList; }
             set { SetProperty(ref _gembaScheduleList, value); }
         }
+
         //private List<GembaScheduleModel> _gembaScheduleListMaster = new List<GembaScheduleModel>();
         //public List<GembaScheduleModel> GembaScheduleListMaster
         //{
@@ -160,7 +161,14 @@ namespace Vedanta.ViewModel
                 else if (Status == "Pending For Score")
                 {
                     //score page
-                    await NavigationService.NavigateAsync("ScorePage");
+                    //await NavigationService.NavigateAsync("ScorePage");
+
+                    //temp due insuffcient data
+                    var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("ScheduleData", obj);
+                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+
+
                 }
                 else if (Status == "Pending")
                 {

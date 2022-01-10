@@ -75,7 +75,7 @@
                         <Label Grid.Column="0" Text="5" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text="Good" Style="{StaticResource LabelInsideFramStyle}" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding GoodSelectionCommand}" NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
 
@@ -85,12 +85,27 @@
             <Grid Grid.Row="5" ColumnDefinitions="*,*" Margin="30,10,30,10" >
                 <Label Grid.Column="0" Text="Score info" TextColor="DeepSkyBlue" HorizontalOptions="StartAndExpand" />
 
-                <Label Grid.Column="1" Text="Skip Adding Score" TextColor="DeepSkyBlue" HorizontalOptions="EndAndExpand" />
+                <Label Grid.Column="1" Text="Skip Adding Score" TextColor="DeepSkyBlue" HorizontalOptions="EndAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SkipScoreCommand}" NumberOfTapsRequired="1" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
 
-            <Frame Grid.Row="6" VerticalOptions="End" HasShadow="True" HeightRequest="50" BackgroundColor="AliceBlue">
-                <Grid>
-                    
+            <Frame Grid.Row="6" VerticalOptions="End" HasShadow="True" HeightRequest="50" BackgroundColor="White">
+                <Grid ColumnDefinitions="5*,5*">
+                    <StackLayout>
+                        <Label Text="Step 2 of 2" FontSize="14" TextColor="Black"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Grid.Column="2" Text="&lt;" FontSize="18" FontAttributes="Bold" VerticalOptions="Start"/>
+                            <Label Grid.Column="2" Text="Back to Observation" FontSize="14" TextColor="Black" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BackToScoreCommand}" NumberOfTapsRequired="1" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        
+                    </StackLayout>
+                    <Button Grid.Column="1" Text="Submit" Command="{Binding SubmitCommand}" BorderColor="#006699" BorderWidth="2" BackgroundColor="Transparent" TextColor="#006699" />
                 </Grid>
             </Frame>
 

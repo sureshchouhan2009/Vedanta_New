@@ -71,6 +71,21 @@ namespace Vedanta.ViewModel
 
                 return _SBUSelectedCommand;
             }
+        } 
+        
+        private ICommand _DepartmentSelectedCommand;
+
+        public ICommand DepartmentSelectedCommand
+        {
+            get
+            {
+                if (_DepartmentSelectedCommand == null)
+                {
+                    _DepartmentSelectedCommand = new Command<object>(ModifyDepartmentSelectetionOnSbuList);
+                }
+
+                return _DepartmentSelectedCommand;
+            }
         }
 
 
@@ -116,6 +131,38 @@ namespace Vedanta.ViewModel
                 Session.Instance.SbuList[index].IsSelected = !Session.Instance.SbuList[index].IsSelected;
                 SBUList.Clear();
                 SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
+            }
+
+
+
+        }
+         private void ModifyDepartmentSelectetionOnSbuList(object obj)
+        {
+            var currentSBU = obj as DepartmentModel;
+            if (currentSBU.DepartmentName == "All")
+            {
+                Session.Instance.DepartmentsList.ForEach(e =>
+                {
+                    if (e.DepartmentName == "All" && e.IsSelected == false)
+                    {
+                        e.IsSelected = !e.IsSelected;
+                    }
+                    else
+                    {
+                        e.IsSelected = false;
+                    }
+
+                });
+                DepartmentList.Clear();
+                DepartmentList = new ObservableCollection<DepartmentModel>(Session.Instance.DepartmentsList);
+            }
+            else
+            {
+                Session.Instance.DepartmentsList[0].IsSelected = false;
+                var index = Session.Instance.DepartmentsList.IndexOf(obj as DepartmentModel);
+                Session.Instance.DepartmentsList[index].IsSelected = !Session.Instance.DepartmentsList[index].IsSelected;
+                DepartmentList.Clear();
+                DepartmentList = new ObservableCollection<DepartmentModel>(Session.Instance.DepartmentsList);
             }
 
 
@@ -171,6 +218,9 @@ namespace Vedanta.ViewModel
 
         private void ClearClickedExecute(object obj)
         {
+            SBUList = new ObservableCollection<SBUFilterModel>(Session.fillSBUModel());
+            DepartmentList = new ObservableCollection<DepartmentModel>(Session.fillDepartmentmodel());
+            StatusList = new ObservableCollection<StatusModel>(Session.fillStatusModel());
             NavigationService.GoBackAsync();
         }
         private void ApplyClickedExecute(object obj)
@@ -201,45 +251,11 @@ namespace Vedanta.ViewModel
         public FilterPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             var listSBU = Session.Instance.SbuList;
-            var listDepartMent = fillDepartmentFilters();
+            var listDepartMent = Session.Instance.DepartmentsList;
             var listStatus = Session.Instance.StatusList;
-
-
-
-
-
             SBUList = new ObservableCollection<SBUFilterModel>(listSBU);
             DepartmentList = new ObservableCollection<DepartmentModel>(listDepartMent);
             StatusList = new ObservableCollection<StatusModel>(listStatus);
         }
-
-
-
-
-
-        private List<DepartmentModel> fillDepartmentFilters()
-        {
-            var Departmentlist = new List<DepartmentModel>();
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "All", IsSelected = true });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "GAP Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Bakeoven Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rodding Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Bakeoven Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rodding Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Cast House Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Cast House Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Potline Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Potline Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-2" });
-
-            return Departmentlist;
-        }
-
-
     }
 }

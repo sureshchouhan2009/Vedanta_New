@@ -65,11 +65,14 @@
                         <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="0"   VerticalOptions="Center" HorizontalOptions="Start" Margin="10,0,0,0">
                             <Label Margin="0" Padding="0" Text=" Start Date" FontAttributes="Bold"  />
 
-                            <DatePicker Margin="0,-5,0,0" FontSize="14" Date="{Binding StartDate}" MaximumDate="{Binding EndDate}" Format="dd-MM-yyyy" TextColor="Black" TextTransform="Uppercase">
+                            <DatePicker Margin="0,-5,0,0" FontSize="14" Date="{Binding StartDate}"  MaximumDate="{Binding EndDate}" Format="dd-MM-yyyy" TextColor="Black" TextTransform="Uppercase">
+                                <DatePicker.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding StartDateSelectedCommand}" CommandParameter="{Binding StartDate}" />
+                                </DatePicker.Behaviors>
                             </DatePicker>
                         </StackLayout>
-                   
-                    
+
+                        
                     </Grid>
 
                     <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="8*,2*"  >
@@ -80,6 +83,9 @@
                             <Label Margin="0" Padding="0" Text=" End Date" FontAttributes="Bold" />
 
                             <DatePicker Margin="0,-5,0,0" FontSize="14" Date="{Binding EndDate}"  Format="dd -MM-yyyy" TextColor="Black" TextTransform="Uppercase">
+                                <DatePicker.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="DateSelected" Command="{Binding EndDateSelectedCommand}" CommandParameter="{Binding EndDate}" />
+                                </DatePicker.Behaviors>
                             </DatePicker>
                         </StackLayout>
 

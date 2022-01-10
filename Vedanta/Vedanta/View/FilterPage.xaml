@@ -54,8 +54,11 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame  Padding="10">
-                                    <Label Text="{Binding DepartmentName}" />
+                                <Frame  Padding="10" >
+                                    <Label Text="{Binding DepartmentName}" TextColor="{Binding IsSelected ,Converter={StaticResource boolToColConverter}}" />
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference filterPage},Path=BindingContext.DepartmentSelectedCommand}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
                                 </Frame>
 
                             </ViewCell>

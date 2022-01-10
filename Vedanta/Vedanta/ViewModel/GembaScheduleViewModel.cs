@@ -64,18 +64,33 @@ namespace Vedanta.ViewModel
         //private DateTime selectedDate;
 
         //public DateTime SelectedDate { get => selectedDate; set => SetProperty(ref selectedDate, value); }
-        private ICommand selectedDateCommand;
+        private ICommand _startDateSelectedCommand;
 
-        public ICommand SelectedDateCommand
+        public ICommand StartDateSelectedCommand
         {
             get
             {
-                if (selectedDateCommand == null)
+                if (_startDateSelectedCommand == null)
                 {
-                    selectedDateCommand = new Command<object>(SelectedDateFunc);
+                    _startDateSelectedCommand = new Command<object>(SelectedStartDateFunction);
                 }
 
-                return selectedDateCommand;
+                return _startDateSelectedCommand;
+            }
+        }
+        
+        private ICommand _endDateSelectedCommand;
+
+        public ICommand EndDateSelectedCommand
+        {
+            get
+            {
+                if (_endDateSelectedCommand == null)
+                {
+                    _endDateSelectedCommand = new Command<object>(SelectedEndDateFunction);
+                }
+
+                return _endDateSelectedCommand;
             }
         }
         private bool _isSearchTapped;
@@ -238,10 +253,30 @@ namespace Vedanta.ViewModel
             //    GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             //}
         }
-        private async void SelectedDateFunc(object obj)
+        private async void SelectedStartDateFunction(object obj)
         {
-            var test = obj as DateSelectedEvent;
-            await Application.Current.MainPage.DisplayAlert("Selected Date", "Your selected date Is: {0}", "Ok");
+            IsBusy = true;
+            //var test = obj as DateSelectedEvent;
+            var startingDate = (DateTime) obj ;
+            var stDate = startingDate.Date.ToString("dd-MM-yyyy");
+            var endDate = EndDate.Date.ToString("dd-MM-yyyy");
+            Session.Instance.GembaScheduleList.Clear();
+            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate);
+            GembaScheduleList.Clear();
+            GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
+            IsBusy = false;
+        }
+        private async void SelectedEndDateFunction(object obj)
+        {
+            IsBusy = true;
+            var endingDate = (DateTime)obj;
+            var stDate = StartDate.Date.ToString();
+            var endDate = endingDate.Date.ToString();
+            Session.Instance.GembaScheduleList.Clear();
+            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate);
+            GembaScheduleList.Clear();
+            GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
+            IsBusy = false;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -268,8 +303,9 @@ namespace Vedanta.ViewModel
         {
             var filteredList = new List<GembaScheduleModel>();
 
-            if (!Session.Instance.SbuList[0].IsSelected || (!Session.Instance.StatusList[0].IsSelected))
+            if (!Session.Instance.SbuList[0].IsSelected || (!Session.Instance.DepartmentsList[0].IsSelected)|| (!Session.Instance.StatusList[0].IsSelected))
             {
+                //filter SBU
                 if (!Session.Instance.SbuList[0].IsSelected && Session.Instance.SbuList.Any(sbu => sbu.IsSelected))
                 {
 
@@ -283,6 +319,19 @@ namespace Vedanta.ViewModel
 
                     });
                 }
+                //filter department
+                if (!Session.Instance.DepartmentsList[0].IsSelected && Session.Instance.DepartmentsList.Any(dp => dp.IsSelected))
+                {
+                    Session.Instance.DepartmentsList.ForEach(dept =>
+                    {
+                        if (dept.IsSelected)
+                        {
+                            filteredList.AddRange(Session.Instance.GembaScheduleList.Where(d => d.Department.ToLower().Contains(dept.DepartmentName.ToLower())).ToList());
+                        }
+
+                    });
+                }
+                //filter Status
                 if (!Session.Instance.StatusList[0].IsSelected && Session.Instance.StatusList.Any(sta => sta.IsSelected))
                 {
                     Session.Instance.StatusList.ForEach(st =>

@@ -199,6 +199,7 @@ namespace Vedanta.ViewModel
             }
         }
 
+        // need to make dynamic via id , id we need to get from measure page.
         private async void getAllLeaderObservationList()
         {
             var allObservationList = await ApiService.Instance.GetAllObservationAgainstSchedule(GembaScheduleModelParamMeasure.Id);

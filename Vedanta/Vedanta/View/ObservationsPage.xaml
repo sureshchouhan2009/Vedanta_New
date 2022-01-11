@@ -86,9 +86,6 @@
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Grid.Column="2" Text="&lt;" FontSize="18" FontAttributes="Bold" VerticalOptions="Start" />
                                                 <Label Grid.Column="2" Text="Next Step Adding Score" FontSize="12" VerticalOptions="Center" TextColor="Black" />
-                                                <StackLayout.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BackToScoreCommand}" NumberOfTapsRequired="1" />
-                                                </StackLayout.GestureRecognizers>
                                             </StackLayout>
 
                                         </StackLayout>

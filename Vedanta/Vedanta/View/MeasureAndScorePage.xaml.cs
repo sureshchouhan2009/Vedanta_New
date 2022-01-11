@@ -15,6 +15,50 @@ namespace Vedanta.View
         public MeasureAndScorePage()
         {
             InitializeComponent();
+            GenerateDynamicGrid(20);
+        }
+
+        private void GenerateDynamicGrid(int level)
+        {
+            var fram = new Frame { BackgroundColor = Color.Green, Padding = new Thickness { Bottom = 0, Top = 0, Left = 0, Right = 0 } };
+            if (level < 10)
+            {
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8, GridUnitType.Star) });
+                ProgressBarGrid.Children.Add(fram, 0, 0);
+
+            }
+            else if(level>=10&& level < 20)
+            {
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4, GridUnitType.Star) });
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                ProgressBarGrid.Children.Add(fram, 0, 0);
+
+            }
+            else if(level>=20&& level < 30)
+            {
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4, GridUnitType.Star) });
+                ProgressBarGrid.Children.Add(fram, 0, 0);
+
+            }
+            else if (level >= 30 && level < 35)
+            {
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8, GridUnitType.Star) });
+                ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                ProgressBarGrid.Children.Add(fram, 0, 0);
+
+            }
+            else if (level == 35)
+            {
+                //ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                //ProgressBarGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4, GridUnitType.Star) });
+                
+                ProgressBarGrid.Children.Add(fram, 0, 0);
+
+            }
+
+
         }
     }
 }

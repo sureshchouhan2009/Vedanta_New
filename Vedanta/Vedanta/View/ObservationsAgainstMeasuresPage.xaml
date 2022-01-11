@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:Vedanta.Components" x:Class="Vedanta.View.AOAwarenessPage" NavigationPage.HasNavigationBar="False" x:Name="AOScreen">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:Vedanta.Components" x:Class="Vedanta.View.ObservationsAgainstMeasuresPage" 
+             NavigationPage.HasNavigationBar="False"
+             x:Name="AOScreen">
     <ContentPage.Content>
         <Grid RowDefinitions=".7*,2*,2.5*,4*" RowSpacing="0">
             <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">

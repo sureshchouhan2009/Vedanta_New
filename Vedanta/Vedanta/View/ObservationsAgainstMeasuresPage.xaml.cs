@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Vedanta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AOAwarenessPage : ContentPage
+    public partial class ObservationsAgainstMeasuresPage : ContentPage
     {
-        public AOAwarenessPage()
+        public ObservationsAgainstMeasuresPage()
         {
             InitializeComponent();
         }

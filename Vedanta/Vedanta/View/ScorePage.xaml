@@ -103,7 +103,7 @@
                             <Label Grid.Column="2" Text="&lt;" FontSize="18" FontAttributes="Bold" VerticalOptions="Start"/>
                             <Label Grid.Column="2" Text="Back to Observation" FontSize="14" TextColor="Black" />
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BackToScoreCommand}" NumberOfTapsRequired="1" />
+                                <TapGestureRecognizer Command="{Binding GobackCommand}" />
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
                         

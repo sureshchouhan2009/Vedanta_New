@@ -238,7 +238,7 @@ namespace Vedanta.ViewModel
             try
             {
                 base.OnNavigatedTo(parameters);
-                IsBusy = true;
+               
                 if (parameters.ContainsKey("Title"))
                 {
                     Title = parameters.GetValue<string>("Title");
@@ -251,7 +251,7 @@ namespace Vedanta.ViewModel
                 {
                     CurrentGembaWalkScheduleId = parameters.GetValue<int>("AoGembaCheckListMasterId");
                 }
-                IsBusy = false;
+                
             }
             catch (Exception ex)
             {

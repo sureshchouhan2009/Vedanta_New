@@ -176,12 +176,12 @@ namespace Vedanta.ViewModel
                 else if (Status == "Pending For Score")
                 {
                     //score page
-                    //await NavigationService.NavigateAsync("ScorePage");
+                    await NavigationService.NavigateAsync("ScorePage");
 
-                    //temp due insuffcient data
-                    var navigationParameters = new NavigationParameters();
-                    navigationParameters.Add("ScheduleData", obj);
-                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+                    ////temp due insuffcient data
+                    //var navigationParameters = new NavigationParameters();
+                    //navigationParameters.Add("ScheduleData", obj);
+                    //await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
 
                 }

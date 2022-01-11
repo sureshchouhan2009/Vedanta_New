@@ -23,6 +23,7 @@ namespace Vedanta.Utility
         #endregion
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
+        public List<GetObservationModel> CurrentMeasureObservations = new List<GetObservationModel>();
         public List<GembaChecklistParametersModel> ChecklistParametersList = new List<GembaChecklistParametersModel>();
         public List<ScoreOptionsModel> ScoreOptionsList = ScoreOptionsListgenerator();
         public List<SBUFilterModel> SbuList = fillSBUModel();

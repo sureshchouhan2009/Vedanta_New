@@ -1,9 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:Vedanta.Components" x:Class="Vedanta.View.ObservationsPage" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:Vedanta.Components"
+             xmlns:Converter="clr-namespace:Vedanta.Converters"
+             x:Class="Vedanta.View.ObservationsPage" 
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="LightGray"
              x:Name="AOScreen">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converter:IndexToBoolConverter x:Key="indexToBoolConverter" />
+            <Converter:IndexToBoolConverterInvers x:Key="indexToBoolConverterInvers" />
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+   
+
     <ContentPage.Content>
         <Grid RowDefinitions=".7*,2*,2.5*,4*" RowSpacing="0">
             <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
@@ -64,10 +76,24 @@
                                         <Label Grid.Column="1" FontSize="14" Text="{Binding PerformedOn,StringFormat='{0:MM-dd-yyyy HH:mm}'}" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Grid>
                                     <BoxView Grid.Row="1" Grid.ColumnSpan="2"  Color="Gray" HeightRequest="2"></BoxView>
-                                    <Grid Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,20,0">
+                                    <Grid Grid.Row="2" Grid.ColumnSpan="2" IsVisible="{Binding .,Converter={StaticResource indexToBoolConverterInvers}}" HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,20,0">
                                         <Label FontSize="14" Text="{Binding Observations}" />
                                     </Grid>
 
+                                    <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="6*,4*" Margin="10,0,10,0" VerticalOptions="FillAndExpand" IsVisible="{Binding .,Converter={StaticResource indexToBoolConverter}}">
+                                        <StackLayout Spacing="0">
+                                            <Label Text="Step 1 of 2" FontSize="14" TextColor="Black"></Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Grid.Column="2" Text="&lt;" FontSize="18" FontAttributes="Bold" VerticalOptions="Start" />
+                                                <Label Grid.Column="2" Text="Next Step Adding Score" FontSize="12" VerticalOptions="Center" TextColor="Black" />
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BackToScoreCommand}" NumberOfTapsRequired="1" />
+                                                </StackLayout.GestureRecognizers>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                        <Button Grid.Column="1" HeightRequest="40" Text="Continue" Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.ContinueToScoreCommand}" CommandParameter="{Binding .}" VerticalOptions="Center" BorderColor="#006699" BorderWidth="2" BackgroundColor="Transparent" TextColor="#006699" />
+                                    </Grid>
                                     <BoxView Grid.Row="3" Grid.ColumnSpan="2" Color="Gray" HeightRequest="2"></BoxView>
 
                                     <Grid Grid.Row="4" Grid.ColumnSpan="2" ColumnDefinitions="5*,.1,5*">

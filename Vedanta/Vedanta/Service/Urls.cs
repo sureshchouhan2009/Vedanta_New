@@ -11,6 +11,7 @@
         public const string GembaScheduleURL = BaseUrl + "AO/Gemba/GetAllLeaderSchedule";
        // public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation?ScheduleId=1";
 
+        public const string CreateGembaScore = BaseUrl + "AO/Gemba/CreateGembaScore";
         public const string AddObservationDetails = BaseUrl + "AO/Gemba/CreateAddObservationDetails";
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";
         public const string GetAllGembaChecklistParameters = BaseUrl + "AO/Gemba/GetAllGembaChecklistParameters";

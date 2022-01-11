@@ -68,6 +68,39 @@ namespace Vedanta.ViewModel
                 return _pickOrCaptureImageCommmand;
             }
         }
+        
+        private ICommand _ContinueToScoreCommand;
+
+        public ICommand ContinueToScoreCommand
+        {
+            get
+            {
+                if (_ContinueToScoreCommand == null)
+                {
+                    _ContinueToScoreCommand = new Command<object>(ContinueToScoreCommandExecute);
+                }
+                return _ContinueToScoreCommand;
+            }
+        }
+
+        private async void ContinueToScoreCommandExecute(object obj)
+        {
+            IsBusy = true;
+            try
+            {
+                var value  = obj as GetObservationModel;
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add("Title", value.Measure);
+                navigationParameters.Add("GembaWalkScheduleId", value.GembaWalkScheduleId);
+                navigationParameters.Add("AoGembaCheckListMasterId", value.AoGembaCheckListMasterId);
+                await NavigationService.NavigateAsync("ScorePage", navigationParameters);
+            }
+            catch (Exception ex)
+            {
+            }
+            IsBusy = false;
+        }
+
         private ICommand _deleteCurrentImageCommand;
 
         public ICommand DeleteCurrentImageCommand
@@ -206,6 +239,8 @@ namespace Vedanta.ViewModel
             if (allObservationList.Count > 0)
             {
                 PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e=>e.Id));
+                Session.Instance.CurrentMeasureObservations.Clear();
+                Session.Instance.CurrentMeasureObservations = PreviousObservations.ToList();
             }
         }
 

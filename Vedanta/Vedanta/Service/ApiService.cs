@@ -51,6 +51,32 @@ namespace Vedanta.Service
             return isSuccess;
 
         }
+         public async Task<bool> AddScoreApiCall(PostScoreModel postScoreModel)
+        {
+            bool isSuccess=false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.CreateGembaScore;
+                var payload = ServiceUtility.BuildRequest(postScoreModel);
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl) { Content = payload };
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                
+            }
+            return isSuccess;
+
+        }
 
 
         //to get the all observations of current GembaSchedule 
@@ -68,6 +94,7 @@ namespace Vedanta.Service
                 {
                     string result = await response.Content.ReadAsStringAsync();
                     responsedata = JsonConvert.DeserializeObject<List<GetObservationModel>>(result);
+                   
                 }
             }
             catch (Exception ex)

@@ -58,37 +58,37 @@ namespace Vedanta.ViewModel
                 if (index == 1)
                 {
                     navigationParameters.Add("Title", "Add Observation - AO Awareness");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 2)
                 {
                     navigationParameters.Add("Title", "Preventive maintenance");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 3)
                 {
                     navigationParameters.Add("Title", "RCA tool understanding");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 4)
                 {
                     navigationParameters.Add("Title", "CLTI understanding and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 5)
                 {
                     navigationParameters.Add("Title", "SOP/SMP understanding and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 6)
                 {
                     navigationParameters.Add("Title", "5S Awareness and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
                 else if (index == 7)
                 {
                     navigationParameters.Add("Title", "Process Optimization");
-                    await NavigationService.NavigateAsync("ObservationsAgainstMeasuresPage", navigationParameters);
+                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
                 }
             }
             catch (Exception ex)

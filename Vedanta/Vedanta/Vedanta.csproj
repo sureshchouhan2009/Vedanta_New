@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\ObservationsAgainstMeasuresPage.xaml.cs">
-      <DependentUpon>ObservationsAgainstMeasuresPage.xaml</DependentUpon>
+    <Compile Update="View\ObservationsPage.xaml.cs">
+      <DependentUpon>ObservationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="View\MeasureAndScorePage.xaml.cs">
       <DependentUpon>MeasureAndScorePage.xaml</DependentUpon>
@@ -33,7 +33,7 @@
     <EmbeddedResource Update="Components\CustomCalendarComponent.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\ObservationsAgainstMeasuresPage.xaml">
+    <EmbeddedResource Update="View\ObservationsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\FilterPage.xaml">

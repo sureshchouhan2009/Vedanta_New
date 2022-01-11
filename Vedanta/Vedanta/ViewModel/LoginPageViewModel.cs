@@ -56,8 +56,14 @@ namespace Vedanta.ViewModel
                         var LoginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
                         if (RememberMe)
                         {
-                            Preferences.Set("UserName", EmailText);
-                            Preferences.Set("Password", PasswordText);
+                            //commented for now
+
+                            //Preferences.Set("UserName", EmailText);
+                            //Preferences.Set("Password", PasswordText);
+                            //Preferences.Set("IsLoggedIN", true); 
+                            
+                            Preferences.Set("UserName", "Umesh.ecgit");
+                            Preferences.Set("Password", "abc@1234");
                             Preferences.Set("IsLoggedIN", true);
                         }
                         var StartDate = new DateTime(2021, 11, 01).Date.ToString();

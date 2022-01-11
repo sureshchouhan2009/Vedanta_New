@@ -53,7 +53,7 @@ namespace Vedanta
             containerRegistry.RegisterForNavigation<GembaSchedule, GembaScheduleViewModel>();
             containerRegistry.RegisterForNavigation<FilterPage, FilterPageViewModel>();
             containerRegistry.RegisterForNavigation<MeasureAndScorePage, MeasureAndScorePageViewModel>();
-            containerRegistry.RegisterForNavigation<ObservationsAgainstMeasuresPage, AOAwarenessPageViewModel>();
+            containerRegistry.RegisterForNavigation<ObservationsAgainstMeasuresPage, ObservationsAgainstMeasuresPageViewModel>();
             containerRegistry.RegisterForNavigation<ScorePage, ScorePageViewModel>();
         }
     }

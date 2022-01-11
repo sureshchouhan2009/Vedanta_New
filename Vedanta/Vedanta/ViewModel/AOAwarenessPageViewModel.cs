@@ -16,7 +16,7 @@ using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
 {
-    public class AOAwarenessPageViewModel : ViewModelBase
+    public class ObservationsAgainstMeasuresPageViewModel : ViewModelBase
     {
         private string _PageTitle;
         public string PageTitle
@@ -277,7 +277,7 @@ namespace Vedanta.ViewModel
             return bytes;
         }
 
-        public AOAwarenessPageViewModel(INavigationService navigationService) : base(navigationService)
+        public ObservationsAgainstMeasuresPageViewModel(INavigationService navigationService) : base(navigationService)
         {
            
             var ImagesList = new ObservableCollection<UploadImageModel>(new List<UploadImageModel>

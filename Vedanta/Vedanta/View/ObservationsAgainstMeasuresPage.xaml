@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:components="clr-namespace:Vedanta.Components" x:Class="Vedanta.View.ObservationsAgainstMeasuresPage" 
              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="LightGray"
              x:Name="AOScreen">
     <ContentPage.Content>
         <Grid RowDefinitions=".7*,2*,2.5*,4*" RowSpacing="0">
@@ -16,6 +17,8 @@
                 </StackLayout>
             </Frame>
 
+            
+            
             <StackLayout Grid.Row="1">
                 <CarouselView x:Name="corousel" ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True"  EmptyView="No items to display.">
                     <CarouselView.ItemTemplate>
@@ -32,7 +35,6 @@
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteCurrentImageCommand}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
-
                             </Grid>
 
 
@@ -40,7 +42,7 @@
                     </CarouselView.ItemTemplate>
 
                 </CarouselView>
-                <IndicatorView x:Name="indicatorView"  IndicatorColor="Gray" SelectedIndicatorColor="Green" HorizontalOptions="Center" VerticalOptions="End" />
+                <IndicatorView x:Name="indicatorView"  IndicatorColor="Green" SelectedIndicatorColor="Red" HorizontalOptions="Center" VerticalOptions="End" />
 
             </StackLayout>
             

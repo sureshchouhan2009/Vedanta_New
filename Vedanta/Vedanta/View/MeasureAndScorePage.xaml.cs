@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Vedanta.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,8 @@ namespace Vedanta.View
         public MeasureAndScorePage()
         {
             InitializeComponent();
+            var vm = (MeasureAndScorePageViewModel)this.BindingContext;
+
             GenerateDynamicGrid(20);
         }
 

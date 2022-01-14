@@ -14,7 +14,7 @@
         public const string CreateGembaScore = BaseUrl + "AO/Gemba/CreateGembaScore";
         public const string AddObservationDetails = BaseUrl + "AO/Gemba/CreateAddObservationDetails";
         public const string UpdateAddObservationDetails = BaseUrl + "AO/Gemba/UpdateAddObservationDetails";
-        public const string GetAllMeasuresandObseravationsandScoreByGembaScheduleId = BaseUrl + "AO/Gemba/CreateAddObservationDetailsAO/Gemba/GetAllMeasuresandObseravationsandScoreByGembaScheduleId";//?ScheduleId=1005
+        public const string GetAllMeasuresandObseravationsandScoreByGembaScheduleId = BaseUrl + "AO/Gemba/GetAllMeasuresandObseravationsandScoreByGembaScheduleId";//?ScheduleId=1005
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";
         public const string DeleteObservation = BaseUrl + "AO/Gemba/DeleteObservation";//?id=41
         public const string GetAllGembaChecklistParameters = BaseUrl + "AO/Gemba/GetAllGembaChecklistParameters";

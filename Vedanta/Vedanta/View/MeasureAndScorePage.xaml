@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             NavigationPage.HasNavigationBar="False"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Converter="clr-namespace:Vedanta.Converters" NavigationPage.HasNavigationBar="False"
+             x:Name="MeasuresPage"
              x:Class="Vedanta.View.MeasureAndScorePage">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Converter:ScoreValueToColorConverter x:Key="scoreValueToColorConverter" />
             <Style x:Key="mainfram" TargetType="Frame"  >
                 <Setter Property="BorderColor" Value="Red" />
                 <Setter Property="HeightRequest" Value="38" />
@@ -46,18 +47,18 @@
             <Label Grid.Row="1" Text="Update score by clicking on section" FontSize="12" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" Margin="20,0,0,0" />
 
             <!--future-->
-            <!--<ListView Grid.Row="2" ItemsSource="{Binding MeasuresList}" HasUnevenRows="True">
+            <ListView Grid.Row="2" ItemsSource="{Binding MeasuresList}" HasUnevenRows="True" Margin="20,0,20,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Frame Style="{StaticResource mainfram}">
                                 <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
-                                    <Frame Grid.Column="0" Style="{StaticResource circleFram}" />
-                                    <Label Grid.Column="0" Text="{Binding GembaScheduleModelParam.Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                    <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="{Binding Score, Converter={StaticResource scoreValueToColorConverter}}"  />
+                                    <Label Grid.Column="0" Text="{Binding Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Measure}" Style="{StaticResource LabelInsideFramStyle}" />
                                     <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding AOAwarenessNavigationCommand}" CommandParameter="1" NumberOfTapsRequired="1" />
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference MeasuresPage},Path=BindingContext.NavigateForObservation}" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                                     </Grid.GestureRecognizers>
                                 </Grid>
 
@@ -65,11 +66,11 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>-->
+            </ListView>
             
             
             
-            <ScrollView Grid.Row="2" Margin="20,0,20,0">
+            <!--<ScrollView Grid.Row="2" Margin="20,0,20,0">
                 <StackLayout  >
                     <Frame Style="{StaticResource mainfram}">
                         <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
@@ -150,7 +151,9 @@
                 </StackLayout>
                 
                 
-            </ScrollView>
+            </ScrollView>-->
+           
+            
             <Frame Grid.Row="3" Margin="20,10,20,10" Padding="1" BorderColor="Gray"   >
                 <Grid  x:Name="ProgressBarGrid" BackgroundColor="White">
 

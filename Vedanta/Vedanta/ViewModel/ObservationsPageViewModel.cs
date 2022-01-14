@@ -18,7 +18,7 @@ namespace Vedanta.ViewModel
 {
     public class ObservationsPageViewModel : ViewModelBase
     {
-       
+
 
 
 
@@ -36,13 +36,20 @@ namespace Vedanta.ViewModel
             set { SetProperty(ref _gembaScheduleModelParamFromMeasure, value); }
         }
 
+        private MeasuresAndScoreModel _currentMeasureAndScoreModel;
+        public MeasuresAndScoreModel CurrentMeasureAndScoreModel
+        {
+            get { return _currentMeasureAndScoreModel; }
+            set { SetProperty(ref _currentMeasureAndScoreModel, value); }
+        }
+
         private string _observationSummaryText;
         public string ObservationSummaryText
         {
             get { return _observationSummaryText; }
             set { SetProperty(ref _observationSummaryText, value); }
         }
-        
+
         private ObservableCollection<GetObservationModel> _previousObservations;
         public ObservableCollection<GetObservationModel> PreviousObservations
         {
@@ -63,7 +70,7 @@ namespace Vedanta.ViewModel
                 return _pickOrCaptureImageCommmand;
             }
         }
-        
+
         private ICommand _ContinueToScoreCommand;
 
         public ICommand ContinueToScoreCommand
@@ -77,7 +84,7 @@ namespace Vedanta.ViewModel
                 return _ContinueToScoreCommand;
             }
         }
-         private ICommand _deleteObservationCommand;
+        private ICommand _deleteObservationCommand;
 
         public ICommand DeleteObservationCommand
         {
@@ -110,12 +117,12 @@ namespace Vedanta.ViewModel
             catch (Exception ex)
             {
 
-               
+
             }
             IsBusy = false;
 
-        } 
-        
+        }
+
         private ICommand _editObservationCommand;
 
         public ICommand EditObservationCommand
@@ -132,7 +139,7 @@ namespace Vedanta.ViewModel
 
         private async void EditObservationCommandExecute(object obj)
         {
-           
+
 
             IsBusy = true;
             try
@@ -156,7 +163,7 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             try
             {
-                var value  = obj as GetObservationModel;
+                var value = obj as GetObservationModel;
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("Title", value.Measure);
                 navigationParameters.Add("GembaWalkScheduleId", value.GembaWalkScheduleId);
@@ -183,7 +190,7 @@ namespace Vedanta.ViewModel
             }
         }
 
-       
+
 
         private void BackPageNavigation(object obj)
         {
@@ -212,11 +219,9 @@ namespace Vedanta.ViewModel
             {
                 if (Session.Instance.CheckInternetConnection())
                 {
-                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count >=3)
+                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count >= 3)
                     {
                         IsBusy = true;
-                        UploadedImagesList.RemoveAt(0);//removing the default image.
-                                                       //attach input data collected from user/observer
                         for (int i = 0; i < UploadedImagesList.Count; i++)
                         {
                             if (i == 0)
@@ -258,12 +263,12 @@ namespace Vedanta.ViewModel
                         observationModel.Department = GembaScheduleModelParamMeasure.Department;
                         observationModel.EmployeeMappingId = GembaScheduleModelParamMeasure.EmployeeMappingId;
                         observationModel.Employee = GembaScheduleModelParamMeasure.Employee;
-                        var request=  JsonConvert.SerializeObject(observationModel);
+                        var request = JsonConvert.SerializeObject(observationModel);
                         var result = await ApiService.Instance.AddObservationApiCall(observationModel);
 
                         if (result)
                         {
-                            getAllLeaderObservationList();
+                            getAllLeaderObservationList(CurrentMeasureAndScoreModel.Id);
                             ObservationSummaryText = "";//clearing the edit text field
                             await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfuly", "Ok");
                         }
@@ -301,12 +306,12 @@ namespace Vedanta.ViewModel
         }
 
         // need to make dynamic via id , id we need to get from measure page.
-        private async void getAllLeaderObservationList()
+        private async void getAllLeaderObservationList(int MeasureID)
         {
-            var allObservationList = await ApiService.Instance.GetAllObservationAgainstSchedule(GembaScheduleModelParamMeasure.Id);
+            var allObservationList = await ApiService.Instance.GetAllObservationAgainstSchedule(MeasureID);
             if (allObservationList.Count > 0)
             {
-                PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e=>e.Id));
+                PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e => e.Id));
                 Session.Instance.CurrentMeasureObservations.Clear();
                 Session.Instance.CurrentMeasureObservations = PreviousObservations.ToList();
             }
@@ -318,16 +323,10 @@ namespace Vedanta.ViewModel
             {
                 var param = obj as UploadImageModel;
                 UploadedImagesList.Remove(param);
-                if (UploadedImagesList != null || UploadedImagesList.Count == 0)
-                {
-                    new UploadImageModel { ImageName = "siteImage", imageSource = ImageSource.FromResource("siteImage") };
-                }
+                handleDefaultImageVisibility();
             }
             catch (Exception ex)
             {
-
-
-
             }
         }
 
@@ -347,8 +346,8 @@ namespace Vedanta.ViewModel
 
                 var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
                 var imgSource = ImageSource.FromFile(pickedfile.FullPath);
-                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageByteArray = byteArray, ImageName= pickedfile.FileName });
-
+                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
+                handleDefaultImageVisibility();
             }
             catch (Exception ex)
             {
@@ -356,11 +355,21 @@ namespace Vedanta.ViewModel
 
         }
 
-       
+        private void handleDefaultImageVisibility()
+        {
+            if (UploadedImagesList.Count >= 1 && UploadedImagesList.Any(e => e.ImageName == "siteImage"))
+            {
+                UploadedImagesList.Remove(UploadedImagesList.FirstOrDefault(t => t.ImageName == "siteImage"));
+            }
+            if (UploadedImagesList.Count == 0)
+            {
+                UploadedImagesList.Add(new UploadImageModel { ImageName = "siteImage", imageSource = ImageSource.FromResource("siteImage") });
+            }
+        }
 
         public ObservationsPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-           
+
             var ImagesList = new ObservableCollection<UploadImageModel>(new List<UploadImageModel>
             {
                 new UploadImageModel{ ImageName="siteImage" , imageSource= ImageSource.FromResource("siteImage")}
@@ -373,12 +382,17 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             if (parameters.ContainsKey("Title"))
             {
-                Title= parameters.GetValue<string>("Title");
+                Title = parameters.GetValue<string>("Title");
             }
             if (parameters.ContainsKey("ScheduleDataForAwareness"))
             {
                 GembaScheduleModelParamMeasure = parameters.GetValue<GembaScheduleModel>("ScheduleDataForAwareness");
-                getAllLeaderObservationList();
+
+            }
+            if (parameters.ContainsKey("CurrentMeasureModel"))
+            {
+                CurrentMeasureAndScoreModel = parameters.GetValue<MeasuresAndScoreModel>("CurrentMeasureModel");
+                getAllLeaderObservationList(CurrentMeasureAndScoreModel.Id);
             }
             IsBusy = false;
         }

@@ -13,19 +13,26 @@ namespace Vedanta.ViewModel
 {
     public class MeasureAndScorePageViewModel : ViewModelBase
     {
+        #region Fields
+        private ObservableCollection<MeasuresAndScoreModel> _measuresList = new ObservableCollection<MeasuresAndScoreModel>();
+        private ICommand _NavigateForObservation;
+        private GembaScheduleModel _gembaScheduleModelParam;
 
-        //Measure lists
-        private ObservableCollection<GembaChecklistParametersModel> _measuresList = new ObservableCollection<GembaChecklistParametersModel>();
-        public ObservableCollection<GembaChecklistParametersModel> MeasuresList
+        #endregion
+        #region Properties
+        public ObservableCollection<MeasuresAndScoreModel> MeasuresList
         {
             get { return _measuresList; }
             set { SetProperty(ref _measuresList, value); }
         }
 
-       
+        public GembaScheduleModel GembaScheduleModelParam
+        {
+            get { return _gembaScheduleModelParam; }
+            set { SetProperty(ref _gembaScheduleModelParam, value); }
+        }
 
 
-        private ICommand _NavigateForObservation;
 
         public ICommand NavigateForObservation
         {
@@ -38,58 +45,72 @@ namespace Vedanta.ViewModel
                 return _NavigateForObservation;
             }
         }
-
-        private GembaScheduleModel _gembaScheduleModelParam;
-        public GembaScheduleModel GembaScheduleModelParam
+        #endregion
+        #region Constructer
+        public MeasureAndScorePageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            get { return _gembaScheduleModelParam; }
-            set { SetProperty(ref _gembaScheduleModelParam, value); }
-        }
 
+        }
+        #endregion
+        #region Methods
         // here we are sending the title , measure ID and other information if needed via params // to do
         private async void AOAwarenessNavigationCommandExecute(object obj)
         {
             try
             {
-                var index = int.Parse((string)obj);
+                var MeasuresModel = (MeasuresAndScoreModel)obj;
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("ScheduleDataForAwareness", GembaScheduleModelParam);
+                navigationParameters.Add("CurrentMeasureModel", MeasuresModel);
+                navigationParameters.Add("Title", MeasuresModel.Measure);
+                await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+
+
+
+
+
+
+
+
+
+                #region TestCode
                 //for AO Awareness
-                if (index == 1)
-                {
-                    navigationParameters.Add("Title", "Add Observation - AO Awareness");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 2)
-                {
-                    navigationParameters.Add("Title", "Preventive maintenance");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 3)
-                {
-                    navigationParameters.Add("Title", "RCA tool understanding");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 4)
-                {
-                    navigationParameters.Add("Title", "CLTI understanding and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 5)
-                {
-                    navigationParameters.Add("Title", "SOP/SMP understanding and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 6)
-                {
-                    navigationParameters.Add("Title", "5S Awareness and Compliance");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
-                else if (index == 7)
-                {
-                    navigationParameters.Add("Title", "Process Optimization");
-                    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
-                }
+                //if (index == 1)
+                //{
+                //    navigationParameters.Add("Title", "Add Observation - AO Awareness");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 2)
+                //{
+                //    navigationParameters.Add("Title", "Preventive maintenance");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 3)
+                //{
+                //    navigationParameters.Add("Title", "RCA tool understanding");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 4)
+                //{
+                //    navigationParameters.Add("Title", "CLTI understanding and Compliance");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 5)
+                //{
+                //    navigationParameters.Add("Title", "SOP/SMP understanding and Compliance");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 6)
+                //{
+                //    navigationParameters.Add("Title", "5S Awareness and Compliance");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //}
+                //else if (index == 7)
+                //{
+                //    navigationParameters.Add("Title", "Process Optimization");
+                //    await NavigationService.NavigateAsync("ObservationsPage", navigationParameters);
+                //} 
+                #endregion
             }
             catch (Exception ex)
             {
@@ -97,13 +118,10 @@ namespace Vedanta.ViewModel
             }
 
 
-            
-        }
-
-        public MeasureAndScorePageViewModel(INavigationService navigationService) : base(navigationService)
-        {
 
         }
+
+
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             IsBusy = true;
@@ -119,8 +137,11 @@ namespace Vedanta.ViewModel
             if (parameters.ContainsKey("ScheduleData"))
             {
                 GembaScheduleModelParam = parameters.GetValue<GembaScheduleModel>("ScheduleData");
+                MeasuresList = new ObservableCollection<MeasuresAndScoreModel>(await ApiService.Instance.GetAllMeasuresandScore(GembaScheduleModelParam.Id));
+
             }
             IsBusy = false;
-        }
+        } 
+        #endregion
     }
 }

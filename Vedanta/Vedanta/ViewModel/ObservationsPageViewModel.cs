@@ -18,12 +18,7 @@ namespace Vedanta.ViewModel
 {
     public class ObservationsPageViewModel : ViewModelBase
     {
-        private string _PageTitle;
-        public string PageTitle
-        {
-            get { return _PageTitle; }
-            set { SetProperty(ref _PageTitle, value); }
-        }
+       
 
 
 
@@ -81,6 +76,79 @@ namespace Vedanta.ViewModel
                 }
                 return _ContinueToScoreCommand;
             }
+        }
+         private ICommand _deleteObservationCommand;
+
+        public ICommand DeleteObservationCommand
+        {
+            get
+            {
+                if (_deleteObservationCommand == null)
+                {
+                    _deleteObservationCommand = new Command<object>(DeleteObservationCommandExecute);
+                }
+                return _deleteObservationCommand;
+            }
+        }
+
+        private async void DeleteObservationCommandExecute(object obj)
+        {
+            IsBusy = true;
+            try
+            {
+                var currentObservation = obj as GetObservationModel;
+                var response = await ApiService.Instance.DeleteObservationApiCall(currentObservation.Id);
+                if (response)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfuly", "Ok");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                }
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+            IsBusy = false;
+
+        } 
+        
+        private ICommand _editObservationCommand;
+
+        public ICommand EditObservationCommand
+        {
+            get
+            {
+                if (_editObservationCommand == null)
+                {
+                    _editObservationCommand = new Command<object>(EditObservationCommandExecute);
+                }
+                return _editObservationCommand;
+            }
+        }
+
+        private async void EditObservationCommandExecute(object obj)
+        {
+           
+
+            IsBusy = true;
+            try
+            {
+                var currentObservation = obj as GetObservationModel;
+                var ParametersForEditObservationPage = new NavigationParameters();
+                ParametersForEditObservationPage.Add("ParametersForEditObservationPage", currentObservation);
+                ParametersForEditObservationPage.Add("Title", currentObservation.Measure);
+                await NavigationService.NavigateAsync("EditObservationPage", ParametersForEditObservationPage);
+            }
+            catch (Exception ex)
+            {
+            }
+            IsBusy = false;
+
+
         }
 
         private async void ContinueToScoreCommandExecute(object obj)
@@ -277,7 +345,7 @@ namespace Vedanta.ViewModel
                     Title = "Capture Image"
                 });
 
-                var byteArray = await getByteArrayFromFile(pickedfile);
+                var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
                 var imgSource = ImageSource.FromFile(pickedfile.FullPath);
                 UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageByteArray = byteArray, ImageName= pickedfile.FileName });
 
@@ -288,29 +356,7 @@ namespace Vedanta.ViewModel
 
         }
 
-        private async Task<byte[]> getByteArrayFromFile(FileResult pickedfile)
-        {
-            var bytes = default(byte[]);
-            try
-            {
-                var st = await pickedfile.OpenReadAsync();
-                using (var streamReader = new StreamReader(st))
-                {
-                    using (var memstream = new MemoryStream())
-                    {
-                        streamReader.BaseStream.CopyTo(memstream);
-                        bytes = memstream.ToArray();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-
-            return bytes;
-        }
+       
 
         public ObservationsPageViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -327,7 +373,7 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             if (parameters.ContainsKey("Title"))
             {
-                PageTitle= parameters.GetValue<string>("Title");
+                Title= parameters.GetValue<string>("Title");
             }
             if (parameters.ContainsKey("ScheduleDataForAwareness"))
             {

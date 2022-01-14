@@ -54,6 +54,7 @@ namespace Vedanta
             containerRegistry.RegisterForNavigation<FilterPage, FilterPageViewModel>();
             containerRegistry.RegisterForNavigation<MeasureAndScorePage, MeasureAndScorePageViewModel>();
             containerRegistry.RegisterForNavigation<ObservationsPage, ObservationsPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditObservationPage, EditObservationPageViewModel>();
             containerRegistry.RegisterForNavigation<ScorePage, ScorePageViewModel>();
         }
     }

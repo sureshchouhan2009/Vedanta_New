@@ -51,6 +51,59 @@ namespace Vedanta.Service
             return isSuccess;
 
         }
+
+        public async Task<bool> UpdateObservationApiCall(PostObservationModel observationModel)
+        {
+            bool isSuccess = false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.UpdateAddObservationDetails;
+                var payload = ServiceUtility.BuildRequest(observationModel);
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl) { Content = payload };
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+
+            }
+            return isSuccess;
+
+        }
+
+        public async Task<bool> DeleteObservationApiCall(int ObservationId)
+        {
+            bool isSuccess=false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.DeleteObservation + "?id=" + ObservationId;
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl);
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                
+            }
+            return isSuccess;
+
+        }
          public async Task<bool> AddScoreApiCall(PostScoreModel postScoreModel)
         {
             bool isSuccess=false;
@@ -79,8 +132,8 @@ namespace Vedanta.Service
         }
 
 
-        //to get the all observations of current GembaSchedule 
-        public async Task<List<GetObservationModel>> GetAllObservationAgainstSchedule( int ScheduleID)
+        //to get the all observations of current Measure 
+        public async Task<List<GetObservationModel>> GetAllObservationAgainstSchedule( int MeasureID)
         {
             List<GetObservationModel> responsedata = new List<GetObservationModel>();
             try
@@ -88,7 +141,7 @@ namespace Vedanta.Service
                 var client = ServiceUtility.CreateNewHttpClient();
                 var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
                 client.DefaultRequestHeaders.Authorization = authHeader;
-                String RequestUrl = Urls.GetAllLeaderObservation + "?ScheduleId=" + ScheduleID;
+                String RequestUrl = Urls.GetAllLeaderObservation + "?ScheduleId=" + MeasureID;
                 var response = await client.GetAsync(RequestUrl);
                 if (response.IsSuccessStatusCode)
                 {
@@ -103,6 +156,32 @@ namespace Vedanta.Service
 
             }
             return responsedata;
+        }
+        
+        //Get all the Measures and score againt that particular Measure bu schedule ID
+        public async Task<List<MeasuresAndScoreModel>> GetAllMeasuresandScore( int ScheduleID)
+        {
+            List<MeasuresAndScoreModel> MeasuresResponsedata = new List<MeasuresAndScoreModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetAllMeasuresandObseravationsandScoreByGembaScheduleId + "?ScheduleId=" + ScheduleID;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    MeasuresResponsedata = JsonConvert.DeserializeObject<List<MeasuresAndScoreModel>>(result);
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return MeasuresResponsedata;
         }
 
         //to get the all Checklist Parameters  
@@ -184,29 +263,9 @@ namespace Vedanta.Service
 
 
 
-        public async Task<HttpResponseMessage> GetRequest(String URL, Object Param)
-        {
+       
 
-            var client = ServiceUtility.CreateNewHttpClient();
-            var response = await client.GetAsync(URL);
-            return response;
-        }
-
-        public async Task<HttpResponseMessage> PostRequest(String URL, Object Param)
-        {
-            var client = ServiceUtility.CreateNewHttpClient();
-            var request = ServiceUtility.BuildRequest(Param);
-            var response = await client.PostAsync(URL, request);
-            return response;
-        }
-
-        public async Task<HttpResponseMessage> DeleteRequest(String URL)
-        {
-            var client = ServiceUtility.CreateNewHttpClient();
-            var response = await client.DeleteAsync(URL);
-            return response;
-        }
-
+       
 
 
 

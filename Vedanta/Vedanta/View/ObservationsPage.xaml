@@ -21,7 +21,7 @@
             <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" BorderColor="#006699">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                     <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
-                    <Label Text="{Binding PageTitle}" FontSize="Body" TextColor="White" />
+                    <Label Text="{Binding Title}" FontSize="Body" TextColor="White" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GobackCommand}" />
                     </StackLayout.GestureRecognizers>
@@ -97,11 +97,17 @@
                                         <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
                                             <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
                                             <Label Grid.Column="1" Text="Delete" FontSize="14"></Label>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteObservationCommand}" CommandParameter="{Binding .}" />
+                                            </Grid.GestureRecognizers>
                                         </Grid  >
                                         <BoxView Grid.Column="1" Color="Gray" WidthRequest="1"></BoxView>
                                         <Grid Grid.Column="2" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
                                             <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
                                             <Label Grid.Column="1" Text="Edit" FontSize="14"></Label>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.EditObservationCommand}" CommandParameter="{Binding .}" />
+                                            </Grid.GestureRecognizers>
                                         </Grid  >
                                     </Grid>
                                 </Grid>

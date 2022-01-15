@@ -248,19 +248,48 @@ namespace Vedanta.ViewModel
 
         private async void FillTheImagesToList(GetObservationModel currentObservation)
         {
-            if (!string.IsNullOrWhiteSpace(currentObservation.ObservationImage1))
-            {
-                Byte[] bytes = Convert.FromBase64String(currentObservation.ObservationImage);
-                string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "image1.jpg");
-                if (File.Exists(fileName))
-                {
-                    File.Delete(fileName);
-                }
-                File.WriteAllBytes(fileName, bytes);
-                var imgSource = ImageSource.FromFile(fileName);
-                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "image1.jpg" });
 
+            List<GetObservationImagesModel> imagesList = await ApiService.Instance.GetObservationImage(currentObservation.Id);
+            if (imagesList.Count > 0)
+            {
+                foreach(var imageModel in imagesList)
+                {
+                    try
+                    {
+                        Byte[] bytes = Convert.FromBase64String(imageModel.FileSource);
+                        string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), imageModel.FileName);
+                        if (File.Exists(fileName))
+                        {
+                            File.Delete(fileName);
+                        }
+                        File.WriteAllBytes(fileName, bytes);
+                        var imgSource = ImageSource.FromFile(fileName);
+                        UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = imageModel.FileName });
+                    }
+                    catch (Exception ex)
+                    {
+
+                        
+                    }
+                }
             }
+
+            #region TestCode
+
+            //if (!string.IsNullOrWhiteSpace(currentObservation.ObservationImage1))
+            //{
+            //    Byte[] bytes = Convert.FromBase64String(currentObservation.ObservationImage);
+            //    string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "image1.jpg");
+            //    if (File.Exists(fileName))
+            //    {
+            //        File.Delete(fileName);
+            //    }
+            //    File.WriteAllBytes(fileName, bytes);
+            //    var imgSource = ImageSource.FromFile(fileName);
+            //    UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "image1.jpg" });
+
+            //} 
+            #endregion
             if (UploadedImagesList != null || UploadedImagesList.Count == 0)
             {
                 UploadedImagesList.Add(new UploadImageModel { ImageName = "siteImage", imageSource = ImageSource.FromResource("siteImage") });

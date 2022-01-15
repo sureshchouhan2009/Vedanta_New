@@ -53,6 +53,40 @@ namespace Vedanta.Service
 
         }
 
+
+        //to get all the Images for particular Observation
+        public async Task<List<GetObservationImagesModel>> GetObservationImage(int ObservationID)
+        {
+            List<GetObservationImagesModel> MeasuresResponsedata = new List<GetObservationImagesModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetAllObservationImage + "?AoGembaObservationId=" + ObservationID;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    MeasuresResponsedata = JsonConvert.DeserializeObject<List<GetObservationImagesModel>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return MeasuresResponsedata;
+        }
+
+
+
+
+
+
+
+
+
+
+
         public async Task<bool> UpdateObservationApiCall(PostObservationModel observationModel)
         {
             bool isSuccess = false;

@@ -18,6 +18,7 @@
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";
         public const string DeleteObservation = BaseUrl + "AO/Gemba/DeleteObservation";//?id=41
         public const string GetAllGembaChecklistParameters = BaseUrl + "AO/Gemba/GetAllGembaChecklistParameters";
+        public const string GetAllObservationImage = BaseUrl + "AO/Gemba/GetAllObservationImage";
 
        // https://vedantaconnect.com/ECGITWEBAPI/AO/Gemba/GetAllLeaderObservation?ScheduleId=1004
 

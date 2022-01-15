@@ -230,15 +230,15 @@ namespace Vedanta.ViewModel
                         {
                             if (i == 0)
                             {
-                                observationModel.ObservationImage = UploadedImagesList[i].ImageName;
+                                observationModel.ObservationImage = UploadedImagesList[i].ImageBase64String;
                             }
                             if (i == 1)
                             {
-                                observationModel.ObservationImage1 = UploadedImagesList[i].ImageName;
+                                observationModel.ObservationImage1 = UploadedImagesList[i].ImageBase64String;
                             }
                             if (i == 2)
                             {
-                                observationModel.ObservationImage2 = UploadedImagesList[i].ImageName;
+                                observationModel.ObservationImage2 = UploadedImagesList[i].ImageBase64String;
                             }
                         }
                         observationModel.Observations = ObservationSummaryText;
@@ -339,18 +339,15 @@ namespace Vedanta.ViewModel
             try
             {
                 int index = UploadedImagesList.IndexOf(obj as UploadImageModel);
-                // UploadedImagesList.Add(new UploadImageModel { ImageName = "homeLogo", imageSource = ImageSource.FromResource("siteImage") });
-                //UploadedImagesList[index]= new UploadImageModel { ImageName = "homeLogo", imageSource = ImageSource.FromResource("siteImage") };
-                //UploadedImagesList.Add(obj as UploadImageModel);
-
                 var pickedfile = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
                 {
                     Title = "Capture Image"
                 });
 
                 var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
+                var Base64String = Convert.ToBase64String(byteArray);
                 var imgSource = ImageSource.FromFile(pickedfile.FullPath);
-                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
+                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource,ImageBase64String= Base64String, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
                 handleDefaultImageVisibility();
             }
             catch (Exception ex)

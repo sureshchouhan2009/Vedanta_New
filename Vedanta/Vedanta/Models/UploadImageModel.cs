@@ -10,5 +10,6 @@ namespace Vedanta.Models
         public string ImageName { get; set; }
         public ImageSource imageSource { get; set; }
         public byte[] ImageByteArray { get; set; }
+        public string ImageBase64String { get; set; }
     }
 }

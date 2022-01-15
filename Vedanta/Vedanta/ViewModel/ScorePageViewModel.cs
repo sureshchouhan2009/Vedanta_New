@@ -31,7 +31,7 @@ namespace Vedanta.ViewModel
         {
             get { return _currentGembaWalkScheduleId; }
             set { SetProperty(ref _currentGembaWalkScheduleId, value); }
-        } 
+        }
         public int CurrentAoGembaCheckListMasterId
         {
             get { return _currentAoGembaCheckListMasterId; }
@@ -42,7 +42,7 @@ namespace Vedanta.ViewModel
             get { return _isGoodSelected; }
             set { SetProperty(ref _isGoodSelected, value); }
         }
-       
+
         public bool IsAverageSelected
         {
             get { return _isAverageSelected; }
@@ -52,7 +52,7 @@ namespace Vedanta.ViewModel
         {
             get { return _isNotSatisfactorySelected; }
             set { SetProperty(ref _isNotSatisfactorySelected, value); }
-        } 
+        }
 
 
         #endregion
@@ -173,14 +173,14 @@ namespace Vedanta.ViewModel
                     scoreModel.Score = calculateGivenScore();
                     scoreModel.IsDeleted = false;
                     scoreModel.PerformedBy = Preferences.Get("UserName", "");
-                    scoreModel.PerformedOn = DateTime.Now.ToString();
-                    bool success=  await ApiService.Instance.AddScoreApiCall(scoreModel);
+                    scoreModel.PerformedOn = DateTime.Now.ToString("yyyy-MM-dd");
+                    bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
                     if (success)
                     {
                         IsBusy = false;
                         await Application.Current.MainPage.DisplayAlert("Success", "Score added successfuly", "Ok");
                         BackPageNavigation();
-                        
+
                     }
                     else
                     {
@@ -209,11 +209,11 @@ namespace Vedanta.ViewModel
             {
                 return 0;
             }
-            else if(IsAverageSelected)
+            else if (IsAverageSelected)
             {
                 return 3;
-            } 
-            else if(IsGoodSelected)
+            }
+            else if (IsGoodSelected)
             {
                 return 5;
             }
@@ -233,30 +233,24 @@ namespace Vedanta.ViewModel
 
         #endregion
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override  void OnNavigatedTo(INavigationParameters parameters)
         {
-            try
-            {
-                base.OnNavigatedTo(parameters);
-               
-                if (parameters.ContainsKey("Title"))
-                {
-                    Title = parameters.GetValue<string>("Title");
-                }
-                if (parameters.ContainsKey("GembaWalkScheduleId"))
-                {
-                    CurrentGembaWalkScheduleId = parameters.GetValue<int>("GembaWalkScheduleId");
-                }
-                if (parameters.ContainsKey("AoGembaCheckListMasterId"))
-                {
-                    CurrentGembaWalkScheduleId = parameters.GetValue<int>("AoGembaCheckListMasterId");
-                }
-                
-            }
-            catch (Exception ex)
-            {
+            base.OnNavigatedTo(parameters);
 
+            if (parameters.ContainsKey("Title"))
+            {
+                Title = parameters.GetValue<string>("Title");
             }
+            if (parameters.ContainsKey("GembaWalkScheduleId"))
+            {
+                CurrentGembaWalkScheduleId = parameters.GetValue<int>("GembaWalkScheduleId");
+            }
+            if (parameters.ContainsKey("AoGembaCheckListMasterId"))
+            {
+                CurrentAoGembaCheckListMasterId = parameters.GetValue<int>("AoGembaCheckListMasterId");
+            }
+
+
 
         }
     }

@@ -27,6 +27,10 @@ namespace Vedanta.Converters
             {
                 return "Add Observation";
             }
+            else if(Status== "In Process")
+            {
+                return "Add Observation";
+            }
             else
             {
                 return "Close";

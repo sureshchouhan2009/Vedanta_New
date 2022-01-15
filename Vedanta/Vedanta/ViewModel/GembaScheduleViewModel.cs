@@ -16,23 +16,27 @@ namespace Vedanta.ViewModel
 {
     public class GembaScheduleViewModel : ViewModelBase
     {
+        #region Fields
+        private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();
         private DateTime _startDate = DateTime.Now.AddDays(-30);
         private DateTime _endDate = DateTime.Now;
+        private String _searchText;
+        private ICommand _endDateSelectedCommand;
+        private ICommand _startDateSelectedCommand;
+        private bool _isSearchTapped;
+        private ICommand _searchTappedCommand;
+        private ICommand _ObservationClickedCommmand;
+        private ICommand _cancelTappedCommand;
+        private ICommand _navigateToFilterPageCommand;
+        private ICommand _searchTextChangedCommand;
 
-        private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();
+        #endregion
+        #region Properties
         public ObservableCollection<GembaScheduleModel> GembaScheduleList
         {
             get { return _gembaScheduleList; }
             set { SetProperty(ref _gembaScheduleList, value); }
         }
-
-        //private List<GembaScheduleModel> _gembaScheduleListMaster = new List<GembaScheduleModel>();
-        //public List<GembaScheduleModel> GembaScheduleListMaster
-        //{
-        //    get { return _gembaScheduleListMaster; }
-        //    set { SetProperty(ref _gembaScheduleListMaster, value); }
-        //}
-
         public DateTime StartDate
         {
             get { return _startDate; }
@@ -43,8 +47,6 @@ namespace Vedanta.ViewModel
             get { return _endDate; }
             set { SetProperty(ref _endDate, value); }
         }
-
-
         public string EndDateText
         {
             get { return "End Date " + EndDate.ToString("dd-MM-yyyy"); }
@@ -55,17 +57,12 @@ namespace Vedanta.ViewModel
             get { return "Start Date " + StartDate.ToString("dd-MM-yyyy"); }
 
         }
-        private String _searchText;
         public String SearchText
         {
             get { return _searchText; }
             set { SetProperty(ref _searchText, value); }
         }
 
-        //private DateTime selectedDate;
-
-        //public DateTime SelectedDate { get => selectedDate; set => SetProperty(ref selectedDate, value); }
-        private ICommand _startDateSelectedCommand;
 
         public ICommand StartDateSelectedCommand
         {
@@ -79,8 +76,7 @@ namespace Vedanta.ViewModel
                 return _startDateSelectedCommand;
             }
         }
-        
-        private ICommand _endDateSelectedCommand;
+
 
         public ICommand EndDateSelectedCommand
         {
@@ -94,14 +90,12 @@ namespace Vedanta.ViewModel
                 return _endDateSelectedCommand;
             }
         }
-        private bool _isSearchTapped;
         public bool IsSearchTapped
         {
             get { return _isSearchTapped; }
             set { SetProperty(ref _isSearchTapped, value); }
         }
 
-        private ICommand _searchTappedCommand;
 
         public ICommand SearchTappedCommand
         {
@@ -115,7 +109,6 @@ namespace Vedanta.ViewModel
                 return _searchTappedCommand;
             }
         }
-        private ICommand _cancelTappedCommand;
 
         public ICommand CancelTappedCommand
         {
@@ -130,7 +123,6 @@ namespace Vedanta.ViewModel
             }
         }
 
-        private ICommand _navigateToFilterPageCommand;
 
         public ICommand NavigateToFilterPageCommand
         {
@@ -145,7 +137,6 @@ namespace Vedanta.ViewModel
             }
         }
 
-        private ICommand _ObservationClickedCommmand;
 
         public ICommand ObservationClickedCommmand
         {
@@ -159,6 +150,29 @@ namespace Vedanta.ViewModel
                 return _ObservationClickedCommmand;
             }
         }
+
+
+        public ICommand SearchTextChangedCommand
+        {
+            get
+            {
+                if (_searchTextChangedCommand == null)
+                {
+                    _searchTextChangedCommand = new Command<object>(searchTextChangedCommandExecute);
+                }
+
+                return _searchTextChangedCommand;
+            }
+        }
+
+        #endregion
+        #region Constructer
+        public GembaScheduleViewModel(INavigationService navigationService) : base(navigationService)
+        {
+
+        }
+        #endregion
+        #region Methods
         private async void ObservationClickedExecute(object obj)
         {
             try
@@ -174,21 +188,17 @@ namespace Vedanta.ViewModel
                 {
 
                 }
+                else if (Status == "In Process")
+                {
+                    var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("ScheduleData", obj);
+                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+                }
                 else if (Status == "Pending For Score")
                 {
                     var navigationParameters = new NavigationParameters();
                     navigationParameters.Add("ScheduleData", obj);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
-
-                    //score page
-                    //await NavigationService.NavigateAsync("ScorePage");
-
-                    ////temp due insuffcient data
-                    //var navigationParameters = new NavigationParameters();
-                    //navigationParameters.Add("ScheduleData", obj);
-                    //await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
-
-
                 }
                 else if (Status == "Pending")
                 {
@@ -196,9 +206,6 @@ namespace Vedanta.ViewModel
                     navigationParameters.Add("ScheduleData", obj);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
-                //var navigationParameters = new NavigationParameters();
-                //navigationParameters.Add("PageTitle", obj);
-                // NavigationService.NavigateAsync("ScorePage");
             }
             catch (Exception ex)
             {
@@ -214,21 +221,6 @@ namespace Vedanta.ViewModel
             IsSearchTapped = false;
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
         }
-        private ICommand _searchTextChangedCommand;
-
-        public ICommand SearchTextChangedCommand
-        {
-            get
-            {
-                if (_searchTextChangedCommand == null)
-                {
-                    _searchTextChangedCommand = new Command<object>(searchTextChangedCommandExecute);
-                }
-
-                return _searchTextChangedCommand;
-            }
-        }
-
         private void searchTextChangedCommandExecute(object obj)
         {
             if (!String.IsNullOrEmpty(SearchText))
@@ -242,27 +234,15 @@ namespace Vedanta.ViewModel
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
         }
-
         private void SearchTapped(object obj)
         {
             IsSearchTapped = !IsSearchTapped;
-        }
-
-        public GembaScheduleViewModel(INavigationService navigationService) : base(navigationService)
-        {
-            //if (GembaScheduleList.Count == 0)
-            //{
-            //    var startDate = StartDate.Date.ToString();
-            //    var endDate = EndDate.Date.ToString();
-            //    Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
-            //    GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
-            //}
         }
         private async void SelectedStartDateFunction(object obj)
         {
             IsBusy = true;
             //var test = obj as DateSelectedEvent;
-            var startingDate = (DateTime) obj ;
+            var startingDate = (DateTime)obj;
             var stDate = startingDate.Date.ToString("dd-MM-yyyy");
             var endDate = EndDate.Date.ToString("dd-MM-yyyy");
             Session.Instance.GembaScheduleList.Clear();
@@ -283,7 +263,6 @@ namespace Vedanta.ViewModel
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             IsBusy = false;
         }
-
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -303,12 +282,11 @@ namespace Vedanta.ViewModel
             PerformFilterOperation();
             IsBusy = false;
         }
-
         private void PerformFilterOperation()
         {
             var filteredList = new List<GembaScheduleModel>();
 
-            if (!Session.Instance.SbuList[0].IsSelected || (!Session.Instance.DepartmentsList[0].IsSelected)|| (!Session.Instance.StatusList[0].IsSelected))
+            if (!Session.Instance.SbuList[0].IsSelected || (!Session.Instance.DepartmentsList[0].IsSelected) || (!Session.Instance.StatusList[0].IsSelected))
             {
                 //filter SBU
                 if (!Session.Instance.SbuList[0].IsSelected && Session.Instance.SbuList.Any(sbu => sbu.IsSelected))
@@ -361,6 +339,7 @@ namespace Vedanta.ViewModel
 
 
 
-        }
+        } 
+        #endregion
     }
 }

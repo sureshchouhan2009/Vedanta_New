@@ -68,7 +68,7 @@ namespace Vedanta.ViewModel
                         }
                         var StartDate = new DateTime(2021, 11, 01).Date.ToString();
                         var EndDate = new DateTime(2021, 12, 21).Date.ToString();
-                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate);
+                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, "Umesh.ecgit");
                        await NavigationService.NavigateAsync("GembaSchedule");
                     }
                     else

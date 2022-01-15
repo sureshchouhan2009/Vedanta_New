@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -88,7 +89,7 @@ namespace Vedanta.Service
                 var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
                 client.DefaultRequestHeaders.Authorization = authHeader;
                 String RequestUrl = Urls.DeleteObservation + "?id=" + ObservationId;
-                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl);
+                var req = new HttpRequestMessage(HttpMethod.Get, RequestUrl);
                 var response = await client.SendAsync(req);
                 if (response?.IsSuccessStatusCode ?? false)
                 {
@@ -132,8 +133,8 @@ namespace Vedanta.Service
         }
 
 
-        //to get the all observations of current Measure 
-        public async Task<List<GetObservationModel>> GetAllObservationAgainstSchedule( int MeasureID)
+        //to get the all observations of current Measure //first we are getting all the observation list against the schedule later filtring Based On Measure ID
+        public async Task<List<GetObservationModel>> GetAllObservationAgainstMeasure(  int ScheduleID, int MeasureID)
         {
             List<GetObservationModel> responsedata = new List<GetObservationModel>();
             try
@@ -141,12 +142,12 @@ namespace Vedanta.Service
                 var client = ServiceUtility.CreateNewHttpClient();
                 var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
                 client.DefaultRequestHeaders.Authorization = authHeader;
-                String RequestUrl = Urls.GetAllLeaderObservation + "?ScheduleId=" + MeasureID;
+                String RequestUrl = Urls.GetAllLeaderObservation + "?ScheduleId=" + ScheduleID;
                 var response = await client.GetAsync(RequestUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
-                    responsedata = JsonConvert.DeserializeObject<List<GetObservationModel>>(result);
+                    responsedata = JsonConvert.DeserializeObject<List<GetObservationModel>>(result).Where(e=>e.AoGembaCheckListMasterId== MeasureID).ToList();
                    
                 }
             }
@@ -233,7 +234,7 @@ namespace Vedanta.Service
         }
 
 
-        public async Task<List<GembaScheduleModel>> GembaScheduleListApiCall(String FromDate, String ToDate)
+        public async Task<List<GembaScheduleModel>> GembaScheduleListApiCall(String FromDate, String ToDate,String EmployeeID)
         {
             List<GembaScheduleModel> responsedata = new List<GembaScheduleModel>();
             try
@@ -241,7 +242,7 @@ namespace Vedanta.Service
                 var client = ServiceUtility.CreateNewHttpClient();
                 var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
                 client.DefaultRequestHeaders.Authorization = authHeader;
-                String RequestUrl = Urls.GembaScheduleURL + "?fromDate=" + FromDate + "&toDate=" + ToDate;
+                String RequestUrl = Urls.GembaScheduleURL + "?fromDate=" + FromDate + "&toDate=" + ToDate+"&EmployeeId=" + EmployeeID;
                 var response = await client.GetAsync(RequestUrl);
                 if (response.IsSuccessStatusCode)
                 {

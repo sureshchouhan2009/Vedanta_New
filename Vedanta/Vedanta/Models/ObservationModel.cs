@@ -22,8 +22,8 @@ namespace Vedanta.Models
         public int AoDepartmentMasterId { get; set; }
         public int AoCategoryMasterId { get; set; }
         public string EmployeeMappingId { get; set; }
-        public object Leader { get; set; }
-        public object Status { get; set; }
+        public string Leader { get; set; }
+        public string Status { get; set; }
         public string SBU { get; set; }
         public string Department { get; set; }
         public string Category { get; set; }

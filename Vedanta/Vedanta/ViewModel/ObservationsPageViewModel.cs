@@ -20,30 +20,33 @@ namespace Vedanta.ViewModel
     {
 
 
-
-
+        #region Fields
         private ObservableCollection<UploadImageModel> _uploadedImagesList = new ObservableCollection<UploadImageModel>();
+        private GembaScheduleModel _gembaScheduleModelParamFromMeasure;
+        private MeasuresAndScoreModel _currentMeasureAndScoreModel;
+        private string _observationSummaryText;
+
+
+        #endregion
+
         public ObservableCollection<UploadImageModel> UploadedImagesList
         {
             get { return _uploadedImagesList; }
             set { SetProperty(ref _uploadedImagesList, value); }
         }
 
-        private GembaScheduleModel _gembaScheduleModelParamFromMeasure;
         public GembaScheduleModel GembaScheduleModelParamMeasure
         {
             get { return _gembaScheduleModelParamFromMeasure; }
             set { SetProperty(ref _gembaScheduleModelParamFromMeasure, value); }
         }
 
-        private MeasuresAndScoreModel _currentMeasureAndScoreModel;
         public MeasuresAndScoreModel CurrentMeasureAndScoreModel
         {
             get { return _currentMeasureAndScoreModel; }
             set { SetProperty(ref _currentMeasureAndScoreModel, value); }
         }
 
-        private string _observationSummaryText;
         public string ObservationSummaryText
         {
             get { return _observationSummaryText; }
@@ -107,6 +110,7 @@ namespace Vedanta.ViewModel
                 var response = await ApiService.Instance.DeleteObservationApiCall(currentObservation.Id);
                 if (response)
                 {
+                    getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
                     await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfuly", "Ok");
                 }
                 else
@@ -243,20 +247,20 @@ namespace Vedanta.ViewModel
                         // below details assigning from schedule model
                         //ask for commented properties
 
-                        observationModel.Id = GembaScheduleModelParamMeasure.Id;
+                        //observationModel.Id = GembaScheduleModelParamMeasure.Id;
                         observationModel.AoCategoryMasterId = GembaScheduleModelParamMeasure.AoCategoryMasterId;
                         observationModel.AoDepartmentMasterId = GembaScheduleModelParamMeasure.AoDepartmentMasterId;
-                        observationModel.Measure = "AO Awareness";
-                        observationModel.AoGembaCheckListMasterId = Session.Instance.ChecklistParametersList.FirstOrDefault(ck => ck.Measure == "AO Awareness").Id;
+                        observationModel.Measure = CurrentMeasureAndScoreModel.Measure;
+                        observationModel.AoGembaCheckListMasterId = Session.Instance.ChecklistParametersList.FirstOrDefault(ck => ck.Measure == CurrentMeasureAndScoreModel.Measure).Id;
                         observationModel.AoSBUMasterId = GembaScheduleModelParamMeasure.AoSBUMasterId;
                         observationModel.Category = GembaScheduleModelParamMeasure.Category;
-                        observationModel.Date = GembaScheduleModelParamMeasure.Date.ToString("dd/MM/yyyy");// check what send here
+                        observationModel.Date = GembaScheduleModelParamMeasure.Date.ToString("yyyy-MM-dd");// check what send here
                         observationModel.UserName = GembaScheduleModelParamMeasure.UserName;
                         observationModel.Status = GembaScheduleModelParamMeasure.Status;
                         observationModel.SBU = GembaScheduleModelParamMeasure.SBU;
                         observationModel.Score = GembaScheduleModelParamMeasure.Score;
-                        observationModel.PerformedOn = DateTime.Now.ToString();
-                        observationModel.PerformedBy = "Umesh.ecgit"; // to get current logged in user
+                        observationModel.PerformedOn = DateTime.Now.ToString("yyyy-MM-dd");
+                        observationModel.PerformedBy = Preferences.Get("UserName", "");
                         observationModel.Percentage = GembaScheduleModelParamMeasure.Percentage;
                         observationModel.Leader = GembaScheduleModelParamMeasure.Employee;
                         observationModel.GembaWalkScheduleId = GembaScheduleModelParamMeasure.Id;
@@ -268,7 +272,7 @@ namespace Vedanta.ViewModel
 
                         if (result)
                         {
-                            getAllLeaderObservationList(CurrentMeasureAndScoreModel.Id);
+                            getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
                             ObservationSummaryText = "";//clearing the edit text field
                             await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfuly", "Ok");
                         }
@@ -306,9 +310,9 @@ namespace Vedanta.ViewModel
         }
 
         // need to make dynamic via id , id we need to get from measure page.
-        private async void getAllLeaderObservationList(int MeasureID)
+        private async void getAllLeaderObservationList(int ScheduleID, int MeasureID)
         {
-            var allObservationList = await ApiService.Instance.GetAllObservationAgainstSchedule(MeasureID);
+            var allObservationList = await ApiService.Instance.GetAllObservationAgainstMeasure(ScheduleID, MeasureID);
             if (allObservationList.Count > 0)
             {
                 PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e => e.Id));
@@ -392,7 +396,7 @@ namespace Vedanta.ViewModel
             if (parameters.ContainsKey("CurrentMeasureModel"))
             {
                 CurrentMeasureAndScoreModel = parameters.GetValue<MeasuresAndScoreModel>("CurrentMeasureModel");
-                getAllLeaderObservationList(CurrentMeasureAndScoreModel.Id);
+                getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id,CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
             }
             IsBusy = false;
         }

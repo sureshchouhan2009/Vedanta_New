@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Vedanta.Models;
 using Vedanta.Service;
 using Vedanta.Utility;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
@@ -265,7 +266,7 @@ namespace Vedanta.ViewModel
             var stDate = startingDate.Date.ToString("dd-MM-yyyy");
             var endDate = EndDate.Date.ToString("dd-MM-yyyy");
             Session.Instance.GembaScheduleList.Clear();
-            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate);
+            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate, Preferences.Get("UserName", ""));
             GembaScheduleList.Clear();
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             IsBusy = false;
@@ -277,7 +278,7 @@ namespace Vedanta.ViewModel
             var stDate = StartDate.Date.ToString();
             var endDate = endingDate.Date.ToString();
             Session.Instance.GembaScheduleList.Clear();
-            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate);
+            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate, Preferences.Get("UserName", ""));
             GembaScheduleList.Clear();
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             IsBusy = false;
@@ -292,7 +293,7 @@ namespace Vedanta.ViewModel
             {
                 var startDate = StartDate.Date.ToString();
                 var endDate = EndDate.Date.ToString();
-                Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate)).Wait();
+                Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate, Preferences.Get("UserName", ""))).Wait();
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }
             if (Session.Instance.ChecklistParametersList.Count == 0)

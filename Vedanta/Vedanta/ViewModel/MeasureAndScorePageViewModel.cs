@@ -18,6 +18,7 @@ namespace Vedanta.ViewModel
         #region Fields
         private ObservableCollection<MeasuresAndScoreModel> _measuresList = new ObservableCollection<MeasuresAndScoreModel>();
         private ICommand _NavigateForObservation;
+        private ICommand _FinalSubmitCommand;
         private GembaScheduleModel _gembaScheduleModelParam;
         private bool _isDetailsViewEnabled;
         private string _totalAddedScoreCountText;
@@ -79,7 +80,21 @@ namespace Vedanta.ViewModel
                 }
                 return _NavigateForObservation;
             }
+        } 
+        
+        public ICommand FinalSubmitCommand
+        {
+            get
+            {
+                if (_FinalSubmitCommand == null)
+                {
+                    _FinalSubmitCommand = new Command<object>(FinalSubmitCommandExecute);
+                }
+                return _FinalSubmitCommand;
+            }
         }
+
+       
         #endregion
         #region Constructer
         public MeasureAndScorePageViewModel(INavigationService navigationService) : base(navigationService)
@@ -155,7 +170,33 @@ namespace Vedanta.ViewModel
 
 
         }
+       
+        private async void FinalSubmitCommandExecute(object obj)
+        {
+            IsBusy = true;
+            try
+            {
+                //need to ask for validation, in which case beed enable this button
 
+                FinalSubmitModel submitModel = new FinalSubmitModel();
+                //need to ask for data source
+                var response = await ApiService.Instance.FinalSubmitApiCall(submitModel);
+                if (response)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Submitted successfully", "Ok");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            IsBusy = false;
+        }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {

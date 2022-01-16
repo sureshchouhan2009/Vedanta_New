@@ -192,7 +192,7 @@ namespace Vedanta.ViewModel
 
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
-                            await Application.Current.MainPage.DisplayAlert("Success", "Onservation updated successfuly", "Ok");
+                            await Application.Current.MainPage.DisplayAlert("Success", "Onservation updated successfully", "Ok");
                         }
                         else
                         {

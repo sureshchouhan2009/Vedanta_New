@@ -111,7 +111,7 @@ namespace Vedanta.ViewModel
                 if (response)
                 {
                     getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
-                    await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfuly", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfully", "Ok");
                 }
                 else
                 {
@@ -274,7 +274,7 @@ namespace Vedanta.ViewModel
                         {
                             getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
                             ObservationSummaryText = "";//clearing the edit text field
-                            await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfuly", "Ok");
+                            await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfully", "Ok");
                         }
                         else
                         {

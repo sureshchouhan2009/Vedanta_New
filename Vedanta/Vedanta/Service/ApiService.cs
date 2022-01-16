@@ -51,6 +51,33 @@ namespace Vedanta.Service
             }
             return isSuccess;
 
+        } 
+        
+        public async Task<bool> FinalSubmitApiCall(FinalSubmitModel finalSubmitModel)
+        {
+            bool isSuccess=false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.FinalSubmitApiURL;
+                var payload = ServiceUtility.BuildRequest(finalSubmitModel);
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl) { Content = payload };
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                
+            }
+            return isSuccess;
+
         }
 
 

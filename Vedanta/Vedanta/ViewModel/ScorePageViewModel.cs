@@ -178,7 +178,7 @@ namespace Vedanta.ViewModel
                     if (success)
                     {
                         IsBusy = false;
-                        await Application.Current.MainPage.DisplayAlert("Success", "Score added successfuly", "Ok");
+                        await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
                         BackPageNavigation();
 
                     }

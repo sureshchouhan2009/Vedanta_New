@@ -13,6 +13,7 @@
 
         public const string CreateGembaScore = BaseUrl + "AO/Gemba/CreateGembaScore";
         public const string AddObservationDetails = BaseUrl + "AO/Gemba/CreateAddObservationDetails";
+        public const string FinalSubmitApiURL = BaseUrl + "AO/Gemba/CreateAddObservationDetailsSubmit";
         public const string UpdateAddObservationDetails = BaseUrl + "AO/Gemba/UpdateAddObservationDetails";
         public const string GetAllMeasuresandObseravationsandScoreByGembaScheduleId = BaseUrl + "AO/Gemba/GetAllMeasuresandObseravationsandScoreByGembaScheduleId";//?ScheduleId=1005
         public const string GetAllLeaderObservation = BaseUrl + "AO/Gemba/GetAllLeaderObservation";

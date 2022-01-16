@@ -338,16 +338,26 @@ namespace Vedanta.ViewModel
         {
             try
             {
-                int index = UploadedImagesList.IndexOf(obj as UploadImageModel);
-                var pickedfile = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
+                if (UploadedImagesList.Count < 3)
                 {
-                    Title = "Capture Image"
-                });
+                    int index = UploadedImagesList.IndexOf(obj as UploadImageModel);
+                    var pickedfile = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
+                    {
+                        Title = "Capture Image"
+                    });
 
-                var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
-                var Base64String = Convert.ToBase64String(byteArray);
-                var imgSource = ImageSource.FromFile(pickedfile.FullPath);
-                UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource,ImageBase64String= Base64String, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
+                    var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
+                    var Base64String = Convert.ToBase64String(byteArray);
+                    var imgSource = ImageSource.FromFile(pickedfile.FullPath);
+                    UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageBase64String = Base64String, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Only three images can be upload", "Ok");
+                }
+
+
                 handleDefaultImageVisibility();
             }
             catch (Exception ex)

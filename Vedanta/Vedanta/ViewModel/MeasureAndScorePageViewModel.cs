@@ -8,6 +8,7 @@ using Vedanta.Models;
 using Vedanta.Service;
 using Vedanta.Utility;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace Vedanta.ViewModel
 {
@@ -17,6 +18,7 @@ namespace Vedanta.ViewModel
         private ObservableCollection<MeasuresAndScoreModel> _measuresList = new ObservableCollection<MeasuresAndScoreModel>();
         private ICommand _NavigateForObservation;
         private GembaScheduleModel _gembaScheduleModelParam;
+        private bool _isDetailsViewEnabled;
 
         #endregion
         #region Properties
@@ -30,6 +32,11 @@ namespace Vedanta.ViewModel
         {
             get { return _gembaScheduleModelParam; }
             set { SetProperty(ref _gembaScheduleModelParam, value); }
+        }
+         public bool IsDetailsViewEnabled
+        {
+            get { return _isDetailsViewEnabled; }
+            set { SetProperty(ref _isDetailsViewEnabled, value); }
         }
 
 
@@ -125,21 +132,18 @@ namespace Vedanta.ViewModel
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             IsBusy = true;
-            //if (Session.Instance.ChecklistParametersList.Count == 0)
-            //{
-            //  MeasuresList=new ObservableCollection<GembaChecklistParametersModel>(  await ApiService.Instance.GetAllGembaChecklistParameters());
-            //}
-            //else
-            //{
-            //    MeasuresList = new ObservableCollection<GembaChecklistParametersModel>(Session.Instance.ChecklistParametersList);
-            //}
-
+            if (parameters.ContainsKey("IsDetailsViewEnabled"))
+            {
+                IsDetailsViewEnabled = parameters.GetValue<bool>("IsDetailsViewEnabled");
+            }
             if (parameters.ContainsKey("ScheduleData"))
             {
                 GembaScheduleModelParam = parameters.GetValue<GembaScheduleModel>("ScheduleData");
                 MeasuresList = new ObservableCollection<MeasuresAndScoreModel>(await ApiService.Instance.GetAllMeasuresandScore(GembaScheduleModelParam.Id));
+                MeasuresList.ForEach(x => x.IsDetailsViewEnabled = IsDetailsViewEnabled);
 
             }
+
             IsBusy = false;
         } 
         #endregion

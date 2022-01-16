@@ -182,7 +182,10 @@ namespace Vedanta.ViewModel
 
                 if (Status == "Closed")
                 {
-
+                    var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("ScheduleData", obj);
+                    navigationParameters.Add("IsDetailsViewEnabled",false);
+                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
                 else if (Status == "In Progress")
                 {
@@ -192,18 +195,21 @@ namespace Vedanta.ViewModel
                 {
                     var navigationParameters = new NavigationParameters();
                     navigationParameters.Add("ScheduleData", obj);
+                    navigationParameters.Add("IsDetailsViewEnabled", true);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
                 else if (Status == "Pending For Score")
                 {
                     var navigationParameters = new NavigationParameters();
                     navigationParameters.Add("ScheduleData", obj);
+                    navigationParameters.Add("IsDetailsViewEnabled", true);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
                 else if (Status == "Pending")
                 {
                     var navigationParameters = new NavigationParameters();
                     navigationParameters.Add("ScheduleData", obj);
+                    navigationParameters.Add("IsDetailsViewEnabled", true);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
             }

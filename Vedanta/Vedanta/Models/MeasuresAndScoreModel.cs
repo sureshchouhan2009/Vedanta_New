@@ -24,5 +24,7 @@ namespace Vedanta.Models
         public bool IsDeleted { get; set; }
         public object PerformedBy { get; set; }
         public DateTime PerformedOn { get; set; }
+        public bool IsDetailsViewEnabled { get; set; }
+
     }
 }

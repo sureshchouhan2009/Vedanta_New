@@ -52,13 +52,13 @@
                     <DataTemplate>
                         <ViewCell>
                             <Frame Style="{StaticResource mainfram}">
-                                <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0">
+                                <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0" IsEnabled="{Binding IsDetailsViewEnabled}">
                                     <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="{Binding Score, Converter={StaticResource scoreValueToColorConverter}}"  />
                                     <Label Grid.Column="0" Text="{Binding Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Measure}" Style="{StaticResource LabelInsideFramStyle}" />
-                                    <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" />
+                                    <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" IsVisible="{Binding IsDetailsViewEnabled}" />
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference MeasuresPage},Path=BindingContext.NavigateForObservation}" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                                        <TapGestureRecognizer  Command="{Binding Source={x:Reference MeasuresPage},Path=BindingContext.NavigateForObservation}" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                                     </Grid.GestureRecognizers>
                                 </Grid>
 
@@ -175,10 +175,10 @@
                     </Grid>
                 </Frame>
             </Grid>
-          
-               
-            
-            <Button Grid.Row="5" Text="Final Submit" Margin="20,10,20,10"   CornerRadius="5" TextColor="White" BackgroundColor="#006699" />
+
+
+
+            <Button Grid.Row="5" Text="Final Submit" Margin="20,10,20,10" CornerRadius="5" TextColor="White" BackgroundColor="#006699" IsEnabled="{Binding IsDetailsViewEnabled}" />
 
         </Grid>
     </ContentPage.Content>

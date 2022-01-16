@@ -268,8 +268,6 @@ namespace Vedanta.ViewModel
                     }
                     catch (Exception ex)
                     {
-
-                        
                     }
                 }
             }

@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Converter="clr-namespace:Vedanta.Converters" NavigationPage.HasNavigationBar="False"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" 
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:Converter="clr-namespace:Vedanta.Converters" xmlns:components="clr-namespace:Vedanta.Components" NavigationPage.HasNavigationBar="False"
              x:Name="MeasuresPage"
              x:Class="Vedanta.View.MeasureAndScorePage">
     <ContentPage.Resources>
@@ -156,24 +159,28 @@
             <Grid Grid.Row="3" RowDefinitions="3.5*,6.5*" Padding="0" Margin="20,0,20,5" RowSpacing="1" >
                 <Grid Grid.Row="0" ColumnDefinitions="5*,5*"  HorizontalOptions="Fill">
                     <Label Text="Total" FontSize="12" Grid.Column="0" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                    <Label Text="0/35" FontSize="12" Grid.Column="1" HorizontalOptions="End" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding TotalAddedScoreCountText}" FontSize="12" Grid.Column="1" HorizontalOptions="End" FontAttributes="Bold"></Label>
                 </Grid>
-                <Frame Grid.Row="1"  Padding="1" BorderColor="Gray">
+                <!--<Frame Grid.Row="1"  Padding="1" BorderColor="Gray">
                     <Grid x:Name="ProgressBarGrid" BackgroundColor="White">
 
                     </Grid>
-                </Frame>
+                </Frame>-->
+                <components:CustomProgressBar Grid.Row="1" Progress="{Binding TotalScorePercentage, Mode=TwoWay}" />
             </Grid>
            <Grid Grid.Row="4" RowDefinitions="3.5*,6.5*" Padding="0" Margin="20,5,20,0" RowSpacing="1" >
                 <Grid Grid.Row="0" ColumnDefinitions="5*,5*"  HorizontalOptions="Fill">
                     <Label Text="Gemba Walk Completion" FontSize="12" Grid.Column="0" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                    <Label Text="0/7" FontSize="12" Grid.Column="1" HorizontalOptions="End" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding GembaWalkCompletionText}" FontSize="12" Grid.Column="1" HorizontalOptions="End" FontAttributes="Bold"></Label>
                 </Grid>
-                <Frame Grid.Row="1"  Padding="1" BorderColor="Gray">
+                <!--<Frame Grid.Row="1"  Padding="1" BorderColor="Gray">
                     <Grid x:Name="ProgressBarGridGembaCompletion" BackgroundColor="White">
 
                     </Grid>
-                </Frame>
+                </Frame>-->
+
+                <components:CustomProgressBar Grid.Row="1" Progress="{Binding GembaWalkCompletionPercentage, Mode=TwoWay}"  />
+
             </Grid>
 
 

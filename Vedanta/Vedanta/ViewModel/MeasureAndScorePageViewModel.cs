@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Vedanta.Models;
@@ -19,6 +20,10 @@ namespace Vedanta.ViewModel
         private ICommand _NavigateForObservation;
         private GembaScheduleModel _gembaScheduleModelParam;
         private bool _isDetailsViewEnabled;
+        private string _totalAddedScoreCountText;
+        private int _totalScorePercentage;
+        private string _gembaWalkCompletionText;
+        private int _gembaWalkCompletionPercentage;
 
         #endregion
         #region Properties
@@ -33,10 +38,33 @@ namespace Vedanta.ViewModel
             get { return _gembaScheduleModelParam; }
             set { SetProperty(ref _gembaScheduleModelParam, value); }
         }
-         public bool IsDetailsViewEnabled
+        public bool IsDetailsViewEnabled
         {
             get { return _isDetailsViewEnabled; }
             set { SetProperty(ref _isDetailsViewEnabled, value); }
+        }
+
+        public string TotalAddedScoreCountText
+        {
+            get { return _totalAddedScoreCountText; }
+            set { SetProperty(ref _totalAddedScoreCountText, value); }
+        } 
+        
+        public int TotalScorePercentage
+        {
+            get { return _totalScorePercentage; }
+            set { SetProperty(ref _totalScorePercentage, value); }
+        }
+
+        public string GembaWalkCompletionText
+        {
+            get { return _gembaWalkCompletionText; }
+            set { SetProperty(ref _gembaWalkCompletionText, value); }
+        }
+         public int GembaWalkCompletionPercentage
+        {
+            get { return _gembaWalkCompletionPercentage; }
+            set { SetProperty(ref _gembaWalkCompletionPercentage, value); }
         }
 
 
@@ -132,20 +160,53 @@ namespace Vedanta.ViewModel
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             IsBusy = true;
-            if (parameters.ContainsKey("IsDetailsViewEnabled"))
+            try
             {
-                IsDetailsViewEnabled = parameters.GetValue<bool>("IsDetailsViewEnabled");
-            }
-            if (parameters.ContainsKey("ScheduleData"))
-            {
-                GembaScheduleModelParam = parameters.GetValue<GembaScheduleModel>("ScheduleData");
-                MeasuresList = new ObservableCollection<MeasuresAndScoreModel>(await ApiService.Instance.GetAllMeasuresandScore(GembaScheduleModelParam.Id));
-                MeasuresList.ForEach(x => x.IsDetailsViewEnabled = IsDetailsViewEnabled);
+                if (parameters.ContainsKey("IsDetailsViewEnabled"))
+                {
+                    IsDetailsViewEnabled = parameters.GetValue<bool>("IsDetailsViewEnabled");
+                }
+                if (parameters.ContainsKey("ScheduleData"))
+                {
+                    GembaScheduleModelParam = parameters.GetValue<GembaScheduleModel>("ScheduleData");
+                    var mlist = await ApiService.Instance.GetAllMeasuresandScore(GembaScheduleModelParam.Id);
+                    MeasuresList = new ObservableCollection<MeasuresAndScoreModel>(mlist);
+                    MeasuresList.ForEach(x => x.IsDetailsViewEnabled = IsDetailsViewEnabled);
+                    Session.Instance.CurrentGembaScheduleMeasuresList = new List<MeasuresAndScoreModel>(MeasuresList);
 
+                    Session.Instance.CurrentGembaSchedule = GembaScheduleModelParam;
+                    TotalScorePercentage = Convert.ToInt32(Session.Instance.CurrentGembaSchedule.Percentage.Replace(" %", ""));
+                    TotalAddedScoreCountText = string.Format("{0}/35", Session.Instance.CurrentGembaSchedule.Score);
+                    GembaWalkCompletionText = string.Format("{0}/7", calculateTheCountOfAddedScoreMeasure(Session.Instance.CurrentGembaScheduleMeasuresList));
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+               
             }
 
             IsBusy = false;
-        } 
+        }
+
+        private int calculateTheCountOfAddedScoreMeasure(List<MeasuresAndScoreModel> measuresList)
+        {
+            int count=0;
+           foreach(var measure in measuresList)
+            {
+                if (measure.Score > 0)
+                {
+                    count++;
+                }
+            }
+
+            var value = ((double)count / 7) * 100;
+            GembaWalkCompletionPercentage = Convert.ToInt32(Math.Round(value, 0));
+
+            return count;
+        }
         #endregion
     }
 }

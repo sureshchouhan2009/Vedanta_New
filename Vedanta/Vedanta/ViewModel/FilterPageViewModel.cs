@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Vedanta.Models;
@@ -30,10 +31,19 @@ namespace Vedanta.ViewModel
 
         private void ClearAllCommandExecute(object obj)
         {
+            //clearing Status List
             SBUList.Clear();
             Session.Instance.SbuList.Clear();
             Session.Instance.SbuList = Session.fillSBUModel();
             SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
+            
+            //Clearing Department List
+            DepartmentList.Clear();
+            Session.Instance.DepartmentsList.Clear();
+            Session.Instance.DepartmentsList = Session.fillDepartmentmodel();
+            DepartmentList = new ObservableCollection<DepartmentModel>(Session.Instance.DepartmentsList);
+
+            //clearing Status list
             StatusList.Clear();
             Session.Instance.StatusList.Clear();
             Session.Instance.StatusList = Session.fillStatusModel();
@@ -132,11 +142,15 @@ namespace Vedanta.ViewModel
                 SBUList.Clear();
                 SBUList = new ObservableCollection<SBUFilterModel>(Session.Instance.SbuList);
             }
+            if (!SBUList.Any(s => s.IsSelected))
+            {
+                Session.Instance.SbuList[0].IsSelected = !Session.Instance.SbuList[0].IsSelected;
+            }
 
 
 
         }
-         private void ModifyDepartmentSelectetionOnSbuList(object obj)
+        private void ModifyDepartmentSelectetionOnSbuList(object obj)
         {
             var currentSBU = obj as DepartmentModel;
             if (currentSBU.DepartmentName == "All")
@@ -164,7 +178,10 @@ namespace Vedanta.ViewModel
                 DepartmentList.Clear();
                 DepartmentList = new ObservableCollection<DepartmentModel>(Session.Instance.DepartmentsList);
             }
-
+            if (!DepartmentList.Any(s => s.IsSelected))
+            {
+                Session.Instance.DepartmentsList[0].IsSelected = !Session.Instance.DepartmentsList[0].IsSelected;
+            }
 
 
         }
@@ -197,9 +214,14 @@ namespace Vedanta.ViewModel
                 StatusList.Clear();
                 StatusList = new ObservableCollection<StatusModel>(Session.Instance.StatusList);
             }
+            if (!StatusList.Any(s => s.IsSelected))
+            {
+                Session.Instance.StatusList[0].IsSelected = !Session.Instance.StatusList[0].IsSelected;
+            }
+            
         }
 
-
+        
 
         private ICommand _clearCommand;
 

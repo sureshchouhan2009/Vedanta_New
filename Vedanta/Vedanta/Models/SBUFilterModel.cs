@@ -6,12 +6,14 @@ namespace Vedanta.Models
 {
     public class SBUFilterModel
     {
-       public bool IsSelected { get; set; }
+        public int ID { get; set; }
+        public bool IsSelected { get; set; }
        public String SBUName { get; set; }
     }
 
     public class DepartmentModel
     {
+        public int SBUID { get; set; }
         public bool IsSelected { get; set; }
         public String DepartmentName { get; set; }
     }

@@ -45,11 +45,11 @@ namespace Vedanta.Utility
         public static List<SBUFilterModel> fillSBUModel()
         {
             var SBUlist = new List<SBUFilterModel>();
-            SBUlist.Add(new SBUFilterModel { SBUName = "All", IsSelected = true });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Carbon" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Cast House" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Potline" });
-            SBUlist.Add(new SBUFilterModel { SBUName = "Power System Common Services" });
+            SBUlist.Add(new SBUFilterModel {     SBUName = "All", IsSelected = true });
+            SBUlist.Add(new SBUFilterModel {ID=1, SBUName = "Carbon" });
+            SBUlist.Add(new SBUFilterModel {ID=2, SBUName = "Cast House" });
+            SBUlist.Add(new SBUFilterModel {ID=3, SBUName = "Potline" });
+            SBUlist.Add(new SBUFilterModel {ID=4, SBUName = "Power System Common Services" });
             return SBUlist;
         }
 
@@ -68,22 +68,27 @@ namespace Vedanta.Utility
         public static List<DepartmentModel> fillDepartmentmodel()
         {
             var Departmentlist = new List<DepartmentModel>();
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "All", IsSelected = true });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "GAP Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Bakeoven Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rodding Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Bakeoven Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rodding Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Cast House Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Cast House Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Potline Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Potline Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-1" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Rectifier Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Utility Smelter-2" });
-            Departmentlist.Add(new DepartmentModel { DepartmentName = "Vehicle Smelter-2" });
+            Departmentlist.Add(new DepartmentModel {        DepartmentName = "All", IsSelected = true });
+            Departmentlist.Add(new DepartmentModel {SBUID=1,DepartmentName = "GAP Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=1,DepartmentName = "GAP Smelter-2" });
+            Departmentlist.Add(new DepartmentModel {SBUID=1,DepartmentName = "Bakeoven Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=1,DepartmentName = "Bakeoven Smelter-2" });
+            Departmentlist.Add(new DepartmentModel {SBUID=1,DepartmentName = "Rodding Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=1, DepartmentName = "Rodding Smelter-2" });
+           
+
+            Departmentlist.Add(new DepartmentModel {SBUID=2, DepartmentName = "Cast House Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=2, DepartmentName = "Cast House Smelter-2" });
+
+            Departmentlist.Add(new DepartmentModel {SBUID=3, DepartmentName = "Potline Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=3, DepartmentName = "Potline Smelter-2" });
+
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Rectifier Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Utility Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Vehicle Smelter-1" });
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Rectifier Smelter-2" });
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Utility Smelter-2" });
+            Departmentlist.Add(new DepartmentModel {SBUID=4, DepartmentName = "Vehicle Smelter-2" });
 
             return Departmentlist;
         }

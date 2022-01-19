@@ -179,7 +179,7 @@ namespace Vedanta.ViewModel
                     {
                         IsBusy = false;
                         await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-                        BackPageNavigation();
+                        await NavigationService.NavigateAsync("MeasureAndScorePage");
 
                     }
                     else

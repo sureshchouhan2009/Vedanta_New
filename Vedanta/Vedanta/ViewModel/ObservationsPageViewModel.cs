@@ -223,7 +223,7 @@ namespace Vedanta.ViewModel
             {
                 if (Session.Instance.CheckInternetConnection())
                 {
-                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count >= 3)
+                    if (!string.IsNullOrWhiteSpace(ObservationSummaryText) && UploadedImagesList.Count >= 1)
                     {
                         IsBusy = true;
                         for (int i = 0; i < UploadedImagesList.Count; i++)
@@ -274,6 +274,7 @@ namespace Vedanta.ViewModel
                         {
                             getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
                             ObservationSummaryText = "";//clearing the edit text field
+                            UploadedImagesList.Clear();
                             await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfully", "Ok");
                         }
                         else

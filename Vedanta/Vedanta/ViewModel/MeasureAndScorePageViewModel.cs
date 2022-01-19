@@ -176,10 +176,8 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             try
             {
-                //need to ask for validation, in which case beed enable this button
-
                 FinalSubmitModel submitModel = new FinalSubmitModel();
-                //need to ask for data source
+                submitModel.GembaWalkScheduleId = _gembaScheduleModelParam.Id;
                 var response = await ApiService.Instance.FinalSubmitApiCall(submitModel);
                 if (response)
                 {

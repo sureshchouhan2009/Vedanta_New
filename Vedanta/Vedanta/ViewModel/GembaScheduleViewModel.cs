@@ -18,7 +18,7 @@ namespace Vedanta.ViewModel
     {
         #region Fields
         private ObservableCollection<GembaScheduleModel> _gembaScheduleList = new ObservableCollection<GembaScheduleModel>();
-        private DateTime _startDate = DateTime.Now.AddDays(-30);
+        private DateTime _startDate = DateTime.Now.AddDays(-60);
         private DateTime _endDate = DateTime.Now;
         private String _searchText;
         private ICommand _endDateSelectedCommand;

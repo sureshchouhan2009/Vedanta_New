@@ -24,5 +24,6 @@ namespace Vedanta.Models
         public bool IsDeleted { get; set; }
         public string PerformedBy { get; set; }
         public DateTime PerformedOn { get; set; }
+        public bool IsAddScoreEnabled { get; set; }
     }
 }

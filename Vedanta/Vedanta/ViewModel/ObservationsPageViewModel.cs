@@ -110,7 +110,7 @@ namespace Vedanta.ViewModel
                 var response = await ApiService.Instance.DeleteObservationApiCall(currentObservation.Id);
                 if (response)
                 {
-                    getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
+                    getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.Id);
                     await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfully", "Ok");
                 }
                 else
@@ -272,7 +272,7 @@ namespace Vedanta.ViewModel
 
                         if (result)
                         {
-                            getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
+                            getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.Id);
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
                             await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfully", "Ok");
@@ -316,11 +316,15 @@ namespace Vedanta.ViewModel
             var allObservationList = await ApiService.Instance.GetAllObservationAgainstMeasure(ScheduleID, MeasureID);
             if (allObservationList.Count > 0)
             {
+                bool addScoreEnabled = CurrentMeasureAndScoreModel.Score == 1 ? true : false;
+                allObservationList.ForEach(obs => obs.IsAddScoreEnabled = addScoreEnabled);
                 PreviousObservations = new ObservableCollection<GetObservationModel>(allObservationList.OrderByDescending(e => e.Id));
                 Session.Instance.CurrentMeasureObservations.Clear();
                 Session.Instance.CurrentMeasureObservations = PreviousObservations.ToList();
             }
         }
+
+       
 
         private void DeleteCurrentImageCommandExecute(object obj)
         {
@@ -367,6 +371,9 @@ namespace Vedanta.ViewModel
 
         }
 
+
+
+
         private void handleDefaultImageVisibility()
         {
             if (UploadedImagesList.Count >= 1 && UploadedImagesList.Any(e => e.ImageName == "siteImage"))
@@ -404,7 +411,7 @@ namespace Vedanta.ViewModel
             if (parameters.ContainsKey("CurrentMeasureModel"))
             {
                 CurrentMeasureAndScoreModel = parameters.GetValue<MeasuresAndScoreModel>("CurrentMeasureModel");
-                getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id,CurrentMeasureAndScoreModel.AoGembaCheckListMasterId);
+                getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id,CurrentMeasureAndScoreModel.Id);
             }
             IsBusy = false;
         }

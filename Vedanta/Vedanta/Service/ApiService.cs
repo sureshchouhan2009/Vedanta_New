@@ -32,6 +32,7 @@ namespace Vedanta.Service
             try
             {
                 var client = ServiceUtility.CreateNewHttpClient();
+                client.Timeout = TimeSpan.FromMinutes(10);
                 var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
                 client.DefaultRequestHeaders.Authorization = authHeader;
                 String RequestUrl = Urls.AddObservationDetails;

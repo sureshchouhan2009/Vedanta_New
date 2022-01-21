@@ -235,7 +235,7 @@ namespace Vedanta.ViewModel
             int count=0;
            foreach(var measure in measuresList)
             {
-                if (measure.Score > 0)
+                if (measure.Score != 1)
                 {
                     count++;
                 }

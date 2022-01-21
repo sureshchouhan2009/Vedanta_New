@@ -152,6 +152,8 @@ namespace Vedanta.ViewModel
                 var ParametersForEditObservationPage = new NavigationParameters();
                 ParametersForEditObservationPage.Add("ParametersForEditObservationPage", currentObservation);
                 ParametersForEditObservationPage.Add("Title", currentObservation.Measure);
+                ParametersForEditObservationPage.Add("CurrentGembaScheduleModel", GembaScheduleModelParamMeasure);
+                ParametersForEditObservationPage.Add("MeasuresAndScoreModelData", CurrentMeasureAndScoreModel);
                 await NavigationService.NavigateAsync("EditObservationPage", ParametersForEditObservationPage);
             }
             catch (Exception ex)
@@ -275,6 +277,7 @@ namespace Vedanta.ViewModel
                             getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.Id);
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
+                            handleDefaultImageVisibility();
                             await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfully", "Ok");
                         }
                         else
@@ -350,9 +353,10 @@ namespace Vedanta.ViewModel
                     {
                         Title = "Capture Image"
                     });
-
+                   
                     var byteArray = await GeneralUtility.getByteArrayFromFile(pickedfile);
-                    var Base64String = Convert.ToBase64String(byteArray);
+                var compressedBarray=await    ImageResizer.ResizeImage(byteArray, 500, 500);
+                    var Base64String = Convert.ToBase64String(compressedBarray);
                     var imgSource = ImageSource.FromFile(pickedfile.FullPath);
                     UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageBase64String = Base64String, ImageByteArray = byteArray, ImageName = pickedfile.FileName });
 
@@ -371,7 +375,17 @@ namespace Vedanta.ViewModel
 
         }
 
-
+        //public static byte[] ResizeImageAndroid(byte[] imageData, float width, float height)
+        //{
+        //    // Load the bitmap
+        //    Bitmap originalImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length);
+        //    Bitmap resizedImage = Bitmap.CreateScaledBitmap(originalImage, (int)width, (int)height, false);
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        resizedImage.Compress(Bitmap.CompressFormat.Jpeg, 100, ms);
+        //        return ms.ToArray();
+        //    }
+        //}
 
 
         private void handleDefaultImageVisibility()

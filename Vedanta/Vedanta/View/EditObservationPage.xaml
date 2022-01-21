@@ -20,7 +20,7 @@
 
 
             <StackLayout Grid.Row="1">
-                <CarouselView x:Name="corousel" HeightRequest="300" ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True" EmptyView="No items to display.">
+                <CarouselView x:Name="corousel" HeightRequest="300" ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True" EmptyView="Loading...">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Grid>

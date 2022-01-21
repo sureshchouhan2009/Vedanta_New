@@ -30,18 +30,18 @@
 
             <Frame Grid.Row="2">
                 <components:CustomEntry x:Name="EmailEntry" Text="{Binding EmailText}" Placeholder="User Name">
-                    <components:CustomEntry.Behaviors>
+                    <!--<components:CustomEntry.Behaviors>
                         <local:EmailValidatorBehavior />
-                    </components:CustomEntry.Behaviors>
+                    </components:CustomEntry.Behaviors>-->
                 </components:CustomEntry>
                 
             </Frame>
 
             <Frame Grid.Row="4" >
                 <components:CustomEntry x:Name="PasswordEntry" IsPassword="True"   Text="{Binding PasswordText}" Placeholder="Password">
-                    <components:CustomEntry.Behaviors>
+                    <!--<components:CustomEntry.Behaviors>
                         <local:PasswordValidationBehavior />
-                    </components:CustomEntry.Behaviors>
+                    </components:CustomEntry.Behaviors>-->
                 </components:CustomEntry>
                   </Frame>
             <Grid Grid.Row="5" RowDefinitions="*" ColumnDefinitions="3*,6*" VerticalOptions="Center" >

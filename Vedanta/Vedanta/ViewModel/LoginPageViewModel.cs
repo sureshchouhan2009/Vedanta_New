@@ -41,61 +41,107 @@ namespace Vedanta.ViewModel
         private async void PerformLoginComand()
         {
             IsBusy = true;
+
             try
             {
-
-                //if (string.IsNullOrEmpty(EmailText) || string.IsNullOrEmpty(PasswordText))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert("Empty Values", "Please enter Email and Password", "OK");
-                //}
-
-                //else
-                //{
-                    //if (AppConstansts.IsValidEmail(EmailText) && AppConstansts.IsValidPassword(PasswordText))
-                    if (0 == 0)
+                if (string.IsNullOrEmpty(EmailText) || string.IsNullOrEmpty(PasswordText))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Empty Values", "Please enter UserName and Password", "OK");
+                }
+                else
+                {
+                    var response = await ApiService.Instance.LoginApiCall(EmailText.Trim(), PasswordText.Trim());
+                    if (response.IsSuccessStatusCode)
                     {
-                        var response = await ApiService.Instance.LoginApiCall("Umesh.ecgit", "abc@1234");
-                        if (response.IsSuccessStatusCode)
+                        string result = await response.Content.ReadAsStringAsync();
+                        var LoginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
+                        if (RememberMe)
                         {
-                            string result = await response.Content.ReadAsStringAsync();
-                            var LoginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
-                            //if (RememberMe)
-                            //{
-                                //commented for now
-
-                                //Preferences.Set("UserName", EmailText);
-                                //Preferences.Set("Password", PasswordText);
-                                //Preferences.Set("IsLoggedIN", true); 
-
-                                Preferences.Set("UserName", "Umesh.ecgit");
-                                Preferences.Set("Password", "abc@1234");
-                                Preferences.Set("IsLoggedIN", true);
-                            //}
-                            var StartDate = new DateTime(2021, 11, 01).Date.ToString();
-                            var EndDate = new DateTime(2021, 12, 21).Date.ToString();
-                            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, "Umesh.ecgit");
-                            await NavigationService.NavigateAsync("GembaSchedule");
+                            Preferences.Set("UserName", EmailText);
+                            Preferences.Set("Password", PasswordText);
+                            Preferences.Set("IsLoggedIN", true);
                         }
                         else
                         {
-
+                            Preferences.Set("UserName", EmailText);
+                            Preferences.Set("Password", PasswordText);
+                            Preferences.Set("IsLoggedIN", false);
                         }
-
+                        var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
+                        var EndDate = DateTime.Now.Date.ToString();
+                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, EmailText);
+                        await NavigationService.NavigateAsync("GembaSchedule");
                     }
                     else
-                        await Application.Current.MainPage.DisplayAlert("Login Fail", "Please enter correct Email and Password", "OK");
-                //}
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Please enter valid UserName and Password", "OK");
+                    }
+
+
+                    #region Test Code
+
+                    //try
+                    //{
+
+                    //    //if (string.IsNullOrEmpty(EmailText) || string.IsNullOrEmpty(PasswordText))
+                    //    //{
+                    //    //    await Application.Current.MainPage.DisplayAlert("Empty Values", "Please enter Email and Password", "OK");
+                    //    //}
+
+                    //    //else
+                    //    //{
+                    //        //if (AppConstansts.IsValidEmail(EmailText) && AppConstansts.IsValidPassword(PasswordText))
+                    //        if (0 == 0)
+                    //        {
+                    //            var response = await ApiService.Instance.LoginApiCall("Umesh.ecgit", "abc@1234");
+                    //            if (response.IsSuccessStatusCode)
+                    //            {
+                    //                string result = await response.Content.ReadAsStringAsync();
+                    //                var LoginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
+                    //                //if (RememberMe)
+                    //                //{
+                    //                    //commented for now
+
+                    //                    //Preferences.Set("UserName", EmailText);
+                    //                    //Preferences.Set("Password", PasswordText);
+                    //                    //Preferences.Set("IsLoggedIN", true); 
+
+                    //                    Preferences.Set("UserName", "Umesh.ecgit");
+                    //                    Preferences.Set("Password", "abc@1234");
+                    //                    Preferences.Set("IsLoggedIN", true);
+                    //                //}
+                    //                var StartDate = new DateTime(2021, 11, 01).Date.ToString();
+                    //                var EndDate = new DateTime(2021, 12, 21).Date.ToString();
+                    //                Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, "Umesh.ecgit");
+                    //                await NavigationService.NavigateAsync("GembaSchedule");
+                    //            }
+                    //            else
+                    //            {
+
+                    //            }
+
+                    //        }
+                    //        else
+                    //            await Application.Current.MainPage.DisplayAlert("Login Fail", "Please enter correct Email and Password", "OK");
+                    //    //}
+
+                    //}
+                    //catch (Exception ex)
+                    //{
+
+
+                    //}
+                    //IsBusy = false; 
+                    #endregion
+                }
 
             }
             catch (Exception ex)
             {
-
-               
+                await Application.Current.MainPage.DisplayAlert("Error", ex.ToString(), "OK");
             }
             IsBusy = false;
         }
-
-
 
 
 

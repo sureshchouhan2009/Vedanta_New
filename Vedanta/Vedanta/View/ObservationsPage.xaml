@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <Converter:IndexToBoolConverter x:Key="indexToBoolConverter" />
             <Converter:IndexToBoolConverterInvers x:Key="indexToBoolConverterInvers" />
+            <Converter:BoolToAddScoreButtonTextAndBorderColor x:Key="boolToAddScoreButtonTextAndBorderColor" />
         </ResourceDictionary>
 
     </ContentPage.Resources>
@@ -89,7 +90,7 @@
                                             </StackLayout>
 
                                         </StackLayout>
-                                        <Button Grid.Column="1" HeightRequest="40" Text="Continue" Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.ContinueToScoreCommand}" CommandParameter="{Binding .}" IsEnabled="{Binding IsAddScoreEnabled}" VerticalOptions="Center" BorderColor="#006699" BorderWidth="2" BackgroundColor="Transparent" TextColor="#006699" />
+                                        <Button Grid.Column="1" HeightRequest="40" Text="Continue" Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.ContinueToScoreCommand}" CommandParameter="{Binding .}" VerticalOptions="Center" BorderColor="{Binding IsAddScoreEnabled,Converter={StaticResource boolToAddScoreButtonTextAndBorderColor}}" BorderWidth="2" BackgroundColor="Transparent" TextColor="{Binding IsAddScoreEnabled,Converter={StaticResource boolToAddScoreButtonTextAndBorderColor}}" />
                                     </Grid>
                                     <BoxView Grid.Row="3" Grid.ColumnSpan="2" Color="Gray" HeightRequest="2"></BoxView>
 

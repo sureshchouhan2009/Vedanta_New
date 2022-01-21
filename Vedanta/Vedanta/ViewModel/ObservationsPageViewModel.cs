@@ -148,13 +148,17 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             try
             {
+
                 var currentObservation = obj as GetObservationModel;
-                var ParametersForEditObservationPage = new NavigationParameters();
-                ParametersForEditObservationPage.Add("ParametersForEditObservationPage", currentObservation);
-                ParametersForEditObservationPage.Add("Title", currentObservation.Measure);
-                ParametersForEditObservationPage.Add("CurrentGembaScheduleModel", GembaScheduleModelParamMeasure);
-                ParametersForEditObservationPage.Add("MeasuresAndScoreModelData", CurrentMeasureAndScoreModel);
-                await NavigationService.NavigateAsync("EditObservationPage", ParametersForEditObservationPage);
+               
+                    var ParametersForEditObservationPage = new NavigationParameters();
+                    ParametersForEditObservationPage.Add("ParametersForEditObservationPage", currentObservation);
+                    ParametersForEditObservationPage.Add("Title", currentObservation.Measure);
+                    ParametersForEditObservationPage.Add("CurrentGembaScheduleModel", GembaScheduleModelParamMeasure);
+                    ParametersForEditObservationPage.Add("MeasuresAndScoreModelData", CurrentMeasureAndScoreModel);
+                    await NavigationService.NavigateAsync("EditObservationPage", ParametersForEditObservationPage);
+                
+                
             }
             catch (Exception ex)
             {
@@ -170,11 +174,14 @@ namespace Vedanta.ViewModel
             try
             {
                 var value = obj as GetObservationModel;
-                var navigationParameters = new NavigationParameters();
-                navigationParameters.Add("Title", value.Measure);
-                navigationParameters.Add("GembaWalkScheduleId", value.GembaWalkScheduleId);
-                navigationParameters.Add("AoGembaCheckListMasterId", value.AoGembaCheckListMasterId);
-                await NavigationService.NavigateAsync("ScorePage", navigationParameters);
+                if (value.IsAddScoreEnabled)
+                {
+                    var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("Title", value.Measure);
+                    navigationParameters.Add("GembaWalkScheduleId", value.GembaWalkScheduleId);
+                    navigationParameters.Add("AoGembaCheckListMasterId", value.AoGembaCheckListMasterId);
+                    await NavigationService.NavigateAsync("ScorePage", navigationParameters);
+                }
             }
             catch (Exception ex)
             {

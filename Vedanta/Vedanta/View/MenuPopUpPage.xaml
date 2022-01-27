@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:prism="http://prismlibrary.com" 
+                 prism:ViewModelLocator.AutowireViewModel="True"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 x:Class="Vedanta.View.MenuPopUpPage" x:Name="popupPage">
+    <pages:PopupPage.Content>
+        <Grid RowDefinitions="Auto,Auto" BackgroundColor="#EEEEEE" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" Margin="0,0,100,0">
+            <Grid Grid.Row="0" RowDefinitions="Auto,Auto" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="150" HeightRequest="150" Source="siteImage.jpg" />
+                <Label Grid.Row="1" Text="{Binding UserNameText}" FontSize="24" FontAttributes="Bold" TextColor="#006699" />
+                <!--<Button Grid.Row="2" Padding="0" TextColor="White" Text="EDIT" BackgroundColor="Red" HeightRequest="35" CornerRadius="6" VerticalOptions="Center" HorizontalOptions="Center" />-->
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" HorizontalOptions="Start">
+                <ListView Grid.Row="0" ItemsSource="{Binding StringImageList}" HeightRequest="500" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid ColumnDefinitions="Auto,Auto"  Padding="10">
+                                    <Image Grid.Column="0" Source="{Binding AcordianIcon}" HorizontalOptions="End" />
+                                    <Label Grid.Column="1" Text="{Binding ActionProperty}" FontSize="20" FontAttributes="Bold" />
+                                    <!--<Image Grid.Column="2" Source="{Binding AcordianIcon}" HorizontalOptions="Start" />-->
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference popupPage}, Path=BindingContext.MenuItemTappedCommand}" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!--<BoxView Grid.Row="1" HorizontalOptions="FillAndExpand" HeightRequest=".5" Color="Gray" />
+                <Label Grid.Row="2" Text="Logout" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Start" Margin="50,0,0,0" />-->
+            </Grid>
+
+        </Grid>
+
+
+    </pages:PopupPage.Content>
+</pages:PopupPage>

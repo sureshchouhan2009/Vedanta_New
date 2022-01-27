@@ -56,6 +56,7 @@ namespace Vedanta
             containerRegistry.RegisterForNavigation<ObservationsPage, ObservationsPageViewModel>();
             containerRegistry.RegisterForNavigation<EditObservationPage, EditObservationPageViewModel>();
             containerRegistry.RegisterForNavigation<ScorePage, ScorePageViewModel>();
+            containerRegistry.RegisterForNavigation<MenuPopUpPage, GembaScheduleViewModel>();
         }
     }
 }

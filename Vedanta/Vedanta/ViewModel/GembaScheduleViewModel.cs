@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using Vedanta.Models;
 using Vedanta.Service;
 using Vedanta.Utility;
+using Vedanta.View;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -21,6 +23,7 @@ namespace Vedanta.ViewModel
         private DateTime _startDate = DateTime.Now.AddDays(-60);
         private DateTime _endDate = DateTime.Now;
         private String _searchText;
+        private String _userNameText;
         private ICommand _endDateSelectedCommand;
         private ICommand _startDateSelectedCommand;
         private bool _isSearchTapped;
@@ -29,6 +32,8 @@ namespace Vedanta.ViewModel
         private ICommand _cancelTappedCommand;
         private ICommand _navigateToFilterPageCommand;
         private ICommand _searchTextChangedCommand;
+        private ICommand _menuClickedCommand;
+        private ICommand _menuItemTappedCommand;
 
         #endregion
         #region Properties
@@ -61,6 +66,16 @@ namespace Vedanta.ViewModel
         {
             get { return _searchText; }
             set { SetProperty(ref _searchText, value); }
+        }
+        public String UserNameText
+        {
+            get
+            {
+                _userNameText = Preferences.Get("UserName", "");
+                return _userNameText;
+
+            }
+            set { SetProperty(ref _userNameText, value); }
         }
 
 
@@ -165,10 +180,50 @@ namespace Vedanta.ViewModel
             }
         }
 
+        public ICommand MenuClickedCommand
+        {
+            get
+            {
+                if (_menuClickedCommand == null)
+                {
+                    _menuClickedCommand = new Command<object>(PopulateUserProfile);
+                }
+
+                return _menuClickedCommand;
+            }
+        }
+        
+        public ICommand MenuItemTappedCommand
+        {
+            get
+            {
+                if (_menuItemTappedCommand == null)
+                {
+                    _menuItemTappedCommand = new Command<object>(MenuItemClickedCommandExecute);
+                }
+
+                return _menuItemTappedCommand;
+            }
+        }
+
+       
+
+        private List<UserInfo> stringImageList;
+
+        public List<UserInfo> StringImageList { get => stringImageList; set => SetProperty(ref stringImageList, value); }
+
         #endregion
         #region Constructer
         public GembaScheduleViewModel(INavigationService navigationService) : base(navigationService)
         {
+            StringImageList = new List<UserInfo>
+            {
+                new UserInfo{ ActionProperty="Leader Schedule" ,AcordianIcon ="close.png"},
+                new UserInfo{ ActionProperty="User Responsibility" ,AcordianIcon ="close.png"},
+                new UserInfo{ ActionProperty="Update Responsibility" ,AcordianIcon ="close.png"},
+                new UserInfo{ ActionProperty="Logout" ,AcordianIcon ="close.png"},
+                
+            };
 
         }
         #endregion
@@ -184,7 +239,7 @@ namespace Vedanta.ViewModel
                 {
                     var navigationParameters = new NavigationParameters();
                     navigationParameters.Add("ScheduleData", obj);
-                    navigationParameters.Add("IsDetailsViewEnabled",false);
+                    navigationParameters.Add("IsDetailsViewEnabled", false);
                     await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
                 }
                 else if (Status == "In Progress")
@@ -226,6 +281,33 @@ namespace Vedanta.ViewModel
         {
             IsSearchTapped = false;
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
+        }
+        private async void PopulateUserProfile(object obj)
+        {
+            var page = new MenuPopUpPage();
+            await PopupNavigation.Instance.PushAsync(page);
+        }
+        private async void MenuItemClickedCommandExecute(object obj)
+        {
+            IsBusy = true;
+            try
+            {
+                var currentItem = obj as UserInfo;
+                if (currentItem.ActionProperty == "Logout")
+                {
+                    Preferences.Clear();
+                    await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+                    await PopupNavigation.Instance.PopAsync();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            IsBusy = false;
+
         }
         private void searchTextChangedCommandExecute(object obj)
         {
@@ -345,7 +427,7 @@ namespace Vedanta.ViewModel
 
 
 
-        } 
+        }
         #endregion
     }
 }

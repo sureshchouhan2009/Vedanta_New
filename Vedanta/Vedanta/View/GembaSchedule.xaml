@@ -19,14 +19,19 @@
     <ContentPage.Content>
         <Grid RowDefinitions="1*,1.5*,8*" RowSpacing="0" >
             <Frame Grid.Row="0" BackgroundColor="#006699" >
-                <Grid ColumnDefinitions="7*, 3*">
-                    <Label Grid.Column="0" Text="Gemba Schedule"  IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontSize="Title"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                    <components:CustomEntry Grid.Column="0" Text="{Binding SearchText}"  IsVisible="{Binding IsSearchTapped}" BackgroundColor="White" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="14" Placeholder="Search">
+                <Grid ColumnDefinitions="1*,6*, 2*" Margin="0,0,5,0">
+                    <Image Source="hamburger.png" HeightRequest="20" WidthRequest="20" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Start">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MenuClickedCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Grid.Column="1" Text="Gemba Schedule"  IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontSize="18"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                    <components:CustomEntry Grid.Column="1" Text="{Binding SearchText}"  IsVisible="{Binding IsSearchTapped}" BackgroundColor="White" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="14" Placeholder="Search">
                         <components:CustomEntry.Behaviors>
                             <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}" CommandParameter="{Binding .}" />
                         </components:CustomEntry.Behaviors>
                     </components:CustomEntry>
-                    <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Orientation="Horizontal" Spacing="40">
+                    <StackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Orientation="Horizontal" Spacing="20">
                         <Image Source="search_icon" HeightRequest="25" WidthRequest="25" IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding SearchTappedCommand}" />

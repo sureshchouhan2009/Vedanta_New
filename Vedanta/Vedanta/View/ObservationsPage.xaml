@@ -32,7 +32,7 @@
             
             
             <StackLayout Grid.Row="1">
-                <CarouselView x:Name="corousel" HeightRequest="400"  ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True"  EmptyView="No items to display." Margin="0" >
+                <CarouselView x:Name="corousel" HeightRequest="350"  ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True"  EmptyView="No items to display." Margin="0" >
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -69,7 +69,8 @@
                             <Frame BorderColor="Gray" Padding="0">
                                 <Grid RowDefinitions="3*,.2,4*,.2,3*" ColumnDefinitions="5*,5*">
                                     <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="5*,5*">
-                                        <Label Text="{Binding Id,StringFormat='Observation {0}'}" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Grid.Column="0" Text="{Binding Id,StringFormat='Observation {0}'}" IsVisible="{Binding .,Converter={StaticResource indexToBoolConverterInvers}}" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Grid.Column="0" Text="Latest Observation" IsVisible="{Binding .,Converter={StaticResource indexToBoolConverter}}" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
                                         <Label Grid.Column="1" FontSize="14" Text="{Binding PerformedOn,StringFormat='{0:MM-dd-yyyy HH:mm}'}" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Grid>
                                     <BoxView Grid.Row="1" Grid.ColumnSpan="2"  Color="Gray" HeightRequest="2"></BoxView>
@@ -101,7 +102,7 @@
                                         <BoxView Grid.Column="1" Color="Gray" WidthRequest="1"></BoxView>
                                         <Grid Grid.Column="2" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
                                             <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
-                                            <Label Grid.Column="1" Text="Edit" FontSize="14"></Label>
+                                            <Label Grid.Column="1" Text="View/Edit" FontSize="14"></Label>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.EditObservationCommand}" CommandParameter="{Binding .}" />
                                             </Grid.GestureRecognizers>

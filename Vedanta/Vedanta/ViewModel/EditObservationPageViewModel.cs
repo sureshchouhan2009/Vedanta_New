@@ -283,15 +283,43 @@ namespace Vedanta.ViewModel
                 {
                     try
                     {
-                        Byte[] bytes = Convert.FromBase64String(imagesList[index].FileName);
-                        string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "comp_image.png");
-                        if (File.Exists(fileName))
+                        if (index == 0)
                         {
-                            File.Delete(fileName);
+                            Byte[] bytes = Convert.FromBase64String(imagesList[index].FileName);
+                            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "comp_image.png");
+                            if (File.Exists(fileName))
+                            {
+                                File.Delete(fileName);
+                            }
+                            File.WriteAllBytes(fileName, bytes);
+                            var imgSource = ImageSource.FromFile(fileName);
+                            UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "", ImageBase64String = imagesList[index].FileName });
                         }
-                        File.WriteAllBytes(fileName, bytes);
-                        var imgSource = ImageSource.FromFile(fileName);
-                        UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "", ImageBase64String = imagesList[index].FileName });
+                        else if (index == 1) 
+                        {
+                            Byte[] bytes = Convert.FromBase64String(imagesList[index].FileName1);
+                            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "comp_image1.png");
+                            if (File.Exists(fileName))
+                            {
+                                File.Delete(fileName);
+                            }
+                            File.WriteAllBytes(fileName, bytes);
+                            var imgSource = ImageSource.FromFile(fileName);
+                            UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "", ImageBase64String = imagesList[index].FileName1 });
+                        }
+                        else if (index == 2)
+                        {
+                            Byte[] bytes = Convert.FromBase64String(imagesList[index].FileName2);
+                            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "comp_image2.png");
+                            if (File.Exists(fileName))
+                            {
+                                File.Delete(fileName);
+                            }
+                            File.WriteAllBytes(fileName, bytes);
+                            var imgSource = ImageSource.FromFile(fileName);
+                            UploadedImagesList.Add(new UploadImageModel { imageSource = imgSource, ImageName = "", ImageBase64String = imagesList[index].FileName2 });
+                        }
+                          
                     }
                     catch (Exception ex)
                     {

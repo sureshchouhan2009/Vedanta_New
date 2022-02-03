@@ -177,6 +177,7 @@ namespace Vedanta.ViewModel
                 if (value.IsAddScoreEnabled)
                 {
                     var navigationParameters = new NavigationParameters();
+                    navigationParameters.Add("GembaScheduleModelParamFromObservation", GembaScheduleModelParamMeasure);
                     navigationParameters.Add("Title", value.Measure);
                     navigationParameters.Add("GembaWalkScheduleId", value.GembaWalkScheduleId);
                     navigationParameters.Add("AoGembaCheckListMasterId", value.AoGembaCheckListMasterId);

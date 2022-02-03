@@ -24,6 +24,7 @@ namespace Vedanta.ViewModel
         private ICommand _BackToScoreCommand;
         private ICommand _SkipScoreCommand;
         private ICommand _SubmitCommand;
+        private GembaScheduleModel _gembaScheduleModelParamFromObservartionPage;
         #endregion
 
         #region Properties
@@ -53,7 +54,11 @@ namespace Vedanta.ViewModel
             get { return _isNotSatisfactorySelected; }
             set { SetProperty(ref _isNotSatisfactorySelected, value); }
         }
-
+        public GembaScheduleModel GembaScheduleModelFromObservattionPage
+        {
+            get { return _gembaScheduleModelParamFromObservartionPage; }
+            set { SetProperty(ref _gembaScheduleModelParamFromObservartionPage, value); }
+        }
 
         #endregion
         #region Commands
@@ -178,8 +183,11 @@ namespace Vedanta.ViewModel
                     if (success)
                     {
                         IsBusy = false;
+                        var navigationParameters = new NavigationParameters();
+                        navigationParameters.Add("ScheduleData", GembaScheduleModelFromObservattionPage);
+                        navigationParameters.Add("IsDetailsViewEnabled", true);
                         await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-                        await NavigationService.NavigateAsync("MeasureAndScorePage");
+                        await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                     }
                     else
@@ -241,6 +249,11 @@ namespace Vedanta.ViewModel
             {
                 Title = parameters.GetValue<string>("Title");
             }
+            if (parameters.ContainsKey("GembaScheduleModelParamFromObservation"))
+            {
+                GembaScheduleModelFromObservattionPage = parameters.GetValue<GembaScheduleModel>("GembaScheduleModelParamFromObservation");
+            }
+
             if (parameters.ContainsKey("GembaWalkScheduleId"))
             {
                 CurrentGembaWalkScheduleId = parameters.GetValue<int>("GembaWalkScheduleId");

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Vedanta.Models;
 using Vedanta.Service;
 using Vedanta.Utility;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -181,7 +182,12 @@ namespace Vedanta.ViewModel
                 var response = await ApiService.Instance.FinalSubmitApiCall(submitModel);
                 if (response)
                 {
+
                     await Application.Current.MainPage.DisplayAlert("Success", "Submitted successfully", "Ok");
+                    var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
+                    var EndDate = DateTime.Now.Date.ToString();
+                    Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+                    await NavigationService.NavigateAsync("GembaSchedule");
                 }
                 else
                 {

@@ -48,6 +48,7 @@ namespace Vedanta
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+          
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<GembaSchedule, GembaScheduleViewModel>();

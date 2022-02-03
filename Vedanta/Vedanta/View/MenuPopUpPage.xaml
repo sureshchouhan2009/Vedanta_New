@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
                  xmlns:prism="http://prismlibrary.com" 
                  prism:ViewModelLocator.AutowireViewModel="True"
-                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 
                  x:Class="Vedanta.View.MenuPopUpPage" x:Name="popupPage">
     <pages:PopupPage.Content>
         <Grid RowDefinitions="Auto,Auto" BackgroundColor="#EEEEEE" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" Margin="0,0,100,0">
@@ -18,7 +19,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Grid ColumnDefinitions="Auto,Auto"  Padding="10">
-                                    <Image Grid.Column="0" Source="{Binding AcordianIcon}" HorizontalOptions="End" />
+                                    <Image Grid.Column="0" Source="{Binding AcordianIcon}" HeightRequest="20" WidthRequest="20" HorizontalOptions="End" />
                                     <Label Grid.Column="1" Text="{Binding ActionProperty}" FontSize="20" FontAttributes="Bold" />
                                     <!--<Image Grid.Column="2" Source="{Binding AcordianIcon}" HorizontalOptions="Start" />-->
                                     <Grid.GestureRecognizers>

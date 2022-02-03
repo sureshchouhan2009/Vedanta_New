@@ -93,7 +93,7 @@
 
                                     <Grid Grid.Row="4" Grid.ColumnSpan="2" ColumnDefinitions="5*,.1,5*">
                                         <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
+                                            <Image Grid.Column="0" Source="delete_icon" HeightRequest="15" WidthRequest="15"></Image>
                                             <Label Grid.Column="1" Text="Delete" FontSize="14"></Label>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.DeleteObservationCommand}" CommandParameter="{Binding .}" />
@@ -101,7 +101,7 @@
                                         </Grid  >
                                         <BoxView Grid.Column="1" Color="Gray" WidthRequest="1"></BoxView>
                                         <Grid Grid.Column="2" ColumnDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Image Grid.Column="0" Source="close" HeightRequest="15" WidthRequest="15"></Image>
+                                            <Image Grid.Column="0" Source="edit_circle_blue" HeightRequest="15" WidthRequest="15"></Image>
                                             <Label Grid.Column="1" Text="View/Edit" FontSize="14"></Label>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference AOScreen},Path=BindingContext.EditObservationCommand}" CommandParameter="{Binding .}" />

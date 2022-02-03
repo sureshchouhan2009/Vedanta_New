@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Vedanta.Models;
@@ -182,11 +183,24 @@ namespace Vedanta.ViewModel
                     bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
                     if (success)
                     {
+                        try
+                        {
+                            var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
+                            var EndDate = DateTime.Now.Date.ToString();
+                            Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
                         IsBusy = false;
                         var navigationParameters = new NavigationParameters();
-                        navigationParameters.Add("ScheduleData", GembaScheduleModelFromObservattionPage);
+                       
+                        navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex=>ex.Id==  GembaScheduleModelFromObservattionPage.Id));
                         navigationParameters.Add("IsDetailsViewEnabled", true);
                         await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
+
                         await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                     }

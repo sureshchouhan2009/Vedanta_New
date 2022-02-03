@@ -192,7 +192,12 @@ namespace Vedanta.ViewModel
                 return _menuClickedCommand;
             }
         }
-        
+
+        private void PopulateUserProfile(object obj)
+        {
+           
+        }
+
         public ICommand MenuItemTappedCommand
         {
             get
@@ -218,10 +223,10 @@ namespace Vedanta.ViewModel
         {
             StringImageList = new List<UserInfo>
             {
-                new UserInfo{ ActionProperty="Leader Schedule" ,AcordianIcon ="close.png"},
-                new UserInfo{ ActionProperty="User Responsibility" ,AcordianIcon ="close.png"},
-                new UserInfo{ ActionProperty="Update Responsibility" ,AcordianIcon ="close.png"},
-                new UserInfo{ ActionProperty="Logout" ,AcordianIcon ="close.png"},
+                new UserInfo{ ActionProperty="Leader Schedule" ,AcordianIcon ="history_icon.png"},
+                new UserInfo{ ActionProperty="User Responsibility" ,AcordianIcon ="history_icon.png"},
+                new UserInfo{ ActionProperty="Update Responsibility" ,AcordianIcon ="history_icon.png"},
+                new UserInfo{ ActionProperty="Logout" ,AcordianIcon ="logout_icon.png"},
                 
             };
 
@@ -282,11 +287,20 @@ namespace Vedanta.ViewModel
             IsSearchTapped = false;
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
         }
-        private async void PopulateUserProfile(object obj)
-        {
-            var page = new MenuPopUpPage();
-            await PopupNavigation.Instance.PushAsync(page);
-        }
+        //private async void PopulateUserProfile(object obj)
+        //{
+        //    try
+        //    {
+        //        var page = new MenuPopUpPage();
+        //        await PopupNavigation.Instance.PushAsync(page);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+
+        //    }
+
+        //}
         private async void MenuItemClickedCommandExecute(object obj)
         {
             IsBusy = true;

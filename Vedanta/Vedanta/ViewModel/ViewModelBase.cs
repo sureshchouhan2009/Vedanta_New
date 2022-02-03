@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Vedanta.Helpers;
+using Vedanta.View;
 using Xamarin.Forms;
 
 namespace Vedanta.ViewModel
@@ -43,7 +44,7 @@ namespace Vedanta.ViewModel
             //HomeCommand = new DelegateCommand(PerformHomeCommand);
             //CreateNewEventCommand = new DelegateCommand(CreateNewEvent);
             GobackCommand = new DelegateCommand(BackPageNavigation);
-            //UserProfilePopulateCommand = new DelegateCommand(PopulateUserProfile);
+            UserProfilePopulateCommand = new DelegateCommand(PopulateUserProfile);
             //CurrentTemplate = (ControlTemplate)Application.Current.Resources["MasterTemplate"];
         }
 
@@ -62,7 +63,20 @@ namespace Vedanta.ViewModel
         //    var page = new MenuPopUpPage();
         //    await PopupNavigation.Instance.PushAsync(page);
         //}
+        public async void PopulateUserProfile()
+        {
+            try
+            {
+              
+                var page = new MenuPopUpPage();
+                await PopupNavigation.Instance.PushAsync(page);
+            }
+            catch (Exception ex)
+            {
 
+
+            }
+        }
         private async void PerformHomeCommand()
         {
             await NavigationService.NavigateAsync("MechanicalOrSystemProblem");

@@ -67,14 +67,14 @@ namespace Vedanta.ViewModel
         {
             try
             {
-              
+
                 var page = new MenuPopUpPage();
                 await PopupNavigation.Instance.PushAsync(page);
             }
             catch (Exception ex)
             {
 
-
+              await  NavigationService.NavigateAsync("GembaSchedule");
             }
         }
         private async void PerformHomeCommand()

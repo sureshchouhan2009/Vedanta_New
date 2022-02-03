@@ -297,7 +297,7 @@ namespace Vedanta.ViewModel
                     }
                     else
                     {
-                        if (UploadedImagesList.Count == 1)
+                        if (UploadedImagesList.Count <1)
                         {
                             await Application.Current.MainPage.DisplayAlert("Require fields", "Please upload Atleast one image", "Ok");
                         }

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:prism="http://prismlibrary.com" 
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vedanta.View.ScoreInfoPage" >
+    <pages:PopupPage.Content >
+
+        <ScrollView>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" Margin="40,60,40,60" Padding="8" BackgroundColor="White">
+              
+                <Label Grid.Row="0" Text="{Binding MeasureName}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
+                <Label Grid.Row="1" Text="Checkpoint:" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                <Label Grid.Row="2" Text="{Binding Checkpoint}" TextColor="Black" FontSize="16"  />
+                <Label Grid.Row="3" Text="Score 0:" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                <Label Grid.Row="4" Text="{Binding ScoreZeorText}" TextColor="Black" FontSize="16" />
+                <Label Grid.Row="5" Text="Score 3:" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                <Label Grid.Row="6" Text="{Binding ScoreThreeText}" TextColor="Black" FontSize="16"  />
+                <Label Grid.Row="7" Text="Score 5:" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                <Label Grid.Row="8" Text="{Binding ScoreFiveText}" TextColor="Black" FontSize="16"  />
+                <Grid Grid.Row="9">
+                    <Label Text="Close" TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="End" Margin="10">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseTappedCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    
+                    
+                </Grid>
+            </Grid>
+
+        </ScrollView>
+           
+    </pages:PopupPage.Content>
+</pages:PopupPage>

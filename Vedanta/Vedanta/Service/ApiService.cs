@@ -271,6 +271,33 @@ namespace Vedanta.Service
 
             }
             return ChecklistResponse;
+        } 
+        
+        
+        //to get the all Checklist Parameters  
+        public async Task<List<ScoreInfoModel>> GetMeasureScoreDetails(int MeasureID )
+        {
+            List<ScoreInfoModel> MeasureScoreDettails = new List<ScoreInfoModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetMeasureScoreDetails + "?Id=" + MeasureID; 
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    MeasureScoreDettails = JsonConvert.DeserializeObject<List<ScoreInfoModel>>(result);
+                    return MeasureScoreDettails;
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return MeasureScoreDettails;
         }
 
 

@@ -7,6 +7,7 @@ using Android.OS;
 using Prism;
 using Prism.Ioc;
 using Acr.UserDialogs;
+using Rg.Plugins.Popup.Services;
 
 namespace Vedanta.Droid
 {
@@ -28,6 +29,18 @@ namespace Vedanta.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        public async override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                // Do something if there are some pages in the `PopupStack`
+                await PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                // Do something if there are not any pages in the `PopupStack`
+            }
         }
     }
     public class AndroidInitializer : IPlatformInitializer

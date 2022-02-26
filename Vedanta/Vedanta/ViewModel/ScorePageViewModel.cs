@@ -1,11 +1,14 @@
 ﻿using Prism.Navigation;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Vedanta.Models;
 using Vedanta.Service;
+using Vedanta.View;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -24,8 +27,11 @@ namespace Vedanta.ViewModel
         private ICommand _GoodSelectionCommand;
         private ICommand _BackToScoreCommand;
         private ICommand _SkipScoreCommand;
+        private ICommand _ScoreInfoTapped;
+        private ICommand _closeTappedCommand;
         private ICommand _SubmitCommand;
         private GembaScheduleModel _gembaScheduleModelParamFromObservartionPage;
+        private List<ScoreInfoModel> _measureScoreDetails;
         #endregion
 
         #region Properties
@@ -59,6 +65,43 @@ namespace Vedanta.ViewModel
         {
             get { return _gembaScheduleModelParamFromObservartionPage; }
             set { SetProperty(ref _gembaScheduleModelParamFromObservartionPage, value); }
+        }
+
+         public List<ScoreInfoModel> MeasureScoreDetails
+        {
+            get { return _measureScoreDetails; }
+            set { SetProperty(ref _measureScoreDetails, value); }
+        }
+
+        private string _measureName;
+        private string _checkpoint;
+        private string _scoreZeorText;
+        private string _scoreThreeText;
+        private string _scoreFiveText;
+        public string MeasureName
+        {
+            get { return _measureName; }
+            set { SetProperty(ref _measureName, value); }
+        }
+        public string Checkpoint
+        {
+            get { return _checkpoint; }
+            set { SetProperty(ref _checkpoint, value); }
+        }
+         public string ScoreZeorText
+        {
+            get { return _scoreZeorText; }
+            set { SetProperty(ref _scoreZeorText, value); }
+        } 
+        public string ScoreThreeText
+        {
+            get { return _scoreThreeText; }
+            set { SetProperty(ref _scoreThreeText, value); }
+        }
+        public string ScoreFiveText
+        {
+            get { return _scoreFiveText; }
+            set { SetProperty(ref _scoreFiveText, value); }
         }
 
         #endregion
@@ -134,6 +177,52 @@ namespace Vedanta.ViewModel
                 return _SkipScoreCommand;
             }
             set { SetProperty(ref _SkipScoreCommand, value); }
+        }
+        
+        public ICommand ScoreInfoTapped
+        {
+            get
+            {
+                if (_ScoreInfoTapped == null)
+                {
+                    _ScoreInfoTapped = new Command<object>(ScoreInfoTappedExecute);
+                }
+                return _ScoreInfoTapped;
+            }
+            set { SetProperty(ref _ScoreInfoTapped, value); }
+        }
+        
+        public ICommand CloseTappedCommand
+        {
+            get
+            {
+                if (_closeTappedCommand == null)
+                {
+                    _closeTappedCommand = new Command<object>(ClosePopupPageExecute);
+                }
+                return _closeTappedCommand;
+            }
+            set { SetProperty(ref _closeTappedCommand, value); }
+        }
+
+        private async void ClosePopupPageExecute(object obj)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
+        private async void ScoreInfoTappedExecute(object obj)
+        {
+            try
+            {
+              
+                var page = new ScoreInfoPage();
+                await PopupNavigation.Instance.PushAsync(page);
+            }
+            catch (Exception ex)
+            {
+
+                // await NavigationService.NavigateAsync("GembaSchedule");
+            }
         }
         #endregion
         #region Methods
@@ -251,12 +340,25 @@ namespace Vedanta.ViewModel
         #region Constructer
         public ScorePageViewModel(INavigationService navigationService) : base(navigationService)
         {
+            Task.Run(async () =>
+            {
+                IsBusy = true;
+                MeasureScoreDetails = await ApiService.Instance.GetMeasureScoreDetails(Vedanta.Utility.Session.Instance.CurrentMeasureObservations.FirstOrDefault().AoGembaCheckListMasterId);
+                MeasureName = MeasureScoreDetails[0].Measure;
+                Checkpoint = MeasureScoreDetails[0].Checkpoint;
+                ScoreZeorText = MeasureScoreDetails[0].Score0;
+                ScoreThreeText = MeasureScoreDetails[0].Score3;
+                ScoreFiveText = MeasureScoreDetails[0].Score5;
+                IsBusy = false;
+            });
+           
         }
 
         #endregion
 
-        public override  void OnNavigatedTo(INavigationParameters parameters)
+        public override  async void OnNavigatedTo(INavigationParameters parameters)
         {
+            IsBusy = true;
             base.OnNavigatedTo(parameters);
 
             if (parameters.ContainsKey("Title"))
@@ -275,9 +377,12 @@ namespace Vedanta.ViewModel
             if (parameters.ContainsKey("AoGembaCheckListMasterId"))
             {
                 CurrentAoGembaCheckListMasterId = parameters.GetValue<int>("AoGembaCheckListMasterId");
+
+               
+
             }
 
-
+            IsBusy = false;
 
         }
     }

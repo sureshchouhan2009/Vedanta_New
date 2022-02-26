@@ -86,7 +86,11 @@
             </StackLayout>
 
             <Grid Grid.Row="5" ColumnDefinitions="*,*" Margin="30,10,30,10" >
-                <Label Grid.Column="0" Text="Score info" TextColor="DeepSkyBlue" HorizontalOptions="StartAndExpand" />
+                <Label Grid.Column="0" Text="Score info" TextColor="DeepSkyBlue" HorizontalOptions="StartAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ScoreInfoTapped}" NumberOfTapsRequired="1" />
+                    </Label.GestureRecognizers>
+                </Label>
 
                 <Label Grid.Column="1" Text="Skip Adding Score" TextColor="DeepSkyBlue" HorizontalOptions="EndAndExpand">
                     <Label.GestureRecognizers>

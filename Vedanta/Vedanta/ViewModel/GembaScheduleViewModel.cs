@@ -384,6 +384,7 @@ namespace Vedanta.ViewModel
             PerformFilterOperation();
             IsBusy = false;
         }
+       
         private void PerformFilterOperation()
         {
             var filteredList = new List<GembaScheduleModel>();

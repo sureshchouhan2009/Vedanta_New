@@ -69,8 +69,16 @@ namespace Vedanta.ViewModel
                         }
                         var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
                         var EndDate = DateTime.Now.Date.ToString();
-                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, EmailText);
-                        await NavigationService.NavigateAsync("GembaSchedule");
+                        if("SomeCondition"== "SomeCondition")
+                        {
+                            await NavigationService.NavigateAsync("ActionPlansPage");
+                        }
+                        else
+                        {
+                            Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, EmailText);
+                            await NavigationService.NavigateAsync("GembaSchedule");
+                        }
+                      
                     }
                     else
                     {

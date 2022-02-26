@@ -353,6 +353,35 @@ namespace Vedanta.Service
 
 
 
+        public async Task<List<ActionPlanModel>> GetActionPlanList(String FromDate, String ToDate,String EmployeeID)
+        {
+            List<ActionPlanModel> responsedata = new List<ActionPlanModel>();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetActionPlanList + "?fromDate=" + FromDate + "&toDate=" + ToDate+ "&EmployeeId=" + EmployeeID;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    responsedata = JsonConvert.DeserializeObject<List<ActionPlanModel>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+            return responsedata;
+        }
+
+
+
+
+
+
        
 
        

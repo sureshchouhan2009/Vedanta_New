@@ -23,6 +23,7 @@ namespace Vedanta.Utility
         #endregion
         
         public List<GembaScheduleModel> GembaScheduleList = new List<GembaScheduleModel>();
+        public List<ActionPlanModel> ActionPlanList = new List<ActionPlanModel>();
         public GembaScheduleModel CurrentGembaSchedule = new GembaScheduleModel();
         public List<MeasuresAndScoreModel> CurrentGembaScheduleMeasuresList = new List<MeasuresAndScoreModel>();
         public List<GetObservationModel> CurrentMeasureObservations = new List<GetObservationModel>();

@@ -153,12 +153,17 @@ namespace Vedanta.ViewModel
                 ActionPlanModel model = obj as ActionPlanModel;
                 var Status = model.Status;
 
-                if (Status == "Pending")
+                if (Status == "Pending" || Status == "In Process")
                 {
                     var navigationParameters = new NavigationParameters();
-                    navigationParameters.Add("ScheduleData", obj);
-                    navigationParameters.Add("IsDetailsViewEnabled", true);
-                    await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
+                    var detailsOfPlan = await ApiService.Instance.GetActionPlanDetails(model.Id);
+                    navigationParameters.Add("ActionPlanDetailsModel", detailsOfPlan);
+                    await NavigationService.NavigateAsync("PlanStatusUpdationPage", navigationParameters);
+                    ActionPlansList.Clear();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "This action plan has been closed", "Ok");
                 }
 
 

@@ -378,7 +378,7 @@ namespace Vedanta.ViewModel
             {
                 CurrentAoGembaCheckListMasterId = parameters.GetValue<int>("AoGembaCheckListMasterId");
 
-               
+                ScoreInfoTappedExecute(null);
 
             }
 

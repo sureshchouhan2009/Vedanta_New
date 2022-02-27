@@ -57,19 +57,21 @@ namespace Vedanta.ViewModel
                         var LoginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
                         if (RememberMe)
                         {
+                            Preferences.Set("UserType", LoginResponse.UserType);
                             Preferences.Set("UserName", EmailText);
                             Preferences.Set("Password", PasswordText);
                             Preferences.Set("IsLoggedIN", true);
                         }
                         else
                         {
+                            Preferences.Set("UserType", LoginResponse.UserType);
                             Preferences.Set("UserName", EmailText);
                             Preferences.Set("Password", PasswordText);
                             Preferences.Set("IsLoggedIN", false);
                         }
                         var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
                         var EndDate = DateTime.Now.Date.ToString();
-                        if("SomeCondition"== "SomeCondition")
+                        if ( LoginResponse.UserType == "User")
                         {
                             await NavigationService.NavigateAsync("ActionPlansPage");
                         }
@@ -78,7 +80,7 @@ namespace Vedanta.ViewModel
                             Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, EmailText);
                             await NavigationService.NavigateAsync("GembaSchedule");
                         }
-                      
+
                     }
                     else
                     {

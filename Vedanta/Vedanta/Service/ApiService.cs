@@ -376,15 +376,64 @@ namespace Vedanta.Service
             }
             return responsedata;
         }
+        
+        public async Task<ActionPlanDetailsModel> GetActionPlanDetails(int PlanID)
+        {
+            ActionPlanDetailsModel responsedata = new ActionPlanDetailsModel();
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.GetActionPlainDetailsByID + "?Id=" + PlanID;
+                var response = await client.GetAsync(RequestUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    responsedata = JsonConvert.DeserializeObject<ActionPlanDetailsModel>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+            return responsedata;
+        }
+
+
+        public async Task<bool> UpdateAcctionPlanApiCall(UpdateActionPlanModel updateActionPlanModel)
+        {
+            bool isSuccess = false;
+            try
+            {
+                var client = ServiceUtility.CreateNewHttpClient();
+                var authHeader = new AuthenticationHeaderValue("bearer", await TokenClass.GetToken());
+                client.DefaultRequestHeaders.Authorization = authHeader;
+                String RequestUrl = Urls.CreateUpdateResponsibility;
+                var payload = ServiceUtility.BuildRequest(updateActionPlanModel);
+                var req = new HttpRequestMessage(HttpMethod.Post, RequestUrl) { Content = payload };
+                var response = await client.SendAsync(req);
+                if (response?.IsSuccessStatusCode ?? false)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    isSuccess = JsonConvert.DeserializeObject<bool>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+
+            }
+            return isSuccess;
+
+        }
 
 
 
 
 
 
-       
-
-       
 
 
 

@@ -25,10 +25,14 @@ namespace Vedanta
             Preferences.Get("IsLoggedIN", false);
             if (CheckIfLoggedIn())
             {
-               
-                await NavigationService.NavigateAsync("NavigationPage/GembaSchedule");
-              //  await NavigationService.NavigateAsync("NavigationPage/AOAwarenessPage");
-
+               if(Preferences.Get("UserType", "")== "User")
+                {
+                    await NavigationService.NavigateAsync("ActionPlansPage");
+                }
+                else
+                {
+                    await NavigationService.NavigateAsync("GembaSchedule");
+                }
             }
             else
             {
@@ -60,6 +64,7 @@ namespace Vedanta
             containerRegistry.RegisterForNavigation<MenuPopUpPage, GembaScheduleViewModel>();
             containerRegistry.RegisterForNavigation<ScoreInfoPage, ScorePageViewModel>();
             containerRegistry.RegisterForNavigation<ActionPlansPage, ActionPlansPageViewModel>();
+            containerRegistry.RegisterForNavigation<PlanStatusUpdationPage, PlanStatusUpdationPageViewModel>();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Vedanta.Models
         public object UserId { get; set; }
         public object Password { get; set; }
         public string Name { get; set; }
+        public string UserType { get; set; }
         public object AllowedApplication { get; set; }
         public int Id { get; set; }
     }

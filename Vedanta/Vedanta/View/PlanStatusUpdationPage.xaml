@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vedanta.View.PlanStatusUpdationPage" 
+             NavigationPage.HasNavigationBar="False" 
+             x:Name="updatePlanStatusScreen" 
+             xmlns:components="clr-namespace:Vedanta.Components">
+    <ContentPage.Content>
+        <ScrollView>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="0" >
+                <Frame Grid.Row="0" BackgroundColor="#006699" Padding="20,0,20,0" HeightRequest="50" BorderColor="#006699">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                        <Label Text="&lt;" FontSize="Body" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Action Plan Update" FontSize="Body" TextColor="White" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GobackCommand}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Frame>
+
+                <StackLayout Grid.Row="1" Margin="20,10,20,10" >
+                    <CarouselView x:Name="corousel" HeightRequest="250" ItemsSource="{Binding UploadedImagesList}" IndicatorView="indicatorView" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True" EmptyView="No Image">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image Aspect="AspectFill" Source="{Binding imageSource}" BackgroundColor="Gray" />
+                                </Grid>
+
+
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+
+                    </CarouselView>
+                    <IndicatorView x:Name="indicatorView" IndicatorColor="Green" SelectedIndicatorColor="Red" HorizontalOptions="Center" VerticalOptions="End" />
+
+                </StackLayout>
+                <Grid Grid.Row="2" RowDefinitions="Auto,Auto" Margin="20,10,20,10">
+                    <Label Grid.Row="0" Text="Observation:" FontAttributes="Bold" FontSize="18" TextColor="Black" />
+                    <Label Grid.Row="1" Text="{Binding PlanDetails.Observations}"  FontSize="16" TextColor="Black" />
+                </Grid>
+
+                <Grid Grid.Row="3" RowDefinitions="Auto,Auto" Margin="20,10,20,10">
+                    <Label Grid.Row="0" Text="Action Plan:" FontAttributes="Bold" FontSize="18" TextColor="Black" />
+                    <Label Grid.Row="1" Text="{Binding PlanDetails.ActionPlan}"  FontSize="16" TextColor="Black" />
+                </Grid>
+                <Grid Grid.Row="4" RowDefinitions="Auto,Auto" Margin="20,10,20,10">
+                    <Label Grid.Row="0" Text="Remark" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Frame Grid.Row="1" VerticalOptions="FillAndExpand" BorderColor="DarkGray" HasShadow="True" Padding="0">
+                        <components:CustomEditor AutoSize="TextChanges"  Text="{Binding ActionSummaryText}" HeightRequest="120" FontSize="16" FontAttributes="Bold" />
+                    </Frame>
+                    
+                </Grid>
+                <StackLayout Grid.Row="5" Margin="20,10,20,10">
+                    <Label Text="Status" />
+                    <Frame Padding="0">
+                        <components:CustomPicker ItemsSource="{Binding StatusList}" SelectedItem="{Binding SelectedStatus, Mode=TwoWay}" Image="ddicon" IconHeight="10" IconWidth="10">
+                           
+                        </components:CustomPicker>
+                    </Frame>
+                </StackLayout>
+
+                <Grid Grid.Row="6" RowDefinitions="Auto,Auto" Margin="20,10,20,10" >
+                    <Label Grid.Row="0" Text="Add Images" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
+                    <StackLayout Grid.Row="1"  Padding="0" Margin="0" >
+                        <CarouselView x:Name="corouselForNewImages" HeightRequest="240" ItemsSource="{Binding NewlyUploadedImages}" IndicatorView="indicatorViewForNewImages" FlowDirection="LeftToRight" IsBounceEnabled="True" IsScrollAnimated="True" EmptyView="No Image" Margin="0">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Image Aspect="AspectFill" Source="{Binding imageSource}" BackgroundColor="Gray" />
+                                        <Button Text="Add Image" Margin="20,0,20,0" Command="{Binding Source={x:Reference updatePlanStatusScreen},Path=BindingContext.PickOrCaptureImageCommmand}" CommandParameter="{Binding .}" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Start" BackgroundColor="Transparent">
+
+                                        </Button>
+                                        <Button Text="Delete" Margin="0,0,20,0" Command="{Binding Source={x:Reference updatePlanStatusScreen},Path=BindingContext.DeleteCurrentImageCommand}" CommandParameter="{Binding .}" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="End" BackgroundColor="Transparent">
+
+                                        </Button>
+                                    </Grid>
+
+
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+
+                        </CarouselView>
+                        <IndicatorView x:Name="indicatorViewForNewImages" IndicatorColor="Green" HorizontalOptions="Center" VerticalOptions="End"  />
+
+                    </StackLayout>
+                </Grid>
+
+                <Button Grid.Row="7" Command="{Binding SubmitCommand}" HeightRequest="60" Text="Submit" Margin="20,10,20,10" CornerRadius="5" TextColor="White" BackgroundColor="#006699" Padding="2" />
+
+            </Grid>
+        </ScrollView>
+       
+    </ContentPage.Content>
+</ContentPage>

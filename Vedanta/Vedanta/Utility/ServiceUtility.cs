@@ -33,7 +33,7 @@ namespace Vedanta.Utility
 
         public static HttpContent BuildRequest(object payloadModel)
         {
-
+            var reqmodel = JsonConvert.SerializeObject(payloadModel);
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore

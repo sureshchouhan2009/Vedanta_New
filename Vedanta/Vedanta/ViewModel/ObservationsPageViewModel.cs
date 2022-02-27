@@ -286,11 +286,12 @@ namespace Vedanta.ViewModel
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
                             handleDefaultImageVisibility();
-                            await Application.Current.MainPage.DisplayAlert("Success", "New Onservation added successfully", "Ok");
+                            await Application.Current.MainPage.DisplayAlert("Success", "New Observation added successfully", "Ok");
                         }
                         else
                         {
                             await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                            IsBusy = false;
                         }
 
                         IsBusy = false;
@@ -318,6 +319,7 @@ namespace Vedanta.ViewModel
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                IsBusy = false;
             }
         }
 

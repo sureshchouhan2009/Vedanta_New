@@ -11,29 +11,17 @@ namespace Vedanta.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var Status = (String)value;
-            if (Status == "Closed")
+            if (Status == "Completed")
             {
-                return "Close";
+                return "Freezed";
             }
-            else if (Status == "In Progress")
-            {
-                return "Continue Observation";
-            }
-            else if (Status == "Pending For Score")
-            {
-                return "Add Score";
-            }
-            else if (Status == "Pending")
+            else if (Status == "Pending"|| Status == "In Process")
             {
                 return "Report Status";
             }
-            else if (Status == "In Process")
-            {
-                return "Add Observation";
-            }
             else
             {
-                return "Close";
+                return "Freezed";
             }
         }
 

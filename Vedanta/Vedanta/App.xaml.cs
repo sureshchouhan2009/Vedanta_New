@@ -27,16 +27,16 @@ namespace Vedanta
             {
                if(Preferences.Get("UserType", "")== "User")
                 {
-                    await NavigationService.NavigateAsync("ActionPlansPage");
+                    await NavigationService.NavigateAsync("/ActionPlansPage");
                 }
                 else
                 {
-                    await NavigationService.NavigateAsync("GembaSchedule");
+                    await NavigationService.NavigateAsync("/GembaSchedule");
                 }
             }
             else
             {
-                await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+                await NavigationService.NavigateAsync("/LoginPage");
             }
         }
 

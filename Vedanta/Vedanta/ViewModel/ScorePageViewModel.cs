@@ -275,7 +275,9 @@ namespace Vedanta.ViewModel
                         navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex=>ex.Id==  GembaScheduleModelFromObservattionPage.Id));
                         navigationParameters.Add("IsDetailsViewEnabled", true);
                         await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-
+                        //check if they raised Issues
+                        //NavigationService.GoBackAsync();
+                        //NavigationService.GoBackAsync();
                         await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                     }

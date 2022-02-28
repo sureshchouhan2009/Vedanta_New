@@ -8,6 +8,7 @@ using Prism;
 using Prism.Ioc;
 using Acr.UserDialogs;
 using Rg.Plugins.Popup.Services;
+using AndroidX.AppCompat.App;
 
 namespace Vedanta.Droid
 {
@@ -16,6 +17,9 @@ namespace Vedanta.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
+            //for restrict dark mode for app  for iOS also solution here  //https://stackoverflow.com/questions/64183173/how-to-force-light-mode-in-xamarin-forms
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;  
             base.OnCreate(savedInstanceState);
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(0, 102, 153)); //to change the status bar color
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

@@ -9,7 +9,7 @@
              x:Name="ActionPlanScreen">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Converter:StringToColorConverter x:Key="StrToColConverter" />
+            <Converter:StringToColorConverterForActionListPage x:Key="StrToColConverterActionListPage" />
             <Converter:StatusToButtonTextConverterForActionListScreen x:Key="StatusToBTextConverterForActionPage" />
             <Converter:DateChangedEventArgsConverter x:Key="dateChangedEventArgsConverter" />
             <Converter:InverseBoolConverter x:Key="InvertedBoolConverter" />
@@ -111,7 +111,7 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-                                    <Frame Grid.Column="1" Padding="0" BackgroundColor="{Binding Status,Converter={StaticResource StrToColConverter}}" HeightRequest="10" Margin="0" CornerRadius="20">
+                                    <Frame Grid.Column="1" Padding="0" BackgroundColor="{Binding Status,Converter={StaticResource StrToColConverterActionListPage}}" HeightRequest="10" Margin="0" CornerRadius="20">
                                         <Label Text="{Binding Status}" FontSize="14" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
                                     </Frame>
                                 </Grid>

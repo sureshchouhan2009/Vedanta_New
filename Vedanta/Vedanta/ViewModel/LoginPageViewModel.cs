@@ -73,12 +73,12 @@ namespace Vedanta.ViewModel
                         var EndDate = DateTime.Now.Date.ToString();
                         if ( LoginResponse.UserType == "User")
                         {
-                            await NavigationService.NavigateAsync("ActionPlansPage");
+                            await NavigationService.NavigateAsync("/ActionPlansPage");
                         }
                         else
                         {
                             Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, EmailText);
-                            await NavigationService.NavigateAsync("GembaSchedule");
+                            await NavigationService.NavigateAsync("/GembaSchedule");
                         }
 
                     }

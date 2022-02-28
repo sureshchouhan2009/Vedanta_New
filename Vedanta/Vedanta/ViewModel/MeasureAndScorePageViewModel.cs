@@ -22,6 +22,7 @@ namespace Vedanta.ViewModel
         private ICommand _FinalSubmitCommand;
         private GembaScheduleModel _gembaScheduleModelParam;
         private bool _isDetailsViewEnabled;
+        private bool _isFinalSubmitEnabled;
         private string _totalAddedScoreCountText;
         private int _totalScorePercentage;
         private string _gembaWalkCompletionText;
@@ -44,6 +45,15 @@ namespace Vedanta.ViewModel
         {
             get { return _isDetailsViewEnabled; }
             set { SetProperty(ref _isDetailsViewEnabled, value); }
+        }
+         public bool IsFinalSubmitEnabled
+        {
+            get
+            {
+                _isFinalSubmitEnabled=calculateTheCountOfAddedScoreMeasure(Session.Instance.CurrentGembaScheduleMeasuresList)==7;
+                return _isFinalSubmitEnabled; 
+            }
+            set { SetProperty(ref _isFinalSubmitEnabled, value); }
         }
 
         public string TotalAddedScoreCountText

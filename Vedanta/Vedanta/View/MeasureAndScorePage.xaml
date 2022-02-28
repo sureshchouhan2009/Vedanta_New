@@ -9,6 +9,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Converter:ScoreValueToColorConverter x:Key="scoreValueToColorConverter" />
+            <Converter:ScoreValueToTextConverter x:Key="scoreValueToTextConverter" />
+            
             <Style x:Key="mainfram" TargetType="Frame"  >
                 <Setter Property="BorderColor" Value="Red" />
                 <Setter Property="HeightRequest" Value="38" />
@@ -57,7 +59,7 @@
                             <Frame Style="{StaticResource mainfram}">
                                 <Grid ColumnDefinitions="1.5*,8*,1*" Padding="0" Margin="0" IsEnabled="{Binding IsDetailsViewEnabled}">
                                     <Frame Grid.Column="0" Style="{StaticResource circleFram}" BackgroundColor="{Binding Score, Converter={StaticResource scoreValueToColorConverter}}"  />
-                                    <Label Grid.Column="0" Text="{Binding Score}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                    <Label Grid.Column="0" Text="{Binding Score,Converter={StaticResource scoreValueToTextConverter}}" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Measure}" Style="{StaticResource LabelInsideFramStyle}" />
                                     <Label Grid.Column="2" Text="&gt;" Style="{StaticResource GreterThanSymbolStyle}" IsVisible="{Binding IsDetailsViewEnabled}" />
                                     <Grid.GestureRecognizers>

@@ -142,18 +142,7 @@ namespace Vedanta.ViewModel
             }
             set { SetProperty(ref _GoodSelectionCommand, value); }
         }
-        public ICommand BackToScoreCommand
-        {
-            get
-            {
-                if (_BackToScoreCommand == null)
-                {
-                    _BackToScoreCommand = new Command<object>(BackToScoreCommandExecute);
-                }
-                return _BackToScoreCommand;
-            }
-            set { SetProperty(ref _BackToScoreCommand, value); }
-        }
+       
         public ICommand SubmitCommand
         {
             get
@@ -247,13 +236,10 @@ namespace Vedanta.ViewModel
             IsAverageSelected = false;
             IsNotSatisfactorySelected = false;
         }
-        private void BackToScoreCommandExecute(object obj)
+       
+        private async void SkipScoreCommandExecute(object obj)
         {
-
-        }
-        private void SkipScoreCommandExecute(object obj)
-        {
-
+            await NavigationService.GoBackAsync();
         }
         private async void SubmitCommandExecute(object obj)
         {

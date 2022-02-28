@@ -208,7 +208,7 @@ namespace Vedanta.ViewModel
 
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
-                            await Application.Current.MainPage.DisplayAlert("Success", "Onservation updated successfully", "Ok");
+                            await Application.Current.MainPage.DisplayAlert("Success", "Observation updated successfully", "Ok");
                             var navigationParameters = new NavigationParameters();
                             navigationParameters.Add("ScheduleDataForAwareness", CurrentGembaScheduleModel);
                             navigationParameters.Add("CurrentMeasureModel", CurrentMeasureAndScoreData);

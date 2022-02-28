@@ -6,26 +6,19 @@ using Xamarin.Forms;
 
 namespace Vedanta.Converters
 {
-   public class ScoreValueToColorConverter : IValueConverter
+
+    public class ScoreValueToTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int currentValue = (int)value;
-            if (currentValue == 0)
+            if (currentValue == 1)
             {
-                return Color.Red;
-            }
-            else if (currentValue == 3)
-            {
-                return Color.Orange;
-            }
-            else if (currentValue == 5)
-            {
-                return Color.Green;
+                return "NA";
             }
             else
             {
-                return Color.Gray;
+                return currentValue;
             }
         }
 

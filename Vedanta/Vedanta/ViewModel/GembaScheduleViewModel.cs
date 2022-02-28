@@ -310,7 +310,7 @@ namespace Vedanta.ViewModel
                 if (currentItem.ActionProperty == "Logout")
                 {
                     Preferences.Clear();
-                    await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+                    await NavigationService.NavigateAsync("/LoginPage");
                     await PopupNavigation.Instance.PopAsync();
 
                 }

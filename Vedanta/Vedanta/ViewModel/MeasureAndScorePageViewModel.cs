@@ -187,7 +187,7 @@ namespace Vedanta.ViewModel
                     var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
                     var EndDate = DateTime.Now.Date.ToString();
                     Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
-                    await NavigationService.NavigateAsync("GembaSchedule");
+                    await NavigationService.NavigateAsync("/GembaSchedule");
                 }
                 else
                 {

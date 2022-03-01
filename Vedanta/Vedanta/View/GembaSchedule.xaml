@@ -15,6 +15,7 @@
             <Converter:StatusToButtonTextConverter x:Key="StatusToBTextConverter" />
             <Converter:DateChangedEventArgsConverter x:Key="dateChangedEventArgsConverter" />
             <Converter:InverseBoolConverter x:Key="InvertedBoolConverter" />
+            <Converter:IntToBoolConverter x:Key="intToBoolConverter" />
         </ResourceDictionary>
         
     </ContentPage.Resources>
@@ -101,7 +102,7 @@
                    
                 </Grid>
             </Frame>
-
+            <Label Grid.Row="2" IsVisible="{Binding  GembaScheduleList.Count ,Converter={StaticResource intToBoolConverter}}" Text="No schedule availabe for selected dates" TextColor="Black" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
             <ListView Grid.Row="2" ItemsSource="{Binding GembaScheduleList}" SelectionMode="None"  HasUnevenRows="True" SeparatorVisibility="Default"  >
                 <ListView.ItemTemplate>
                     <DataTemplate>

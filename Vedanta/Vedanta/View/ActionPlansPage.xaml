@@ -13,6 +13,7 @@
             <Converter:StatusToButtonTextConverterForActionListScreen x:Key="StatusToBTextConverterForActionPage" />
             <Converter:DateChangedEventArgsConverter x:Key="dateChangedEventArgsConverter" />
             <Converter:InverseBoolConverter x:Key="InvertedBoolConverter" />
+            <Converter:IntToBoolConverter x:Key="intToBoolConverter" />
         </ResourceDictionary>
 
     </ContentPage.Resources>
@@ -96,6 +97,7 @@
                 </Grid>
             </Frame>
 
+            <Label Grid.Row="2" IsVisible="{Binding ActionPlansList.Count,Converter={StaticResource intToBoolConverter}}" Text="No action plans availabe for selected dates" TextColor="Black" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
             <ListView Grid.Row="2" ItemsSource="{Binding ActionPlansList}" SelectionMode="None" HasUnevenRows="True" SeparatorVisibility="Default">
                 <ListView.ItemTemplate>
                     <DataTemplate>

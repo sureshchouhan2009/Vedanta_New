@@ -306,6 +306,7 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             try
             {
+               
                 var currentItem = obj as UserInfo;
                 if (currentItem.ActionProperty == "Logout")
                 {

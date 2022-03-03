@@ -346,8 +346,8 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             //var test = obj as DateSelectedEvent;
             var startingDate = (DateTime)obj;
-            var stDate = startingDate.Date.ToString("dd-MM-yyyy");
-            var endDate = EndDate.Date.ToString("dd-MM-yyyy");
+            var stDate = startingDate.Date.ToString("MM/dd/yyyy");//"dd-MM-yyyy"
+            var endDate = EndDate.Date.ToString("MM/dd/yyyy");
             Session.Instance.GembaScheduleList.Clear();
             Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate, Preferences.Get("UserName", ""));
             GembaScheduleList.Clear();
@@ -358,8 +358,8 @@ namespace Vedanta.ViewModel
         {
             IsBusy = true;
             var endingDate = (DateTime)obj;
-            var stDate = StartDate.Date.ToString();
-            var endDate = endingDate.Date.ToString();
+            var stDate = StartDate.Date.ToString("MM/dd/yyyy");
+            var endDate = endingDate.Date.ToString("MM/dd/yyyy");
             Session.Instance.GembaScheduleList.Clear();
             Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(stDate, endDate, Preferences.Get("UserName", ""));
             GembaScheduleList.Clear();
@@ -373,8 +373,8 @@ namespace Vedanta.ViewModel
 
             if (GembaScheduleList.Count == 0)
             {
-                var startDate = StartDate.Date.ToString();
-                var endDate = EndDate.Date.ToString();
+                var startDate = StartDate.Date.ToString("MM/dd/yyyy");
+                var endDate = EndDate.Date.ToString("MM/dd/yyyy");
                 Task.Run(async () => Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(startDate, endDate, Preferences.Get("UserName", ""))).Wait();
                 GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
             }

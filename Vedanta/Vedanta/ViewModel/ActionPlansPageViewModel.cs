@@ -234,8 +234,8 @@ namespace Vedanta.ViewModel
         {
             IsBusy = true;
             var startingDate = (DateTime)obj;
-            var stDate = startingDate.Date.ToString("dd-MM-yyyy");
-            var endDate = EndDate.Date.ToString("dd-MM-yyyy");
+            var stDate = startingDate.Date.ToString("MM/dd/yyyy");
+            var endDate = EndDate.Date.ToString("MM/dd/yyyy");
             Session.Instance.ActionPlanList.Clear();
             Session.Instance.ActionPlanList = await ApiService.Instance.GetActionPlanList(stDate, endDate, Preferences.Get("UserName", ""));
             ActionPlansList.Clear();
@@ -246,8 +246,8 @@ namespace Vedanta.ViewModel
         {
             IsBusy = true;
             var endingDate = (DateTime)obj;
-            var stDate = StartDate.Date.ToString();
-            var endDate = endingDate.Date.ToString();
+            var stDate = StartDate.Date.ToString("MM/dd/yyyy");
+            var endDate = endingDate.Date.ToString("MM/dd/yyyy");
             Session.Instance.GembaScheduleList.Clear();
             Session.Instance.ActionPlanList = await ApiService.Instance.GetActionPlanList(stDate, endDate, Preferences.Get("UserName", ""));
             ActionPlansList.Clear();
@@ -263,8 +263,8 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             if (ActionPlansList.Count == 0)
             {
-                var startDate = StartDate.Date.ToString();
-                var endDate = EndDate.Date.ToString();
+                var startDate = StartDate.Date.ToString("MM/dd/yyyy");
+                var endDate = EndDate.Date.ToString("MM/dd/yyyy");
                 Task.Run(async () => Session.Instance.ActionPlanList = await ApiService.Instance.GetActionPlanList(startDate, endDate, Preferences.Get("UserName", ""))).Wait();
                 ActionPlansList = new ObservableCollection<ActionPlanModel>(Session.Instance.ActionPlanList);
             }

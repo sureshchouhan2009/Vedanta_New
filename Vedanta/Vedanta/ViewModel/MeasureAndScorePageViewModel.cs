@@ -46,15 +46,7 @@ namespace Vedanta.ViewModel
             get { return _isDetailsViewEnabled; }
             set { SetProperty(ref _isDetailsViewEnabled, value); }
         }
-         public bool IsFinalSubmitEnabled
-        {
-            get
-            {
-                _isFinalSubmitEnabled=calculateTheCountOfAddedScoreMeasure(Session.Instance.CurrentGembaScheduleMeasuresList)==7;
-                return _isFinalSubmitEnabled; 
-            }
-            set { SetProperty(ref _isFinalSubmitEnabled, value); }
-        }
+        
 
         public string TotalAddedScoreCountText
         {
@@ -187,27 +179,34 @@ namespace Vedanta.ViewModel
             IsBusy = true;
             try
             {
-                FinalSubmitModel submitModel = new FinalSubmitModel();
-                submitModel.GembaWalkScheduleId = _gembaScheduleModelParam.Id;
-                var response = await ApiService.Instance.FinalSubmitApiCall(submitModel);
-                if (response)
+                if (IsDetailsViewEnabled && calculateTheCountOfAddedScoreMeasure(Session.Instance.CurrentGembaScheduleMeasuresList) == 7)
                 {
+                    FinalSubmitModel submitModel = new FinalSubmitModel();
+                    submitModel.GembaWalkScheduleId = _gembaScheduleModelParam.Id;
+                    var response = await ApiService.Instance.FinalSubmitApiCall(submitModel);
+                    if (response)
+                    {
 
-                    await Application.Current.MainPage.DisplayAlert("Success", "Submitted successfully", "Ok");
-                    var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
-                    var EndDate = DateTime.Now.Date.ToString();
-                    Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
-                    await NavigationService.NavigateAsync("/GembaSchedule");
+                        await Application.Current.MainPage.DisplayAlert("Success", "Submitted successfully", "Ok");
+                        var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                        var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
+                        Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+                        await NavigationService.NavigateAsync("/GembaSchedule");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                    }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                    IsBusy = false;
+                    await Application.Current.MainPage.DisplayAlert("Error", "Please add score against all Measures.", "Ok");
                 }
-
             }
             catch (Exception ex)
             {
-
+                IsBusy = false;
             }
             IsBusy = false;
         }

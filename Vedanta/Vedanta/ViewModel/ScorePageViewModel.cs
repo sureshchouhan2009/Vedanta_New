@@ -243,49 +243,59 @@ namespace Vedanta.ViewModel
         }
         private async void SubmitCommandExecute(object obj)
         {
-            IsBusy = true;
+           
             try
             {
                 if (IsNotSatisfactorySelected || IsAverageSelected || IsGoodSelected)
                 {
-                    PostScoreModel scoreModel = new PostScoreModel();
-                    scoreModel.GembaWalkScheduleId = CurrentGembaWalkScheduleId;
-                    scoreModel.AoGembaCheckListMasterId = CurrentAoGembaCheckListMasterId;
-                    scoreModel.Score = calculateGivenScore();
-                    scoreModel.IsDeleted = false;
-                    scoreModel.PerformedBy = Preferences.Get("UserName", "");
-                    scoreModel.PerformedOn = DateTime.Now.ToString("yyyy-MM-dd");
-                    bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
-                    if (success)
+                    var choice = await Application.Current.MainPage.DisplayAlert("Alert", "Are you sure, you want to Submit Score. Once you submit the score, you can not edit it.", "Ok","Cancel");
+                    if (choice)
                     {
-                        try
+                        IsBusy = true;
+                        PostScoreModel scoreModel = new PostScoreModel();
+                        scoreModel.GembaWalkScheduleId = CurrentGembaWalkScheduleId;
+                        scoreModel.AoGembaCheckListMasterId = CurrentAoGembaCheckListMasterId;
+                        scoreModel.Score = calculateGivenScore();
+                        scoreModel.IsDeleted = false;
+                        scoreModel.PerformedBy = Preferences.Get("UserName", "");
+                        scoreModel.PerformedOn = DateTime.Now.ToString("yyyy-MM-dd");
+                        bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
+                        if (success)
                         {
-                            var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
-                            var EndDate = DateTime.Now.Date.ToString();
-                            Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+                            try
+                            {
+                                var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                                var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
+                                Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                            IsBusy = false;
+                            var navigationParameters = new NavigationParameters();
+
+                            navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex => ex.Id == GembaScheduleModelFromObservattionPage.Id));
+                            navigationParameters.Add("IsDetailsViewEnabled", true);
+                            await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
+                            //check if they raised Issues
+                            //NavigationService.GoBackAsync();
+                            //NavigationService.GoBackAsync();
+                            await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                         }
-                        catch (Exception ex)
+                        else
                         {
-
+                            IsBusy = false;
+                            await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
                         }
-                        IsBusy = false;
-                        var navigationParameters = new NavigationParameters();
-                       
-                        navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex=>ex.Id==  GembaScheduleModelFromObservattionPage.Id));
-                        navigationParameters.Add("IsDetailsViewEnabled", true);
-                        await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-                        //check if they raised Issues
-                        //NavigationService.GoBackAsync();
-                        //NavigationService.GoBackAsync();
-                        await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
-
                     }
                     else
                     {
-                        IsBusy = false;
-                        await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+
                     }
+                   
                 }
                 else
                 {
@@ -365,9 +375,6 @@ namespace Vedanta.ViewModel
             if (parameters.ContainsKey("AoGembaCheckListMasterId"))
             {
                 CurrentAoGembaCheckListMasterId = parameters.GetValue<int>("AoGembaCheckListMasterId");
-
-                ScoreInfoTappedExecute(null);
-
             }
 
             IsBusy = false;

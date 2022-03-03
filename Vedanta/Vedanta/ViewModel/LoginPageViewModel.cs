@@ -69,8 +69,8 @@ namespace Vedanta.ViewModel
                             Preferences.Set("Password", PasswordText);
                             Preferences.Set("IsLoggedIN", false);
                         }
-                        var StartDate = DateTime.Now.Date.AddDays(-60).ToString();
-                        var EndDate = DateTime.Now.Date.ToString();
+                        var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                        var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
                         if ( LoginResponse.UserType == "User")
                         {
                             await NavigationService.NavigateAsync("/ActionPlansPage");

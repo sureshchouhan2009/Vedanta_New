@@ -63,7 +63,7 @@ namespace Vedanta.ViewModel
         //    var page = new MenuPopUpPage();
         //    await PopupNavigation.Instance.PushAsync(page);
         //}
-        public async void PopulateUserProfile()
+        public virtual async void PopulateUserProfile()
         {
             try
             {

@@ -28,5 +28,12 @@ namespace Vedanta.View
         {
 
         }
+
+        protected override  bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send<string, string>("GembaSchedule", "ExitPopUp", "");
+
+            return true;
+        }
     }
 }

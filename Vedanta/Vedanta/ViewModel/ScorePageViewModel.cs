@@ -262,26 +262,29 @@ namespace Vedanta.ViewModel
                         bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
                         if (success)
                         {
-                            try
-                            {
-                                var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
-                                var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
-                                Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+                            //try
+                            //{
+                            //    var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                            //    var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
+                            //    if (Vedanta.Utility.Session.Instance.GembaScheduleList.Count == 0)
+                            //    {
+                            //        Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+                            //    }
+                               
 
-                            }
-                            catch (Exception ex)
-                            {
+                            //}
+                            //catch (Exception ex)
+                            //{
 
-                            }
-                            IsBusy = false;
+                            //}
+                           
                             var navigationParameters = new NavigationParameters();
 
                             navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex => ex.Id == GembaScheduleModelFromObservattionPage.Id));
                             navigationParameters.Add("IsDetailsViewEnabled", true);
+                            IsBusy = false;
                             await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-                            //check if they raised Issues
-                            //NavigationService.GoBackAsync();
-                            //NavigationService.GoBackAsync();
+                           
                             await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                         }

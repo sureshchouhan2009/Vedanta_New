@@ -230,6 +230,19 @@ namespace Vedanta.ViewModel
                 
             };
 
+            MessagingCenter.Unsubscribe<String, String>("GembaSchedule", "ExitPopUp");
+            MessagingCenter.Subscribe<String, String>("GembaSchedule", "ExitPopUp", async (args, parameters) =>
+            {
+               var response= await Application.Current.MainPage.DisplayAlert("Alert", "Are you sure, you want to exit from Application.", "Ok", "Cancel");
+                if (response)
+                {
+                    //to terminate the cross platform app
+                    //https://stackoverflow.com/questions/29257929/how-to-terminate-a-xamarin-application
+                    System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+                }
+               
+            });
+
         }
         #endregion
         #region Methods

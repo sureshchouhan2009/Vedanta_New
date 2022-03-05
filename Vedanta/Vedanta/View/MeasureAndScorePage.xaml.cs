@@ -118,5 +118,11 @@ namespace Vedanta.View
            // GenerateDynamicGrid(Session.Instance.CurrentGembaSchedule.Score);
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send<string, string>("DeviceBackButttonToHomePage", "BackToHome", "");
+            return true;
+        }
+
     }
 }

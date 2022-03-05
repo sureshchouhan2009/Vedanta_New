@@ -16,5 +16,12 @@ namespace Vedanta.View
         {
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send<string, string>("ActionPlansPage", "ExitPopUp", "");
+
+            return true;
+        }
     }
 }

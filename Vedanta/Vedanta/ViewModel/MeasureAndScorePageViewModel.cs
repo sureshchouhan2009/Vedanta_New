@@ -19,6 +19,7 @@ namespace Vedanta.ViewModel
         #region Fields
         private ObservableCollection<MeasuresAndScoreModel> _measuresList = new ObservableCollection<MeasuresAndScoreModel>();
         private ICommand _NavigateForObservation;
+        private ICommand _GobackCommandFromMasureAndScore;
         private ICommand _FinalSubmitCommand;
         private GembaScheduleModel _gembaScheduleModelParam;
         private bool _isDetailsViewEnabled;
@@ -73,6 +74,37 @@ namespace Vedanta.ViewModel
 
 
 
+        public ICommand GobackCommandFromMasureAndScore
+        {
+            get
+            {
+                if (_GobackCommandFromMasureAndScore == null)
+                {
+                    _GobackCommandFromMasureAndScore = new Command<object>(GobackCommandFromMasureAndScoreExecute);
+                }
+                return _GobackCommandFromMasureAndScore;
+            }
+        }
+
+        private async void GobackCommandFromMasureAndScoreExecute(object obj)
+        {
+            //if(Session.Instance.GembaScheduleList.Count == 0)
+            //{
+            //    var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+            //    var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
+            //    Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+            //}
+            try
+            {
+
+                await NavigationService.NavigateAsync("/GembaSchedule");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public ICommand NavigateForObservation
         {
             get
@@ -102,7 +134,11 @@ namespace Vedanta.ViewModel
         #region Constructer
         public MeasureAndScorePageViewModel(INavigationService navigationService) : base(navigationService)
         {
-
+            MessagingCenter.Unsubscribe<String, String>("DeviceBackButttonToHomePage", "BackToHome");
+            MessagingCenter.Subscribe<String, String>("DeviceBackButttonToHomePage", "BackToHome", async (args, parameters) =>
+            {
+                await NavigationService.NavigateAsync("/GembaSchedule");
+            });
         }
         #endregion
         #region Methods

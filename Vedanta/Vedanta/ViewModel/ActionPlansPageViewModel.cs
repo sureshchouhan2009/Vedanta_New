@@ -11,6 +11,8 @@ using System.Linq;
 using Vedanta.Service;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
+using Vedanta.View;
+using Rg.Plugins.Popup.Services;
 
 namespace Vedanta.ViewModel
 {
@@ -248,7 +250,6 @@ namespace Vedanta.ViewModel
             var endingDate = (DateTime)obj;
             var stDate = StartDate.Date.ToString("MM/dd/yyyy");
             var endDate = endingDate.Date.ToString("MM/dd/yyyy");
-            Session.Instance.GembaScheduleList.Clear();
             Session.Instance.ActionPlanList = await ApiService.Instance.GetActionPlanList(stDate, endDate, Preferences.Get("UserName", ""));
             ActionPlansList.Clear();
             ActionPlansList = new ObservableCollection<ActionPlanModel>(Session.Instance.ActionPlanList);
@@ -256,7 +257,37 @@ namespace Vedanta.ViewModel
         }
         public ActionPlansPageViewModel(INavigationService navigationService) : base(navigationService)
         {
+            MessagingCenter.Unsubscribe<String, String>("ActionPlansPage", "ExitPopUp");
+            MessagingCenter.Subscribe<String, String>("ActionPlansPage", "ExitPopUp", async (args, parameters) =>
+            {
+                var response = await Application.Current.MainPage.DisplayAlert("Alert", "Are you sure, you want to exit from Application.", "Ok", "Cancel");
+                if (response)
+                {
+                    //to terminate the cross platform app
+                    //https://stackoverflow.com/questions/29257929/how-to-terminate-a-xamarin-application
+                    System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+                }
+
+            });
         }
+
+        public override async void PopulateUserProfile()
+        {
+            try
+            {
+
+                var page = new MenuPopUpPage();
+                await PopupNavigation.Instance.PushAsync(page);
+            }
+            catch (Exception ex)
+            {
+
+                await NavigationService.NavigateAsync("/ActionPlansPage");
+            }
+        }
+
+
+
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);

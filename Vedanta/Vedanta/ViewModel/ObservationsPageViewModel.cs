@@ -286,15 +286,17 @@ namespace Vedanta.ViewModel
                             ObservationSummaryText = "";//clearing the edit text field
                             UploadedImagesList.Clear();
                             handleDefaultImageVisibility();
+                            IsBusy = false;
                             await Application.Current.MainPage.DisplayAlert("Success", "New Observation added successfully", "Ok");
                         }
                         else
                         {
-                            await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
                             IsBusy = false;
+                            await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                           
                         }
 
-                        IsBusy = false;
+                       
                     }
                     else
                     {
@@ -318,8 +320,9 @@ namespace Vedanta.ViewModel
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
                 IsBusy = false;
+                await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong", "Ok");
+                
             }
         }
 
@@ -418,6 +421,8 @@ namespace Vedanta.ViewModel
                 new UploadImageModel{ ImageName="siteImage" , imageSource= ImageSource.FromResource("siteImage")}
             });
             UploadedImagesList = ImagesList;
+
+           
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)

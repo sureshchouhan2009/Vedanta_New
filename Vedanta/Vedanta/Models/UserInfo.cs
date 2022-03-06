@@ -8,5 +8,6 @@ namespace Vedanta.Models
     {
         public string ActionProperty { get; set; }
         public string AcordianIcon { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

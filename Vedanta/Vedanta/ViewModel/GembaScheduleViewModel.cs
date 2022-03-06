@@ -223,10 +223,10 @@ namespace Vedanta.ViewModel
         {
             StringImageList = new List<UserInfo>
             {
-                new UserInfo{ ActionProperty="Leader Schedule" ,AcordianIcon ="history_icon.png"},
-                new UserInfo{ ActionProperty="User Responsibility" ,AcordianIcon ="history_icon.png"},
-                new UserInfo{ ActionProperty="Update Responsibility" ,AcordianIcon ="history_icon.png"},
-                new UserInfo{ ActionProperty="Logout" ,AcordianIcon ="logout_icon.png"},
+                new UserInfo{ ActionProperty="Leader Schedule" ,AcordianIcon ="history_icon.png", IsVisible=false},
+                new UserInfo{ ActionProperty="User Responsibility" ,AcordianIcon ="history_icon.png", IsVisible=false},
+                new UserInfo{ ActionProperty="Update Responsibility" ,AcordianIcon ="history_icon.png",  IsVisible=false},
+                new UserInfo{ ActionProperty="Logout" ,AcordianIcon ="logout_icon.png" , IsVisible=true},
                 
             };
 
@@ -298,6 +298,7 @@ namespace Vedanta.ViewModel
         private void CancelledTapped(object obj)
         {
             IsSearchTapped = false;
+            SearchText = "";
             GembaScheduleList = new ObservableCollection<GembaScheduleModel>(Session.Instance.GembaScheduleList);
         }
         //private async void PopulateUserProfile(object obj)
@@ -341,7 +342,7 @@ namespace Vedanta.ViewModel
         {
             if (!String.IsNullOrEmpty(SearchText))
             {
-                var fList = Session.Instance.GembaScheduleList.Where(e => e.SBU.ToLower().Contains(SearchText.ToLower())).ToList();
+                var fList = Session.Instance.GembaScheduleList.Where(e => e.Department.ToLower().Contains(SearchText.ToLower())).ToList();
                 GembaScheduleList =
                 new ObservableCollection<GembaScheduleModel>(fList);
             }

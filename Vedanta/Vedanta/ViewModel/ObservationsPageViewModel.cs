@@ -110,6 +110,7 @@ namespace Vedanta.ViewModel
                 var response = await ApiService.Instance.DeleteObservationApiCall(currentObservation.Id);
                 if (response)
                 {
+                    PreviousObservations.Remove(currentObservation);
                     getAllLeaderObservationList(GembaScheduleModelParamMeasure.Id, CurrentMeasureAndScoreModel.Id);
                     await Application.Current.MainPage.DisplayAlert("Success", "Observation deleted successfully", "Ok");
                 }
@@ -338,6 +339,7 @@ namespace Vedanta.ViewModel
                 Session.Instance.CurrentMeasureObservations.Clear();
                 Session.Instance.CurrentMeasureObservations = PreviousObservations.ToList();
             }
+            
         }
 
        

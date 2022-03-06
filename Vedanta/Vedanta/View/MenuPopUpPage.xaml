@@ -18,7 +18,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid ColumnDefinitions="Auto,Auto"  Padding="10">
+                                <Grid ColumnDefinitions="Auto,Auto" Padding="10" IsVisible="{Binding IsVisible}">
                                     <Image Grid.Column="0" Source="{Binding AcordianIcon}" HeightRequest="20" WidthRequest="20" HorizontalOptions="End" />
                                     <Label Grid.Column="1" Text="{Binding ActionProperty}" FontSize="20" FontAttributes="Bold" />
                                     <!--<Image Grid.Column="2" Source="{Binding AcordianIcon}" HorizontalOptions="Start" />-->

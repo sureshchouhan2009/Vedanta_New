@@ -188,6 +188,7 @@ namespace Vedanta.ViewModel
                         update.UserName = PlanDetails.UserName;
                         update.Observations = PlanDetails.Observations;
                         update.PerformedBy= Preferences.Get("UserName", "");
+                        update.ResponsibilityUserId = Preferences.Get("UserName", "");
                         update.PerformedOn = DateTime.Now.ToString("yyyy-MM-dd");
                         update.IsDeleted = false;
                         for (int i = 0; i < UploadedImagesList.Count; i++)

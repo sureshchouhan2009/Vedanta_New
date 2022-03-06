@@ -21,6 +21,7 @@ namespace Vedanta.Models
         public int AoGembaObservationId { get; set; }
         public int GembaWalkScheduleId { get; set; }
         public string UserName { get; set; }
+        public string ResponsibilityUserId { get; set; }
         public string Observations { get; set; }
         public bool IsDeleted { get; set; }
         public string PerformedBy { get; set; }

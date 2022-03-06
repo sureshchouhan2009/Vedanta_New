@@ -29,7 +29,7 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <Label Grid.Column="1" Text="Gemba Schedule"  IsVisible="{Binding IsSearchTapped, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontSize="18"  VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                    <components:CustomEntry Grid.Column="1" Text="{Binding SearchText}"  IsVisible="{Binding IsSearchTapped}" BackgroundColor="White" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="14" Placeholder="Search">
+                    <components:CustomEntry Grid.Column="1" Text="{Binding SearchText}"  IsVisible="{Binding IsSearchTapped}" BackgroundColor="White" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="Center" FontSize="13" Placeholder="Search by department">
                         <components:CustomEntry.Behaviors>
                             <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}" CommandParameter="{Binding .}" />
                         </components:CustomEntry.Behaviors>
@@ -45,7 +45,7 @@
                                 <TapGestureRecognizer Command="{Binding CancelTappedCommand}" />
                             </Image.GestureRecognizers>
                         </Image>
-                        <Image Source="filter_new" HeightRequest="25" WidthRequest="25">
+                        <Image Source="filter_new" HeightRequest="25" WidthRequest="25" IsVisible="false">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NavigateToFilterPageCommand}" NumberOfTapsRequired="1" />
                             </Image.GestureRecognizers>

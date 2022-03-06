@@ -7,7 +7,7 @@ using Xamarin.Essentials;
 
 namespace Vedanta.Utility
 {
-  public static  class GeneralUtility
+    public static class GeneralUtility
     {
         public static async Task<byte[]> getByteArrayFromFile(FileResult pickedfile)
         {
@@ -31,6 +31,19 @@ namespace Vedanta.Utility
             }
 
             return bytes;
+        }
+
+
+
+        public static string DefaultSartDate()
+        {
+            DateTime StartDate = DateTime.Now.Date.AddDays(-60);
+            return StartDate.ToString("MM/dd/yyyy");
+        } 
+        public static string DefaultEndDate()
+        {
+            DateTime EndDate = DateTime.Now.Date;
+            return EndDate.ToString("MM/dd/yyyy");
         }
     }
 }

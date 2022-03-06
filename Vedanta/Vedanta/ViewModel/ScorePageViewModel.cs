@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Vedanta.Models;
 using Vedanta.Service;
+using Vedanta.Utility;
 using Vedanta.View;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -67,7 +68,7 @@ namespace Vedanta.ViewModel
             set { SetProperty(ref _gembaScheduleModelParamFromObservartionPage, value); }
         }
 
-         public List<ScoreInfoModel> MeasureScoreDetails
+        public List<ScoreInfoModel> MeasureScoreDetails
         {
             get { return _measureScoreDetails; }
             set { SetProperty(ref _measureScoreDetails, value); }
@@ -88,11 +89,11 @@ namespace Vedanta.ViewModel
             get { return _checkpoint; }
             set { SetProperty(ref _checkpoint, value); }
         }
-         public string ScoreZeorText
+        public string ScoreZeorText
         {
             get { return _scoreZeorText; }
             set { SetProperty(ref _scoreZeorText, value); }
-        } 
+        }
         public string ScoreThreeText
         {
             get { return _scoreThreeText; }
@@ -142,7 +143,7 @@ namespace Vedanta.ViewModel
             }
             set { SetProperty(ref _GoodSelectionCommand, value); }
         }
-       
+
         public ICommand SubmitCommand
         {
             get
@@ -167,7 +168,7 @@ namespace Vedanta.ViewModel
             }
             set { SetProperty(ref _SkipScoreCommand, value); }
         }
-        
+
         public ICommand ScoreInfoTapped
         {
             get
@@ -180,7 +181,7 @@ namespace Vedanta.ViewModel
             }
             set { SetProperty(ref _ScoreInfoTapped, value); }
         }
-        
+
         public ICommand CloseTappedCommand
         {
             get
@@ -203,7 +204,7 @@ namespace Vedanta.ViewModel
         {
             try
             {
-              
+
                 var page = new ScoreInfoPage();
                 await PopupNavigation.Instance.PushAsync(page);
             }
@@ -236,19 +237,19 @@ namespace Vedanta.ViewModel
             IsAverageSelected = false;
             IsNotSatisfactorySelected = false;
         }
-       
+
         private async void SkipScoreCommandExecute(object obj)
         {
             await NavigationService.GoBackAsync();
         }
         private async void SubmitCommandExecute(object obj)
         {
-           
+
             try
             {
                 if (IsNotSatisfactorySelected || IsAverageSelected || IsGoodSelected)
                 {
-                    var choice = await Application.Current.MainPage.DisplayAlert("Alert", "Are you sure, you want to Submit Score. Once you submit the score, you can not edit it.", "Ok","Cancel");
+                    var choice = await Application.Current.MainPage.DisplayAlert("Alert", "Are you sure, you want to Submit Score. Once you submit the score, you can not edit it.", "Ok", "Cancel");
                     if (choice)
                     {
                         IsBusy = true;
@@ -262,29 +263,31 @@ namespace Vedanta.ViewModel
                         bool success = await ApiService.Instance.AddScoreApiCall(scoreModel);
                         if (success)
                         {
-                            //try
-                            //{
-                            //    var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
-                            //    var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
-                            //    if (Vedanta.Utility.Session.Instance.GembaScheduleList.Count == 0)
-                            //    {
-                            //        Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
-                            //    }
-                               
+                            try
+                            {
+                                //var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                                //var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
 
-                            //}
-                            //catch (Exception ex)
-                            //{
+                                var StartDate = GeneralUtility.DefaultSartDate();
+                                var EndDate = GeneralUtility.DefaultEndDate();
 
-                            //}
-                           
+                                Vedanta.Utility.Session.Instance.GembaScheduleList = await ApiService.Instance.GembaScheduleListApiCall(StartDate, EndDate, Preferences.Get("UserName", ""));
+
+
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
                             var navigationParameters = new NavigationParameters();
 
                             navigationParameters.Add("ScheduleData", Vedanta.Utility.Session.Instance.GembaScheduleList.FirstOrDefault(ex => ex.Id == GembaScheduleModelFromObservattionPage.Id));
                             navigationParameters.Add("IsDetailsViewEnabled", true);
                             IsBusy = false;
                             await Application.Current.MainPage.DisplayAlert("Success", "Score added successfully", "Ok");
-                           
+
                             await NavigationService.NavigateAsync("MeasureAndScorePage", navigationParameters);
 
                         }
@@ -298,7 +301,7 @@ namespace Vedanta.ViewModel
                     {
 
                     }
-                   
+
                 }
                 else
                 {
@@ -352,12 +355,12 @@ namespace Vedanta.ViewModel
                 ScoreFiveText = MeasureScoreDetails[0].Score5;
                 IsBusy = false;
             });
-           
+
         }
 
         #endregion
 
-        public override  async void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             IsBusy = true;
             base.OnNavigatedTo(parameters);

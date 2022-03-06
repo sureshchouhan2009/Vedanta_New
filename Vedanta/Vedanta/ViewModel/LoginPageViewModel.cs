@@ -69,8 +69,12 @@ namespace Vedanta.ViewModel
                             Preferences.Set("Password", PasswordText);
                             Preferences.Set("IsLoggedIN", false);
                         }
-                        var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
-                        var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy");
+                        //var StartDate = DateTime.Now.Date.AddDays(-60).ToString("MM/dd/yyyy");
+                        //var EndDate = DateTime.Now.Date.ToString("MM/dd/yyyy"); 
+                        
+                        var StartDate = GeneralUtility.DefaultSartDate();
+                        var EndDate = GeneralUtility.DefaultEndDate();
+
                         if ( LoginResponse.UserType == "User")
                         {
                             await NavigationService.NavigateAsync("/ActionPlansPage");

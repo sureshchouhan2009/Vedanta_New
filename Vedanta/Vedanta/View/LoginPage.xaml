@@ -4,7 +4,7 @@
              xmlns:components="clr-namespace:Vedanta.Components" 
              xmlns:local="clr-namespace:Vedanta.Behaviors"
              x:Class="Vedanta.View.LoginPage" 
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False" BackgroundColor="#FFFFFF">
 
     <ContentPage.Resources>
         <Style TargetType="components:CustomEntry">
